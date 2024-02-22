@@ -141,7 +141,7 @@ Error generating stack: `+i.message+`
   border-radius: 5px;
   box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px, rgb(0 0 0 / 30%) 0px 7px 13px -3px, rgb(0 0 0 / 20%) 0px -3px 0px inset;
 `;function ry(){return I.jsx(I.Fragment,{children:I.jsx(oy,{})})}const oy=se.main`
-  background-color: lightgrey;
+  background-color: ${({theme:e})=>e.body};
   padding: 1.5rem;
   margin: 6rem 20% 3rem 20%;
 
@@ -150,7 +150,7 @@ Error generating stack: `+i.message+`
   }
 
   @media only screen and (max-width: 700px) {
-    margin: 4.5rem 5% 2.5rem 5%
+    margin: 8rem 5% 2.5rem 5%
   }
 `,iy="https://init1-dev.github.io/react-image-search-app/assets/linked-BfgvEGks.svg",ly="https://init1-dev.github.io/react-image-search-app/assets/gh-D42ETGNC.svg",uy=()=>I.jsx(I.Fragment,{children:I.jsxs(sy,{children:[I.jsx(cy,{href:"/",children:"© 2024 - in1t.dev"}),I.jsxs(ay,{children:[I.jsx(sc,{href:"",children:I.jsx(ac,{src:iy,alt:""})}),I.jsx(sc,{href:"",children:I.jsx(ac,{src:ly,alt:""})})]})]})}),sy=se.footer`
   display: flex;
