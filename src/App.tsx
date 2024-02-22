@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Header from './components/Header'
+import SearchResult from './components/SearchResult'
+import Footer from './components/Footer'
+import { toggleTheme, loadTheme } from './helpers/theme/themeUtils'
+import { lightTheme, darkTheme, GlobalStyles } from './helpers/theme/themeConfig';
+
+import '@fortawesome/fontawesome-free/css/all.css';
+
+import { useState } from 'react'
+import styled, { ThemeProvider } from 'styled-components'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [theme, setTheme] = useState(loadTheme);
+
+  const handleToogleTheme = () => {
+    const newTheme = toggleTheme(theme);
+    setTheme(newTheme);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <Wrapper>
+        <GlobalStyles />
+        <Content>
+          <Header theme={theme} toggleTheme={handleToogleTheme} />
+
+          <SearchResult />
+
+          <Footer />
+        </Content>
+      </Wrapper>
+    </ThemeProvider>
   )
 }
+
+// Estilos
+const Wrapper = styled.div`
+  background-color: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
+`;
+
+const Content = styled.div`
+  
+`;
 
 export default App
