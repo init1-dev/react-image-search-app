@@ -12,7 +12,7 @@ function Operations() {
 }
 
 const SectionStyle= styled.main`
-  background-color: lightgrey;
+  background-color: ${({ theme }) => theme.body};
   padding: 1.5rem;
   margin: 6rem 20% 3rem 20%;
 
@@ -21,7 +21,7 @@ const SectionStyle= styled.main`
   }
 
   @media only screen and (max-width: 700px) {
-    margin: 4.5rem 5% 2.5rem 5%
+    margin: 8rem 5% 2.5rem 5%
   }
 `;
 
