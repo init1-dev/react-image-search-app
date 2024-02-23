@@ -231,4 +231,4 @@ Error generating stack: `+i.message+`
   @media only screen and (max-width: 700px) {
     margin: 8rem 5% 2.5rem 5%
   }
-`,MC=()=>j.jsxs(j.Fragment,{children:[j.jsx(kC,{}),j.jsx(NC,{})]}),AC=()=>j.jsx(j.Fragment,{}),Ms="react-image-search-app",DC=aw(Iu(j.jsxs(xl,{path:Ms,element:j.jsx(MS,{}),children:[j.jsx(xl,{path:Ms,element:j.jsx(MC,{})}),j.jsx(xl,{path:Ms+"/saved",element:j.jsx(AC,{})})]})));function zC(){return j.jsx(j.Fragment,{children:j.jsx(mw,{router:DC})})}As.createRoot(document.getElementById("root")).render(j.jsx(zC,{}));
+`,MC=()=>j.jsxs(j.Fragment,{children:[j.jsx(kC,{}),j.jsx(NC,{})]}),AC=()=>j.jsx(j.Fragment,{}),Ms="/react-image-search-app",DC=aw(Iu(j.jsxs(xl,{path:Ms,element:j.jsx(MS,{}),children:[j.jsx(xl,{path:Ms,element:j.jsx(MC,{})}),j.jsx(xl,{path:Ms+"/saved",element:j.jsx(AC,{})})]})));function zC(){return j.jsx(j.Fragment,{children:j.jsx(mw,{router:DC})})}As.createRoot(document.getElementById("root")).render(j.jsx(zC,{}));
