@@ -1,32 +1,34 @@
 import styled from "styled-components";
 
-import icon from '../assets/logo.svg';
+import { useTheme } from "../hooks/themeHooks";
+import { NavLink } from "react-router-dom";
+import { appName } from "../Routes";
 
-interface HeaderProps {
-  toggleTheme: () => void;
-  theme: string;
-}
+import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 
-const Header = ({toggleTheme, theme}: HeaderProps) => {
+const Header = () => {
+  const { theme, handleToggleTheme } = useTheme();
+
   return (
     <HeaderStyle>
       <TopBarStyle>
 
           <SearchBarStyle>
-            <LogoStyle href="/">
-              <img src={icon} alt="logo" />
+            <LogoStyle to={appName}>
+              <WallpaperOutlinedIcon />
             </LogoStyle>
             <SearchInputStyle type="search" autoComplete="off" name="" id="search-box"></SearchInputStyle>
           </SearchBarStyle>
 
           <MenuStyle>
             <li>
-                <MenuItemStyle className="fa-regular fa-bookmark" href="/"></MenuItemStyle>
+                <MenuItemStyle className="fa-regular fa-bookmark" to={appName + "/saved"}></MenuItemStyle>
+                
             </li>
             <li>
-                <MenuItemStyle className="fa-regular fa-address-card" href="/"></MenuItemStyle>
+                <MenuItemStyle className="fa-regular fa-address-card" to={appName + "/contact"}></MenuItemStyle>
             </li>
-            <ToggleThemeButton onClick={toggleTheme}>
+            <ToggleThemeButton onClick={handleToggleTheme}>
               {theme === 'light' ? '🌙' : '☀️'}
             </ToggleThemeButton>
           </MenuStyle>
@@ -69,7 +71,7 @@ const TopBarStyle = styled.div`
   }
 `;
 
-const LogoStyle = styled.a`
+const LogoStyle = styled(NavLink)`
   color: ${({ theme }) => theme.headerH1};
   transition: transform 0.1s;
   transform-origin: center center;
@@ -132,7 +134,7 @@ const MenuStyle = styled.ul`
   }
 `
 
-const MenuItemStyle = styled.a`
+const MenuItemStyle = styled(NavLink)`
   font-size: 20px;
   height: 100%;
   color: ${({ theme }) => theme.btnText};

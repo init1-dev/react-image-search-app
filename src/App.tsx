@@ -1,40 +1,40 @@
 import './App.css'
-import Header from './components/Header'
-import SearchResult from './components/SearchResult'
-import Footer from './components/Footer'
-import { toggleTheme, loadTheme } from './helpers/theme/themeUtils'
-import { lightTheme, darkTheme, GlobalStyles } from './helpers/theme/themeConfig';
+// import Header from './components/Header'
+// import SearchResult from './components/SearchResult'
+// import Footer from './components/Footer'
 
 import '@fortawesome/fontawesome-free/css/all.css';
 
-import { useState } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import { RouterProvider } from 'react-router-dom'
+import appRouter from './Routes'
+import { GlobalStyles, darkTheme, lightTheme } from './helpers/theme/themeConfig';
+import styled, { ThemeProvider } from 'styled-components';
+import { useState } from 'react';
+import { loadTheme, toggleTheme } from './helpers/theme/themeUtils';
+import { ThemeContext } from './hooks/themeHooks';
 
 function App() {
   const [theme, setTheme] = useState(loadTheme);
 
-  const handleToogleTheme = () => {
+  const handleToggleTheme = () => {
     const newTheme = toggleTheme(theme);
     setTheme(newTheme);
   }
 
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <Wrapper>
-        <GlobalStyles />
-        <Content>
-          <Header theme={theme} toggleTheme={handleToogleTheme} />
-
-          <SearchResult />
-
-          <Footer />
-        </Content>
-      </Wrapper>
-    </ThemeProvider>
+    <ThemeContext.Provider value={{ theme, handleToggleTheme }}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <Wrapper>
+          <GlobalStyles />
+          <Content>
+            <RouterProvider router={appRouter} />
+          </Content>
+        </Wrapper>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   )
 }
 
-// Estilos
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.body};
   color: ${({ theme }) => theme.text};
