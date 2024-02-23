@@ -14,7 +14,7 @@ export const SavedPhotos = () => {
 
     return (
         <>
-            <Header />
+            <Header placeholder="Busca entre tus fotos favoritas.." />
             <SearchResult />
         </>
     )

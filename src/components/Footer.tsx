@@ -7,12 +7,12 @@ const Footer = () => {
   return (
     <>
       <FooterStyle>
-        <SocialText href="/">© 2024 - in1t.dev</SocialText>
+        <SocialText href="https://github.com/init1-dev" target="_blank" rel="noopener noreferrer">© 2024 - in1t.dev</SocialText>
         <SocialStyle>
-          <Link href="">
+          <Link href="https://www.linkedin.com/in/in1t-jorge-guillen/" target="_blank" rel="noopener noreferrer">
             <SocialImg src={linked} alt="" />
           </Link>
-          <Link href="">
+          <Link href="https://github.com/init1-dev" target="_blank" rel="noopener noreferrer">
             <SocialImg src={gh} alt="" />
           </Link>
         </SocialStyle>

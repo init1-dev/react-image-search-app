@@ -6,7 +6,11 @@ import { appName } from "../Routes";
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 
-const Header = () => {
+interface HeaderProps {
+  placeholder?: string,
+}
+
+const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderProps) => {
   const { theme, handleToggleTheme } = useTheme();
 
   return (
@@ -17,7 +21,7 @@ const Header = () => {
             <LogoStyle to={appName}>
               <WallpaperOutlinedIcon />
             </LogoStyle>
-            <SearchInputStyle type="search" autoComplete="off" name="" id="search-box"></SearchInputStyle>
+            <SearchInputStyle type="search" autoComplete="off" name="" id="search-box" placeholder={ placeholder }></SearchInputStyle>
           </SearchBarStyle>
 
           <MenuStyle>
