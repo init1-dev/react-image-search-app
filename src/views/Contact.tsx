@@ -2,7 +2,6 @@
 // import { loadTheme, toggleTheme } from "../helpers/theme/themeUtils";
 
 import Header from "../components/Header"
-import SearchResult from "../components/SearchResult"
 
 export const Contact = () => {
     // const [theme, setTheme] = useState(loadTheme);
@@ -15,7 +14,6 @@ export const Contact = () => {
     return (
         <>
             <Header />
-            <SearchResult />
             <div>
                 CONTACTO
             </div>

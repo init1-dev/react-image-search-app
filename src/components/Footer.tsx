@@ -37,7 +37,7 @@ const FooterStyle = styled.footer`
   bottom: 0;
   width: calc(100% - 4rem);
 
-  box-shadow: rgb(0 0 0 / 40%) 0px 1px 4px;
+  box-shadow: rgb(0 0 0 / 40%) 0px 0px 5px;
 
   a:hover {
     color: blueviolet;

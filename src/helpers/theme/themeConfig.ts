@@ -20,10 +20,10 @@ export interface Theme {
   const darkBg = '#373e49';
   
   export const lightTheme: Theme = {
-    body: '#f1f1f1',
+    body: '#e3e3e3',
     text: '#000000',
-    html: '#f1f1f1',
-    header: '#fff',
+    html: '#e3e3e3',
+    header: '#cac9c7',
     headerH1: '#000',
     savedCardBg: '#E3E3E3',
     appBg: '#f1f1f1',
