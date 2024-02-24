@@ -19,9 +19,7 @@ const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderP
 
   const dispatch = useDispatch()
 
-  function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {
-    console.log("enviado");
-    
+  function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {    
     e.preventDefault();
     dispatch(setStatusReady());
     dispatch(setTerm(searchInput.trim()));

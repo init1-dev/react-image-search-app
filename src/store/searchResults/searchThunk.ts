@@ -10,7 +10,6 @@ const resultsPerPage = 'per_page=15';
 export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query: string) => {
     
     const fetchUrl = `${searchUrl}client_id=${accessKey}&${resultsPerPage}&query=${query}`;
-    console.log(fetchUrl);
         
     // try{
     //     console.log(fetchUrl);

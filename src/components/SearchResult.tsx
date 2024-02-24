@@ -10,51 +10,31 @@ import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/sea
 function SearchResults() {
   const dispatch = useAppDispatch();
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
-  const [ onLoad, setOnLoad ] = useState<boolean>(true);
   const images = useAppSelector(searchPhotos);
   const query = useAppSelector(searchQuery);
   const status = useAppSelector(searchStatus);
   const error = useAppSelector(searchError);
   
   useEffect(() => {
-    console.log(query);
-    console.log(status);
-    if(!onLoad) {
-      console.log(onLoad);
-      
-      if(query !== ''){
-        console.log("entré!");
-        
+      if(query !== ''){        
         if (status === 'ready'){
-          console.log("query: dev, status ready");
           dispatch(getSearchThunk(query));
         } else if (status === 'pending') {
-          console.log("query: dev, status pending");
           setIsLoading(true);
         } else if (status === 'fulfilled') {
-          console.log("query: dev, status fullfill");
           setIsLoading(false);
         }
       } else if (query === ''){
         if (status === 'ready'){
-          console.log("query: '', status ready");
           dispatch(getRandomSearchThunk());
         } else if (status === 'pending') {
-          console.log("query: '', status pending");
           setIsLoading(true);
         } else if (status === 'fulfilled') {
-          console.log("query: '', status fullfill");
           setIsLoading(false);
         }
       } else {
         alert(`Error: ${error}`)
       }
-
-    } else {
-      console.log("onload false, lo cambio");
-      
-      setOnLoad(false)
-    }
 
   }, [dispatch, images, query, status, error]);
   

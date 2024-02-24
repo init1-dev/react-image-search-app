@@ -33,7 +33,7 @@ const DEFAULT_STATE: SearchState = {
   images: [],
   query: '',
   loading: false,
-  status: 'ready',
+  status: 'not_ready',
   error: null,
 };
 
@@ -53,8 +53,6 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         setTerm: (search, action) => {
-            console.log(search, action);
-            
             search.query = action.payload
         },
         resetTerm: (search) => {
