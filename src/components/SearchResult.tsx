@@ -26,7 +26,7 @@ function SearchResults() {
       src_regular: img.urls.regular,
       src_full: img.urls.full,
       alt_description: img.description,
-      description: img.description || '',
+      description: img.description === null ? 'unknown' : img.description,
       width: img.width,
       height: img.height,
       likes: img.likes,

@@ -5,7 +5,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import styled from "styled-components";
 
 import { useAppDispatch } from "../hooks/store";
-import { deletePhoto } from '../store/searchResults/searchSlice';
+import { deletePhoto, searchByTerm } from '../store/searchResults/searchSlice';
 import { SavedImg, State } from "../helpers/interfaces";
 import { FormEvent, useState } from "react";
 
@@ -15,15 +15,29 @@ function SearchResults() {
   const dispatch = useAppDispatch();
   const [searchInput, setSearchInput] = useState('');
   const saved = useSelector((state: State) => state.saved.images)
+  const query = useSelector((state: State) => state.saved.query)
   // const images = useAppSelector(searchPhotos);
-  // const query = useAppSelector(searchQuery);
   // const status = useAppSelector(searchStatus);
   // const error = useAppSelector(searchError);
 
+  function getFilteredPhotos(photos:SavedImg[] , searchTerm: string) {
+    console.log(searchTerm);
+    const filtered = photos.filter(photo => photo.description?.toLowerCase().includes(searchTerm.toLowerCase()));
+    console.log(filtered);
+    
+    return filtered;
+  }
+
+  const filterBySearch = getFilteredPhotos(saved, query);
+
   function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {    
     e.preventDefault();
-    
+    dispatch(searchByTerm(searchInput))
+    console.log(searchInput);
   }
+
+  console.log(searchInput);
+  
 
   const handleDownload = (url: string, description: string) => {
     saveAs(
@@ -41,7 +55,7 @@ function SearchResults() {
           </FormStyle>
         </SearchBarStyle>
         <ImageGridStyle>
-          { saved.map((image: SavedImg) => {                
+          { filterBySearch && filterBySearch.map((image: SavedImg) => {                
             return (
               <ImageContainerStyle key={image.id}>
                     <ImageItemStyle
@@ -60,6 +74,8 @@ function SearchResults() {
                       <Button>
                         <InfoOutlinedIcon />
                       </Button>
+                      <span>{image.likes} likes</span>
+                      <p>{image.description}</p>
                     </ButtonContainer>
               </ImageContainerStyle>
             )
@@ -103,10 +119,14 @@ const ImageContainerStyle = styled.div`
     width: 100%;
 
     @media only screen and (max-width: 1024px) {
-      display: flex;
       flex-direction: column;
       align-items: center;
-    }    
+    }
+
+    @media only screen and (max-width: 700px) {
+      display: flex;
+      column-count: 1;
+    }
 `
 
 const ImageItemStyle = styled.img`

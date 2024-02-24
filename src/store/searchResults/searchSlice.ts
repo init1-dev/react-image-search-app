@@ -90,11 +90,13 @@ export const savedSlice = createSlice({
         //     favouriteToEdit.description = action.payload.description
         //     return state
         // },
-        setSavedTerm: (state, action) => {
+        searchByTerm: (state, action) => {
+            console.log(action);
+            
             state.query = action.payload
             return state
         },
-        resetSavedTerm: (state) => {
+        resetSearchTerm: (state) => {
             state.query = ''
             return state
         }
@@ -103,7 +105,7 @@ export const savedSlice = createSlice({
 
 export const { setTerm, resetTerm, setStatusReady } = searchSlice.actions;
 // export const { savePhoto, deletePhoto, editDescription, setSavedTerm, resetSavedTerm } = savedSlice.actions;
-export const { savePhoto, deletePhoto, setSavedTerm, resetSavedTerm } = savedSlice.actions;
+export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm } = savedSlice.actions;
 
 export const searchPhotos = (state: { search: SearchState }) =>  state.search.images;
 export const searchQuery = (state: { search: SearchState }) =>  state.search.query;
