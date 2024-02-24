@@ -10,8 +10,8 @@
 - ( X ) Download button for image download (full)
 - ( X ) Saved images persistance in localStorage
 - (   ) Image buttons functionality
-- (   ) Search in saved photos
-- (   ) 
+- ( X ) Search in saved photos by description
+- (   ) Sort in saved by: created_at, width, height y likes
 - (   ) 
 
 # OPTIONAL
