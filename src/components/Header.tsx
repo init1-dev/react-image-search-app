@@ -120,6 +120,7 @@ const SearchBarStyle = styled.div`
 
   @media only screen and (max-width: 700px) {
     width: 85%;
+    margin-right: 1.2rem
   }
 `;
 

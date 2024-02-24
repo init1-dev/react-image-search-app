@@ -71,7 +71,7 @@ function SearchResults() {
                             <ImageItemStyle
                                 src={(image.urls?.regular) ? image.urls.regular : image.urls.small}
                                 width={400}
-                                alt={image.description}
+                                alt={image.description ? image.description : ''}
                                 loading="lazy"
                             />
                             <ButtonContainer>

@@ -1,54 +1,70 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-
-import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { deletePhoto, savePhoto, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
-import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/searchThunk";
-
+import { useSelector } from "react-redux";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import styled from "styled-components";
+
+import { useAppDispatch } from "../hooks/store";
+import { deletePhoto } from '../store/searchResults/searchSlice';
 import { SavedImg, State } from "../helpers/interfaces";
-import { useSelector } from "react-redux";
+import { FormEvent, useState } from "react";
+
+import { saveAs } from 'file-saver';
 
 function SearchResults() {
   const dispatch = useAppDispatch();
-  const [ isLoading, setIsLoading ] = useState<boolean>(false);
-
+  const [searchInput, setSearchInput] = useState('');
   const saved = useSelector((state: State) => state.saved.images)
   // const images = useAppSelector(searchPhotos);
   // const query = useAppSelector(searchQuery);
   // const status = useAppSelector(searchStatus);
   // const error = useAppSelector(searchError);
 
+  function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {    
+    e.preventDefault();
+    
+  }
+
+  const handleDownload = (url: string, description: string) => {
+    saveAs(
+      url,
+      `${description}.jpg`
+    );
+  };
+
   return (
     <>
       <SectionStyle>
-          <ImageGridStyle>
-              {!isLoading ? saved.map((image: SavedImg) => {                
-                  return (
-                      <ImageContainerStyle key={image.id}>
-                            <ImageItemStyle
-                                src={image.src_regular}
-                                width={400}
-                                alt={image.description}
-                                loading="lazy"
-                            />
-                            <ButtonContainer>
-                              <Button onClick={ () => dispatch(deletePhoto(image.id)) }>
-                                <DeleteOutlineOutlinedIcon />
-                              </Button>
-                              <Button>
-                                <FileDownloadOutlinedIcon />
-                              </Button>
-                              <Button>
-                                <InfoOutlinedIcon />
-                              </Button>
-                            </ButtonContainer>
-                      </ImageContainerStyle>
-                    )
-                }) : '<h1>Cargando..</h1>' }
-          </ImageGridStyle>
+        <SearchBarStyle>
+          <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
+            <SearchInputStyle type="search" autoComplete="off" name="" id="search-box" placeholder="Busca entre tus fotos.." value={searchInput} onChange={(e) => { setSearchInput(e.target.value) }} />
+          </FormStyle>
+        </SearchBarStyle>
+        <ImageGridStyle>
+          { saved.map((image: SavedImg) => {                
+            return (
+              <ImageContainerStyle key={image.id}>
+                    <ImageItemStyle
+                        src={image.src_regular}
+                        width={400}
+                        alt={image.description}
+                        loading="lazy"
+                    />
+                    <ButtonContainer>
+                      <Button onClick={ () => dispatch(deletePhoto(image.id)) }>
+                        <DeleteOutlineOutlinedIcon />
+                      </Button>
+                      <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
+                        <FileDownloadOutlinedIcon />
+                      </Button>
+                      <Button>
+                        <InfoOutlinedIcon />
+                      </Button>
+                    </ButtonContainer>
+              </ImageContainerStyle>
+            )
+          })}
+        </ImageGridStyle>
       </SectionStyle>
     </>
   )
@@ -85,6 +101,12 @@ const ImageContainerStyle = styled.div`
     display: inline-block;
     margin-bottom: 15px;
     width: 100%;
+
+    @media only screen and (max-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }    
 `
 
 const ImageItemStyle = styled.img`
@@ -116,5 +138,45 @@ const Button = styled.button`
     color: #25ac25;
   }
 `;
+
+const SearchBarStyle = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 0;
+  margin-bottom: 2rem;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: ${({ theme }) => theme.headerH1};
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
+`;
+
+const FormStyle = styled.form`
+  width: 100%
+`
+
+const SearchInputStyle = styled.input`
+  width: 50%;
+  padding: 0.4rem 1rem;
+  margin: 0;
+  border-radius: 5rem;
+  border: 1px solid #5d5d5d;
+  outline: none;
+  background-color: #EEEEEE;
+  box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
+  transition: background-color 0.1s;
+
+  &:focus-visible {
+    background-color: white;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    width: 100%;
+  }
+`
 
 export default SearchResults;

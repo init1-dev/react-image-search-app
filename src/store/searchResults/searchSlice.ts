@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { getRandomSearchThunk, getSearchThunk } from './searchThunk';
-import { Image, SavedState, SearchState } from '../../helpers/interfaces';
+import { SavedState, SearchState } from '../../helpers/interfaces';
 
 const DEFAULT_STATE: SearchState = {
   // images: data.results,
@@ -43,7 +43,7 @@ export const searchSlice = createSlice({
                 search.status = 'pending';
                 search.error = null;
             })
-            .addCase(getSearchThunk.fulfilled, (search, action: PayloadAction<Image[]>) => {
+            .addCase(getSearchThunk.fulfilled, (search, action) => {
                 search.loading = false;
                 search.status = 'fulfilled';
                 search.images = action.payload;

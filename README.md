@@ -7,7 +7,7 @@
 - (   ) Saved images filter for description
 - ( X ) Delete images from saved
 - (   ) Order images (Date, width, height, likes)
-- (   ) Download button for image download (full)
+- ( X ) Download button for image download (full)
 - ( X ) Saved images persistance in localStorage
 - (   ) Image buttons functionality
 - (   ) Search in saved photos

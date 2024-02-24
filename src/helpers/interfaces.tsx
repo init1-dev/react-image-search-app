@@ -8,7 +8,7 @@ export interface Image {
         small: string;
         full: string;
     };
-    description: string;
+    description: string | null;
     user: {
         username: string;
         name: string;

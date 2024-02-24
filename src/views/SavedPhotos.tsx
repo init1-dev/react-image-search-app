@@ -5,7 +5,7 @@ export const SavedPhotos = () => {
 
     return (
         <>
-            <Header placeholder="Busca entre tus fotos favoritas.." />
+            <Header placeholder="Introduce un término para buscar.." />
             <SavedResults></SavedResults>
         </>
     )
