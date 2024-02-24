@@ -1,8 +1,11 @@
+import { FormEvent, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { useTheme } from "../hooks/themeHooks";
-import { NavLink } from "react-router-dom";
 import { appName } from "../Routes";
+import { useTheme } from "../hooks/themeHooks";
+import { setStatusReady, setTerm } from "../store/searchResults/searchSlice";
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 
@@ -11,7 +14,17 @@ interface HeaderProps {
 }
 
 const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderProps) => {
+  const [searchInput, setSearchInput] = useState('');
   const { theme, handleToggleTheme } = useTheme();
+
+  const dispatch = useDispatch()
+
+  function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    dispatch(setStatusReady());
+    dispatch(setTerm(searchInput));
+    setSearchInput('');
+}
 
   return (
     <HeaderStyle>
@@ -21,7 +34,9 @@ const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderP
             <LogoStyle to={appName}>
               <WallpaperOutlinedIcon />
             </LogoStyle>
-            <SearchInputStyle type="search" autoComplete="off" name="" id="search-box" placeholder={ placeholder }></SearchInputStyle>
+            <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
+              <SearchInputStyle type="search" autoComplete="off" name="" id="search-box" placeholder={ placeholder } value={searchInput} onChange={(e) => { setSearchInput(e.target.value) }} />
+            </FormStyle>
           </SearchBarStyle>
 
           <MenuStyle>
@@ -86,6 +101,10 @@ const LogoStyle = styled(NavLink)`
     transform: scale(1.05);
   }
 `;
+
+const FormStyle = styled.form`
+  width: 100%
+`
 
 const SearchBarStyle = styled.div`
   display: flex;

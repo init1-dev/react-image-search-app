@@ -16,7 +16,7 @@ export interface Theme {
   }
   
   // Define los temas
-  const darkHeader = '#1e2735cf';
+  const darkHeader = '#242f3f';
   const darkBg = '#373e49';
   
   export const lightTheme: Theme = {

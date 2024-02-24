@@ -1,5 +1,8 @@
 import { configureStore, type Middleware } from "@reduxjs/toolkit";
 
+// import { searchSlice, savedSlice } from "./searchResults/searchSlice";
+import { searchSlice } from "./searchResults/searchSlice";
+
 // import searchReducer from "./searchResults/slice";
 
 const persistanceLocalStorageMiddleware: Middleware = (store) => (next) => (action) => {
@@ -9,7 +12,8 @@ const persistanceLocalStorageMiddleware: Middleware = (store) => (next) => (acti
 
 export const store = configureStore({
     reducer: {
-
+        search: searchSlice.reducer,
+        // saved: savedSlice.reducer
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(persistanceLocalStorageMiddleware)
