@@ -5,78 +5,41 @@ import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { savePhoto, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
 import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/searchThunk";
 
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Image } from "../helpers/interfaces";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import { SavedImg, State } from "../helpers/interfaces";
+import { useSelector } from "react-redux";
 
 function SearchResults() {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
-  const images = useAppSelector(searchPhotos);
-  const query = useAppSelector(searchQuery);
-  const status = useAppSelector(searchStatus);
-  const error = useAppSelector(searchError);
 
-  const handleSave = (img: Image) => {
-    console.log(img);
-    
-    dispatch(savePhoto({
-      id: img.id,
-      src_preview: img.urls.small,
-      src_regular: img.urls.regular,
-      src_full: img.urls.full,
-      alt_description: img.description,
-      description: img.description || '',
-      width: img.width,
-      height: img.height,
-      likes: img.likes,
-      created_at: new Date(Date.now()).toLocaleDateString("es-ES"),
-  }))
-  }
-  
-  useEffect(() => {
-      if(query !== ''){
-        if (status === 'ready'){
-          dispatch(getSearchThunk(query));
-        } else if (status === 'pending') {
-          setIsLoading(true);
-        } else if (status === 'fulfilled') {
-          setIsLoading(false);
-        }
-      } else if (query === ''){
-        if (status === 'ready'){
-          dispatch(getRandomSearchThunk());
-        } else if (status === 'pending') {
-          setIsLoading(true);
-        } else if (status === 'fulfilled') {
-          setIsLoading(false);
-        }
-      } else {
-        alert(`Error: ${error}`)
-      }
-
-  }, [dispatch, images, query, status, error]);
-  
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const saved = useSelector((state: State) => state.saved.images)
+  // const images = useAppSelector(searchPhotos);
+  // const query = useAppSelector(searchQuery);
+  // const status = useAppSelector(searchStatus);
+  // const error = useAppSelector(searchError);
 
   return (
     <>
       <SectionStyle>
           <ImageGridStyle>
-              {!isLoading && Array.isArray(images) ? images.map((image) => {
+              {!isLoading ? saved.map((image: SavedImg) => {                
                   return (
                       <ImageContainerStyle key={image.id}>
                             <ImageItemStyle
-                                src={(image.urls?.regular) ? image.urls.regular : image.urls.small}
+                                src={image.src_regular}
                                 width={400}
                                 alt={image.description}
                                 loading="lazy"
                             />
                             <ButtonContainer>
                               <Button>
-                                <FavoriteBorderOutlinedIcon onClick={() => handleSave(image)} />
+                                <DeleteOutlineOutlinedIcon />
+                              </Button>
+                              <Button>
+                                <FileDownloadOutlinedIcon />
                               </Button>
                               <Button>
                                 <InfoOutlinedIcon />

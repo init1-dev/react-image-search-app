@@ -16,3 +16,12 @@ body {
 select option {
   font-size: 120%;
 }
+
+.logoActive {
+  border-bottom: 5px solid #25ac25;
+  border-radius: 0.4rem;
+}
+
+.img {
+  width: 350px;
+}

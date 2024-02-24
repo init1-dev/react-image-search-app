@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -8,6 +8,7 @@ import { useTheme } from "../hooks/themeHooks";
 import { setStatusReady, setTerm } from "../store/searchResults/searchSlice";
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 
 interface HeaderProps {
   placeholder?: string,
@@ -26,13 +27,15 @@ const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderP
     // setSearchInput('');
   }
 
+  const location = useLocation();
+
   return (
     <HeaderStyle>
       <TopBarStyle>
 
           <SearchBarStyle>
-            <LogoStyle to={appName}>
-              <WallpaperOutlinedIcon />
+            <LogoStyle to={appName} className="logo">
+              {location.pathname === appName ? <WallpaperOutlinedIcon className="logoActive"/> : <WallpaperOutlinedIcon />}
             </LogoStyle>
             <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
               <SearchInputStyle type="search" autoComplete="off" name="" id="search-box" placeholder={ placeholder } value={searchInput} onChange={(e) => { setSearchInput(e.target.value) }} />
@@ -41,11 +44,9 @@ const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderP
 
           <MenuStyle>
             <li>
-                <MenuItemStyle className="fa-regular fa-bookmark" to={appName + "/saved"}></MenuItemStyle>
-                
-            </li>
-            <li>
-                <MenuItemStyle className="fa-regular fa-address-card" to={appName + "/contact"}></MenuItemStyle>
+                <MenuItemStyle to={appName + "/saved"}>
+                  {location.pathname === appName + "/saved" ? <BookmarkBorderOutlinedIcon className="logoActive"/> : <BookmarkBorderOutlinedIcon />}
+                </MenuItemStyle>
             </li>
             <ToggleThemeButton onClick={handleToggleTheme}>
               {theme === 'light' ? '🌙' : '☀️'}
@@ -60,6 +61,7 @@ const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderP
 const HeaderStyle =styled.header`
   position: fixed;
   width: 100%;
+  z-index: 1;
   top: 0;
   box-shadow: rgb(0 0 0 / 40%) 0px 2px 4px, rgb(0 0 0 / 30%) 0px 7px 13px -3px, rgb(0 0 0 / 20%) 0px -3px 0px inset;
 

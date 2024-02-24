@@ -1,32 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getRandomSearchThunk, getSearchThunk } from './searchThunk';
-
-interface Image {
-  id: string;
-  urls: {
-      regular: string;
-      small: string;
-      thumb: string;
-  };
-  alt_description: string;
-  user: {
-      username: string;
-      name: string;
-      profile_image: {
-          small: string;
-          medium: string;
-          large: string;
-      };
-  };
-}
-
-interface SearchState {
-    images: Image[];
-    query: string;
-    loading: boolean;
-    status: string;
-    error: string | null;
-}
+import { Image, SavedState, SearchState } from '../../helpers/interfaces';
 
 const DEFAULT_STATE: SearchState = {
   // images: data.results,
@@ -37,20 +11,20 @@ const DEFAULT_STATE: SearchState = {
   error: null,
 };
 
-const initialState: SearchState = (() => {
+const searchInitialState: SearchState = (() => {
   const persistedState = localStorage.getItem("__image__app__state__");
   return (persistedState) ? JSON.parse(persistedState).search : DEFAULT_STATE;
 })();
 
-// const savedImages = localStorage.getItem('savedImages');
-// const savedInitialState = (savedImages)
-//     ? JSON.parse(savedImages)
-//     : { photos: [], term: '' }
+const savedInitialState: SavedState = (() => {
+    const persistedState = localStorage.getItem("__image__app__state__");
+    return (persistedState) ? JSON.parse(persistedState).saved : { images: [], query: ''};
+})();
 
 // Slice asíncrono para la búsqueda
 export const searchSlice = createSlice({
     name: 'search',
-    initialState,
+    initialState: searchInitialState,
     reducers: {
         setTerm: (search, action) => {
             search.query = action.payload
@@ -98,34 +72,38 @@ export const searchSlice = createSlice({
   });
 
 // Slice síncrono para fotos guardadas
-// export const savedSlice = createSlice({
-//     name: 'saved',
-//     initialState: savedInitialState,
-//     reducers: {
-//         savePhoto: (state, action) => {
-//             if (!state.photos.find(photo => photo.id === action.payload.id)) state.photos.push(action.payload)
-//         },
-//         deletePhoto: (state, action) => {
-//             return  state.photos.filter(photo => photo.id !== action.payload) 
-//         },
-//         editDescription: (state, action) => {
-//             const favouriteToEdit = state.photos.find(photo => photo.id === action.payload.id)
-//             favouriteToEdit.description = action.payload.description
-//             return state
-//         },
-//         setSavedTerm: (state, action) => {
-//             state.term = action.payload
-//             return state
-//         },
-//         resetSavedTerm: (state) => {
-//             state.term = ''
-//             return state
-//         }
-//     }
-// });
+export const savedSlice = createSlice({
+    name: 'saved',
+    initialState: savedInitialState,
+    reducers: {
+        savePhoto: (state, action) => {
+            if (!state.images.find(image => image.id === action.payload.id)) state.images.push(action.payload)
+        },
+        deletePhoto: (state, action) => {
+            return {
+                ...state,
+                images: state.images.filter(image => image.id !== action.payload) 
+            }
+        },
+        // editDescription: (state, action) => {
+        //     const favouriteToEdit = state.images.find(photo => photo.id === action.payload.id)
+        //     favouriteToEdit.description = action.payload.description
+        //     return state
+        // },
+        setSavedTerm: (state, action) => {
+            state.query = action.payload
+            return state
+        },
+        resetSavedTerm: (state) => {
+            state.query = ''
+            return state
+        }
+    }
+});
 
 export const { setTerm, resetTerm, setStatusReady } = searchSlice.actions;
 // export const { savePhoto, deletePhoto, editDescription, setSavedTerm, resetSavedTerm } = savedSlice.actions;
+export const { savePhoto, deletePhoto, setSavedTerm, resetSavedTerm } = savedSlice.actions;
 
 export const searchPhotos = (state: { search: SearchState }) =>  state.search.images;
 export const searchQuery = (state: { search: SearchState }) =>  state.search.query;
