@@ -5,6 +5,7 @@ interface Image {
   id: string;
   urls: {
       regular: string;
+      small: string;
       thumb: string;
   };
   alt_description: string;
@@ -52,6 +53,8 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         setTerm: (search, action) => {
+            console.log(search, action);
+            
             search.query = action.payload
         },
         resetTerm: (search) => {

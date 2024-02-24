@@ -11,8 +11,7 @@ export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query
     
     const fetchUrl = `${searchUrl}client_id=${accessKey}&${resultsPerPage}&query=${query}`;
     console.log(fetchUrl);
-    
-
+        
     // try{
     //     console.log(fetchUrl);
         
@@ -29,21 +28,24 @@ export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query
     // catch (err) {
     //     throw new Error(`Error: ${err}`);
     // }
-
     return data.results;
 })
 
 export const getRandomSearchThunk = createAsyncThunk('search/fetchRandomPhoto', async() => {
     try {
-        const resp = await fetch(randomUrl + accessKey + resultsPerPage)
+        const fetchUrl = `${randomUrl}client_id=${accessKey}&${resultsPerPage}`;
+        console.log(fetchUrl);
 
+        const resp = await fetch(fetchUrl)
+        
         if (!resp.ok) {
             throw new Error(`Error status ${resp.status}`);
         }
 
         const data = await resp.json();
-
-        return data;
+        console.log(data);
+        
+        return [data];
     } 
     catch(err) {
         throw new Error(`Error: ${err}`);

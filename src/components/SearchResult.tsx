@@ -1,35 +1,76 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { useAppSelector } from "../hooks/store";
-import { searchLoading, searchError, searchPhotos } from '../store/searchResults/searchSlice';
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
+import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/searchThunk";
 
 // import { RootState } from '../app/store';
 
 function SearchResults() {
+  const dispatch = useAppDispatch();
+  const [ isLoading, setIsLoading ] = useState<boolean>(false);
+  const [ onLoad, setOnLoad ] = useState<boolean>(true);
   const images = useAppSelector(searchPhotos);
-  const loading = useAppSelector(searchLoading);
+  const query = useAppSelector(searchQuery);
+  const status = useAppSelector(searchStatus);
   const error = useAppSelector(searchError);
-
-  console.log(images.length);
   
+  useEffect(() => {
+    console.log(query);
+    console.log(status);
+    if(!onLoad) {
+      console.log(onLoad);
+      
+      if(query !== ''){
+        console.log("entré!");
+        
+        if (status === 'ready'){
+          console.log("query: dev, status ready");
+          dispatch(getSearchThunk(query));
+        } else if (status === 'pending') {
+          console.log("query: dev, status pending");
+          setIsLoading(true);
+        } else if (status === 'fulfilled') {
+          console.log("query: dev, status fullfill");
+          setIsLoading(false);
+        }
+      } else if (query === ''){
+        if (status === 'ready'){
+          console.log("query: '', status ready");
+          dispatch(getRandomSearchThunk());
+        } else if (status === 'pending') {
+          console.log("query: '', status pending");
+          setIsLoading(true);
+        } else if (status === 'fulfilled') {
+          console.log("query: '', status fullfill");
+          setIsLoading(false);
+        }
+      } else {
+        alert(`Error: ${error}`)
+      }
 
-  if (loading) {
+    } else {
+      console.log("onload false, lo cambio");
+      
+      setOnLoad(false)
+    }
+
+  }, [dispatch, images, query, status, error]);
+  
+  if (isLoading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: { error }</div>;
   }
 
   return (
     <>
       <SectionStyle>
           <ImageGridStyle>
-              {!loading && images ? images.map((image) => {
+              {!isLoading && Array.isArray(images) ? images.map((image) => {
                   return (
                       <ImageContainerStyle key={image.id}>
                             <ImageItemStyle
-                                src={image.urls.regular}
+                                src={(image.urls?.regular) ? image.urls.regular : image.urls.small}
                                 width={400}
                                 alt={image.alt_description}
                                 loading="lazy"
