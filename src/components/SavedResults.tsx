@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { savePhoto, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
+import { deletePhoto, savePhoto, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
 import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/searchThunk";
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -12,7 +12,7 @@ import { SavedImg, State } from "../helpers/interfaces";
 import { useSelector } from "react-redux";
 
 function SearchResults() {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
   const saved = useSelector((state: State) => state.saved.images)
@@ -35,7 +35,7 @@ function SearchResults() {
                                 loading="lazy"
                             />
                             <ButtonContainer>
-                              <Button>
+                              <Button onClick={ () => dispatch(deletePhoto(image.id)) }>
                                 <DeleteOutlineOutlinedIcon />
                               </Button>
                               <Button>

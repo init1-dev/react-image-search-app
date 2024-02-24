@@ -59,3 +59,8 @@ export interface State {
         error: null
       }
 }
+
+export interface ImageProps {
+    alt: string;
+    id: string;
+  }

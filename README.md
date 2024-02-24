@@ -5,7 +5,7 @@
 - ( X ) Add to saved
 - ( X ) Hover buttons for save and info (width, height, likes, date added)
 - (   ) Saved images filter for description
-- (   ) Delete images from saved
+- ( X ) Delete images from saved
 - (   ) Order images (Date, width, height, likes)
 - (   ) Download button for image download (full)
 - ( X ) Saved images persistance in localStorage

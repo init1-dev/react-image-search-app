@@ -76,7 +76,7 @@ function SearchResults() {
                             />
                             <ButtonContainer>
                               <Button>
-                                <FavoriteBorderOutlinedIcon onClick={() => handleSave(image)} />
+                                <FavoriteBorderOutlinedIcon onClick={ () => handleSave(image) } />
                               </Button>
                               <Button>
                                 <InfoOutlinedIcon />
