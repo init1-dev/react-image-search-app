@@ -86,9 +86,10 @@ export const savedSlice = createSlice({
             };
         },
         editDescription: (state, action) => {
-            const savedItem = state.images.find(image => image.id === action.payload.id);
+            const { id, newDescription } = action.payload;
+            const savedItem = state.images.find(image => image.id === id);
             if(savedItem) {
-                savedItem.description = action.payload.description;
+                savedItem.description = newDescription;
                 return state;
             }
         },
@@ -104,8 +105,7 @@ export const savedSlice = createSlice({
 });
 
 export const { setTerm, resetTerm, setStatusReady } = searchSlice.actions;
-// export const { savePhoto, deletePhoto, editDescription, setSavedTerm, resetSavedTerm } = savedSlice.actions;
-export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm } = savedSlice.actions;
+export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm, editDescription } = savedSlice.actions;
 
 export const searchPhotos = (state: { search: SearchState }) =>  state.search.images;
 export const searchQuery = (state: { search: SearchState }) =>  state.search.query;
