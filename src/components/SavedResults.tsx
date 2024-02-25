@@ -21,10 +21,7 @@ function SearchResults() {
   // const error = useAppSelector(searchError);
 
   function getFilteredPhotos(photos:SavedImg[] , searchTerm: string) {
-    console.log(searchTerm);
     const filtered = photos.filter(photo => photo.description?.toLowerCase().includes(searchTerm.toLowerCase()));
-    console.log(filtered);
-    
     return filtered;
   }
 
@@ -176,17 +173,18 @@ const SearchBarStyle = styled.div`
 `;
 
 const FormStyle = styled.form`
-  width: 100%
+  width: 100%;
+  margin-right: 2rem;
 `
 
 const SearchInputStyle = styled.input`
-  width: 50%;
+  width: 100%;
   padding: 0.4rem 1rem;
   margin: 0;
   border-radius: 5rem;
   border: 1px solid #5d5d5d;
   outline: none;
-  background-color: #EEEEEE;
+  background-color: ${({ theme }) => theme.searchBarBg};
   box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
   transition: background-color 0.1s;
 

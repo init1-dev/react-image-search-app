@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -17,11 +17,18 @@ interface HeaderProps {
 const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderProps) => {
   const [searchInput, setSearchInput] = useState('');
   const { theme, handleToggleTheme } = useTheme();
+  const currentPath = useLocation();
+  const navigate = useNavigate ();
 
   const dispatch = useDispatch()
 
   function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {    
     e.preventDefault();
+    console.log(`${appName}`);
+    
+    if(currentPath.pathname !== appName){
+      navigate(appName)
+    }
     dispatch(setStatusReady());
     dispatch(setTerm(searchInput.trim()));
     // setSearchInput('');
@@ -131,7 +138,7 @@ const SearchInputStyle = styled.input`
   border-radius: 5rem;
   border: 1px solid #5d5d5d;
   outline: none;
-  background-color: #EEEEEE;
+  background-color: ${({ theme }) => theme.searchBarBg};
   box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
   transition: background-color 0.1s;
 
