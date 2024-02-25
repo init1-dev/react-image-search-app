@@ -49,6 +49,7 @@ export const ImageItemStyle = styled.img`
     border-radius: 5px;
     transition: all 0.3s ease;
     border: 1px solid #858585;
+    cursor: pointer;
 
     &:hover {
       transform: scale(1.02);
