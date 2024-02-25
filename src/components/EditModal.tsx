@@ -4,7 +4,7 @@ import { Dialog, DialogContent, TextField, Button } from '@mui/material';
 import HeightOutlinedIcon from '@mui/icons-material/HeightOutlined';
 import SettingsEthernetOutlinedIcon from '@mui/icons-material/SettingsEthernetOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import styled from "styled-components";
+// import styled from "styled-components";
 
 const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -37,11 +37,11 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
+    <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
       <DialogContent>
         <img src={image.src_regular} 
              alt="Imagen" 
-             style={{ width: '100%', height: '100%', objectFit: 'contain', marginBottom: '1rem' }} />
+             style={{ width: '100%', height: '100%', maxHeight: '70vh', objectFit: 'contain', marginBottom: '1rem' }} />
         {isEditing ? (
           <TextField
             value={editedDescription}
@@ -53,9 +53,9 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
             onKeyDown={handleKeyDown}
           />
         ) : (
-          <span>Desc: <strong>{editedDescription}</strong></span>
+          <span>Desc: <strong>{editedDescription.substring(0,20)}</strong></span>
         )}
-        <div style={{display:'flex', alignItems:'center', margin: '0.5rem 0 0rem 0'}}>
+        <div style={{display:'flex', alignItems:'center', margin: '0.5rem 0 1rem 0'}}>
           <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
             <SettingsEthernetOutlinedIcon style={{marginRight: '0.5rem'}}/>
             <strong>{`${image.width}`}</strong>
@@ -68,29 +68,17 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
             <FavoriteBorderOutlinedIcon style={{marginRight: '0.5rem'}}/>
             <strong>{`${image.likes}`}</strong>
           </span>
-          <div>
-            {isEditing ? (
-              <Button variant="contained" onClick={handleSaveDescription}>Guardar</Button>
-            ) : (
-              <Button variant="contained" onClick={handleEditToggle}>Editar descripción</Button>
-            )}
-          </div>
+        </div>
+        <div>
+          {isEditing ? (
+            <Button variant="contained" onClick={handleSaveDescription}>Guardar</Button>
+          ) : (
+            <Button variant="contained" onClick={handleEditToggle}>Editar descripción</Button>
+          )}
         </div>
       </DialogContent>
     </Dialog>
   );
 };
-
-const SectionStyle= styled.main`
-    
-
-    @media only screen and (max-width: 1024px) {
-      
-    }
-
-    @media only screen and (max-width: 700px) {
-      
-    }
-`;
 
 export default EditModal;

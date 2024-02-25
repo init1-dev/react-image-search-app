@@ -89,7 +89,7 @@ function SearchResults() {
         <ImageGridStyle>
           { filterBySearch && filterBySearch.map((image: SavedImg) => {                
             return (
-              <ImageContainerStyle key={image.id} onClick={ () => dispatch(deletePhoto(image.id)) }>
+              <ImageContainerStyle key={image.id}>
                 <ImageItemStyle
                     src={image.src_regular}
                     width={400}
@@ -98,7 +98,7 @@ function SearchResults() {
                 <ButtonContainer>
                   <Button>
                     <Tooltip text={'Delete image from saved'}>
-                      <DeleteOutlineOutlinedIcon />
+                      <DeleteOutlineOutlinedIcon onClick={ () => dispatch(deletePhoto(image.id)) } />
                     </Tooltip>
                   </Button>
                   <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
