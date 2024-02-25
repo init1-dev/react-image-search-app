@@ -142,6 +142,25 @@ const SearchInputStyle = styled.input`
   box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
   transition: background-color 0.1s;
 
+  &::placeholder {
+    color: ${({ theme }) => theme.footerText};
+    opacity: 1; /* Firefox */
+  }
+
+  &:focus::placeholder {
+    color: ${({ theme }) => theme.footerText};
+    filter: invert(100%);
+  }
+  
+  &::-ms-input-placeholder { /* Edge 12 -18 */
+    color: ${({ theme }) => theme.footerText};
+  }
+
+  &:focus::-ms-input-placeholder {
+    color: ${({ theme }) => theme.footerText};
+    filter: invert(100%);
+  }
+
   &:focus-visible {
     background-color: white;
   }

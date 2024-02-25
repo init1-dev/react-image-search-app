@@ -91,8 +91,6 @@ export const savedSlice = createSlice({
         //     return state
         // },
         searchByTerm: (state, action) => {
-            console.log(action);
-            
             state.query = action.payload
             return state
         },
