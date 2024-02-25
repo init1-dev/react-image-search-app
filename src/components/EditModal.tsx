@@ -25,7 +25,7 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
     handleEditToggle();
   };
 
-  const handleDescriptionChange = (e) => {
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedDescription(e.target.value);
   };
 
