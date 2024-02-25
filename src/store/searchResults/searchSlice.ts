@@ -27,13 +27,13 @@ export const searchSlice = createSlice({
     initialState: searchInitialState,
     reducers: {
         setTerm: (search, action) => {
-            search.query = action.payload
+            search.query = action.payload;
         },
         resetTerm: (search) => {
-            search.query = ''
+            search.query = '';
         },
         setStatusReady: (search) => {
-            search.status = 'ready'
+            search.status = 'ready';
         }
     },
     extraReducers: (builder) => {
@@ -50,7 +50,7 @@ export const searchSlice = createSlice({
             })
             .addCase(getSearchThunk.rejected, (search, action) => {
                 search.loading = false;
-                search.status = 'rejected'
+                search.status = 'rejected';
                 search.error = action.error?.message ?? "Unknown error occurred";
             })
             .addCase(getRandomSearchThunk.pending,(search) => {
@@ -65,7 +65,7 @@ export const searchSlice = createSlice({
             })
             .addCase(getRandomSearchThunk.rejected,(search, action) => {
                 search.loading = false;
-                search.status = 'rejected'
+                search.status = 'rejected';
                 search.error = action.error?.message ?? "Unknown error occurred";
             })
         }
@@ -77,26 +77,28 @@ export const savedSlice = createSlice({
     initialState: savedInitialState,
     reducers: {
         savePhoto: (state, action) => {
-            if (!state.images.find(image => image.id === action.payload.id)) state.images.push(action.payload)
+            if (!state.images.find(image => image.id === action.payload.id)) state.images.push(action.payload);
         },
         deletePhoto: (state, action) => {
             return {
                 ...state,
                 images: state.images.filter(image => image.id !== action.payload) 
+            };
+        },
+        editDescription: (state, action) => {
+            const savedItem = state.images.find(image => image.id === action.payload.id);
+            if(savedItem) {
+                savedItem.description = action.payload.description;
+                return state;
             }
         },
-        // editDescription: (state, action) => {
-        //     const favouriteToEdit = state.images.find(photo => photo.id === action.payload.id)
-        //     favouriteToEdit.description = action.payload.description
-        //     return state
-        // },
         searchByTerm: (state, action) => {
-            state.query = action.payload
-            return state
+            state.query = action.payload;
+            return state;
         },
         resetSearchTerm: (state) => {
-            state.query = ''
-            return state
+            state.query = '';
+            return state;
         }
     }
 });

@@ -17,15 +17,14 @@ DOCUMENTATION PENDING
 - ( X ) Sort in saved by: created_at, width, height y likes
 - (   ) Modify image description
 - (   ) Image zoom modal 
-- (   ) Image info, width, height, likes, date in modal 
-- (   ) Tags system in saved images to filter images
-- (   ) Pagination on saved
-- (   ) lazy load on search section
-
-- (   ) Improve buttons on image location, desktop: on hover / mobile: image bottom
-- (   ) repository app description
+- (   ) Image info, width, height, likes, date in modal
 
 # OPTIONAL
 
-- Tag system for filter by tags
+- Tags system in saved images to filter images by tag
 - Pagination for saved, lazy load for searchs
+
+# OTHERS
+
+- (   ) Improve buttons on image location, desktop: on hover / mobile: image bottom
+- (   ) repository app description

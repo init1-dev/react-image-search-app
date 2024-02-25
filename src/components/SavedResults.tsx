@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 
 import { useAppDispatch } from "../hooks/store";
 import { deletePhoto, searchByTerm } from '../store/searchResults/searchSlice';
@@ -10,6 +11,7 @@ import { FormEvent, useState } from "react";
 
 import { saveAs } from 'file-saver';
 import { Button, ButtonContainer, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SearchInputStyle, SectionStyle, SelectStyle } from "../css/SavedResults";
+import Tooltip from "./Tooltip";
 
 function SearchResults() {
   const dispatch = useAppDispatch();
@@ -25,10 +27,14 @@ function SearchResults() {
 
   const getOrderedPhotos = (images: SavedImg[], filter: string) => {    
     if (filter === 'newer') {
-      return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => nextPhoto['created_at'] - prevPhoto['created_at']).reverse()
+      return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => nextPhoto['created_at'] - prevPhoto['created_at']).reverse();
     }
-    return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => nextPhoto[filter] - prevPhoto[filter])
-}
+    return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => nextPhoto[filter] - prevPhoto[filter]);
+  }
+
+  const handleEditDescription = (image: SavedImg) => {
+    console.log(image);
+  }
 
   const filterBySearch = getOrderedPhotos(getFilteredPhotos(saved, query), orderBy);
 
@@ -71,13 +77,24 @@ function SearchResults() {
                     />
                     <ButtonContainer>
                       <Button onClick={ () => dispatch(deletePhoto(image.id)) }>
-                        <DeleteOutlineOutlinedIcon />
+                        <Tooltip text={'Delete image from saved'}>
+                          <DeleteOutlineOutlinedIcon />
+                        </Tooltip>
                       </Button>
                       <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
+                      <Tooltip text={'Download image'}>
                         <FileDownloadOutlinedIcon />
+                      </Tooltip>
                       </Button>
                       <Button>
-                        <InfoOutlinedIcon />
+                        <Tooltip text={'Get info'}>
+                          <InfoOutlinedIcon />
+                        </Tooltip> 
+                      </Button>
+                      <Button>
+                        <Tooltip text={'Edit description'}>
+                          <EditNoteOutlinedIcon />
+                        </Tooltip>
                       </Button>
                       <span>{image.likes} ❤️</span>
                       <span>{` ${image.description.substring(0,10).toUpperCase()}`}</span>

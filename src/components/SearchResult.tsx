@@ -8,6 +8,7 @@ import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/sea
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Image } from "../helpers/interfaces";
+import Tooltip from "./Tooltip";
 
 function SearchResults() {
   const dispatch = useAppDispatch();
@@ -76,10 +77,14 @@ function SearchResults() {
                             />
                             <ButtonContainer>
                               <Button>
-                                <FavoriteBorderOutlinedIcon onClick={ () => handleSave(image) } />
+                                <Tooltip text={'Save this image'}>
+                                  <FavoriteBorderOutlinedIcon onClick={ () => handleSave(image) } />
+                                </Tooltip>
                               </Button>
                               <Button>
-                                <InfoOutlinedIcon />
+                                <Tooltip text={'Get info'}>
+                                  <InfoOutlinedIcon />
+                                </Tooltip>
                               </Button>
                             </ButtonContainer>
                       </ImageContainerStyle>
