@@ -94,17 +94,23 @@ export const SearchBarStyle = styled.div`
 `;
 
 export const FormStyle = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   margin-right: 2rem;
   text-align: center;
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+  }
 `
 
 export const SearchInputStyle = styled.input`
-  width: 100%;
-  padding: 0.4rem 1rem;
+  width: 78%;
+  padding: 0.8rem;
   margin: 0;
-  margin-bottom: 1rem;
-  border-radius: 5rem;
+  border-radius: 1rem;
   border: 1px solid #5d5d5d;
   outline: none;
   background-color: ${({ theme }) => theme.searchBarBg};
@@ -134,14 +140,20 @@ export const SearchInputStyle = styled.input`
     background-color: white;
   }
 
-  @media only screen and (max-width: 1024px) {
+  @media only screen and (max-width: 700px) {
     width: 100%;
+    margin-bottom: 1rem;
   }
 `
 
 export const SelectStyle = styled.select`
+  width: 20%;
   padding: 0.8rem;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.searchBarBg};
   color: ${({ theme }) => theme.headerH1};
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
 `
