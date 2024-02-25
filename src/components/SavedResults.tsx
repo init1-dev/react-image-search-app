@@ -1,25 +1,34 @@
 import { useSelector } from "react-redux";
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
-
+import { FormEvent, useState } from "react";
 import { useAppDispatch } from "../hooks/store";
 import { deletePhoto, editDescription, searchByTerm } from '../store/searchResults/searchSlice';
-import { SavedImg, State } from "../helpers/interfaces";
-import { FormEvent, useState } from "react";
+import { SavedImg, SelectedPic, State } from "../helpers/interfaces";
 
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+
+import Tooltip from "./Tooltip";
 import { saveAs } from 'file-saver';
 import { Button, ButtonContainer, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SearchInputStyle, SectionStyle, SelectStyle } from "../css/SavedResults";
-import Tooltip from "./Tooltip";
-import EditDescriptionModal from "./EditDescriptionModal";
+import EditModal from "./EditModal";
+
 
 function SearchResults() {
   const dispatch = useAppDispatch();
+
   const [searchInput, setSearchInput] = useState('');
   const [orderBy, setOrderBy] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState<SavedImg | null>(null);
+  const [selectedPic, setSelectedPic] = useState<SelectedPic>({
+    id: '',
+    src_regular: '',
+    description: '',
+    width: 0,
+    height: 0,
+    likes: 0
+  });
+
   const saved = useSelector((state: State) => state.saved.images)
   const query = useSelector((state: State) => state.saved.query)
 
@@ -35,16 +44,11 @@ function SearchResults() {
     return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => nextPhoto[filter] - prevPhoto[filter]);
   }
 
-  const handleEditDescription = (id: string) => {
-    setIsModalOpen(true);
-    setCurrentImage(id);
-  }
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleSaveDescription = (id: string, newDescription: string) => {
+  const handleSaveDescription = (id: string, newDescription: string) => {    
     dispatch(editDescription({ id, newDescription }))
   };
 
@@ -61,6 +65,11 @@ function SearchResults() {
       `${description}.jpg`
     );
   };
+
+  function handleModal(image: SavedImg) {
+    setIsModalOpen(true);
+    setSelectedPic(image);
+  }
 
   return (
     <>
@@ -80,48 +89,40 @@ function SearchResults() {
         <ImageGridStyle>
           { filterBySearch && filterBySearch.map((image: SavedImg) => {                
             return (
-              <ImageContainerStyle key={image.id}>
-                    <ImageItemStyle
-                        src={image.src_regular}
-                        width={400}
-                        alt={image.description}
-                        loading="lazy"
-                    />
-                    <ButtonContainer>
-                      <Button onClick={ () => dispatch(deletePhoto(image.id)) }>
-                        <Tooltip text={'Delete image from saved'}>
-                          <DeleteOutlineOutlinedIcon />
-                        </Tooltip>
-                      </Button>
-                      <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
-                      <Tooltip text={'Download image'}>
-                        <FileDownloadOutlinedIcon />
-                      </Tooltip>
-                      </Button>
-                      <Button>
-                        <Tooltip text={'Get info'}>
-                          <InfoOutlinedIcon />
-                        </Tooltip> 
-                      </Button>
-                      <Button onClick={ () => handleEditDescription(image.id) }>
-                        <Tooltip text={'Edit description'}>
-                          <EditNoteOutlinedIcon />
-                        </Tooltip>
-                      </Button>
-                      <span>{image.likes} ❤️</span>
-                      <span>{` ${image.description.substring(0,10).toUpperCase()}`}</span>
-                      <div>
-                        <span>{`{ w: ${image.width}`}</span>
-                        <span>{` - h: ${image.height} }`}</span>
-                        <span>{` -> ${image.created_at}`}</span>
-                      </div>
-                    </ButtonContainer>
+              <ImageContainerStyle key={image.id} onClick={ () => dispatch(deletePhoto(image.id)) }>
+                <ImageItemStyle
+                    src={image.src_regular}
+                    width={400}
+                    alt={image.description}
+                />
+                <ButtonContainer>
+                  <Button>
+                    <Tooltip text={'Delete image from saved'}>
+                      <DeleteOutlineOutlinedIcon />
+                    </Tooltip>
+                  </Button>
+                  <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
+                  <Tooltip text={'Download image'}>
+                    <FileDownloadOutlinedIcon />
+                  </Tooltip>
+                  </Button>
+                  <Button>
+                    <Tooltip text={'Get info'}>
+                      <InfoOutlinedIcon onClick={() => handleModal(image)} />
+                    </Tooltip> 
+                  </Button>
+                  <span>{image.likes} ❤️</span>
+                </ButtonContainer>
               </ImageContainerStyle>
             )
           })}
         </ImageGridStyle>
       </SectionStyle>
-      <EditDescriptionModal isOpen={isModalOpen} onClose={handleCloseModal} onSave={(description: string) => handleSaveDescription(currentImage, description)} />
+      <EditModal 
+        open={isModalOpen} 
+        onClose={handleCloseModal} 
+        onSave={(description: string) => handleSaveDescription(selectedPic.id, description)} 
+        image={selectedPic as SelectedPic} />
     </>
   )
 }

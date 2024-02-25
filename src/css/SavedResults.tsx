@@ -10,7 +10,7 @@ export const SectionStyle= styled.main`
     }
 
     @media only screen and (max-width: 700px) {
-      margin: 8rem 5% 2.5rem 5%
+      margin: 7rem 0% 2.5rem 0%
     }
 `;
 
@@ -33,12 +33,10 @@ export const ImageContainerStyle = styled.div`
     width: 100%;
 
     @media only screen and (max-width: 1024px) {
-      flex-direction: column;
       align-items: center;
     }
 
     @media only screen and (max-width: 700px) {
-      display: flex;
       column-count: 1;
     }
 `
@@ -55,6 +53,10 @@ export const ImageItemStyle = styled.img`
       transform: scale(1.02);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
+
+    @media only screen and (max-width: 700px) {
+      width: 100%;
+    }
 `
 
 export const ButtonContainer = styled.div`
@@ -68,6 +70,7 @@ export const Button = styled.button`
   transition: opacity 0.3s ease;
   margin-right: 0.3rem;
   border-radius: 0.5rem;
+  cursor: pointer;
 
   &:hover {
     color: #25ac25;
@@ -86,7 +89,7 @@ export const SearchBarStyle = styled.div`
   color: ${({ theme }) => theme.headerH1};
 
   @media only screen and (max-width: 700px) {
-    width: 100%;
+    display: block;
   }
 `;
 

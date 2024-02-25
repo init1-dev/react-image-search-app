@@ -1,3 +1,4 @@
+import { DialogProps } from "@mui/material/Dialog";
 import { ReactNode } from "react";
 
 export interface Image {
@@ -71,3 +72,27 @@ export interface TooltipProps {
     children: ReactNode;
     text: string;
 }
+
+export interface ImageData {
+    src_regular: string;
+    description: string;
+    width: number;
+    height: number;
+    likes: number;
+  }
+  
+export interface EditModalProps extends Omit<DialogProps, 'onClose'> {
+    open: boolean;
+    onClose: () => void;
+    onSave: (description: string) => void;
+    image: ImageData;
+}
+
+export interface SelectedPic {
+    id: string;
+    src_regular: string;
+    description: string;
+    width: number;
+    height: number;
+    likes: number;
+  }

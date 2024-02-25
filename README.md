@@ -15,9 +15,9 @@ DOCUMENTATION PENDING
 - ( X ) Image buttons functionality
 - ( X ) Search in saved photos by description
 - ( X ) Sort in saved by: created_at, width, height y likes
-- (   ) Modify image description
-- (   ) Image zoom modal 
-- (   ) Image info, width, height, likes, date in modal
+- ( X ) Modify image description
+- ( X ) Image zoom modal
+- ( X ) Image info, width, height, likes, date in modal
 
 # OPTIONAL
 

@@ -5,22 +5,19 @@ import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { savePhoto, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
 import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/searchThunk";
 
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Image } from "../helpers/interfaces";
 import Tooltip from "./Tooltip";
 
 function SearchResults() {
   const dispatch = useAppDispatch();
-  const [ isLoading, setIsLoading ] = useState<boolean>(false);
+  const [ isLoading, setIsLoading ] = useState<boolean>(true);
   const images = useAppSelector(searchPhotos);
   const query = useAppSelector(searchQuery);
   const status = useAppSelector(searchStatus);
   const error = useAppSelector(searchError);
 
   const handleSave = (img: Image) => {
-    console.log(img);
-    
     dispatch(savePhoto({
       id: img.id,
       src_preview: img.urls.small,
@@ -68,7 +65,7 @@ function SearchResults() {
           <ImageGridStyle>
               {!isLoading && Array.isArray(images) ? images.map((image) => {
                   return (
-                      <ImageContainerStyle key={image.id}>
+                      <ImageContainerStyle key={image.id} onClick={ () => handleSave(image) }>
                             <ImageItemStyle
                                 src={(image.urls?.regular) ? image.urls.regular : image.urls.small}
                                 width={400}
@@ -78,13 +75,9 @@ function SearchResults() {
                             <ButtonContainer>
                               <Button>
                                 <Tooltip text={'Save this image'}>
-                                  <FavoriteBorderOutlinedIcon onClick={ () => handleSave(image) } />
+                                  <AddCircleOutlineOutlinedIcon />
                                 </Tooltip>
-                              </Button>
-                              <Button>
-                                <Tooltip text={'Get info'}>
-                                  <InfoOutlinedIcon />
-                                </Tooltip>
+                                <p style={{margin: '0'}}>Add to collection</p>
                               </Button>
                             </ButtonContainer>
                       </ImageContainerStyle>
@@ -99,14 +92,14 @@ function SearchResults() {
 const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
     padding: 1.5rem;
-    margin: 6rem 10% 3rem 10%;
+    padding: 7rem 10% 3rem 10%;
 
     @media only screen and (max-width: 1024px) {
-      margin: 5rem 8% 3rem 8%
+      padding: 6rem 0% 3rem 4%;
     }
 
     @media only screen and (max-width: 700px) {
-      margin: 8rem 5% 2.5rem 5%
+      padding: 9rem 0% 3rem 8%;
     }
 `;
 
@@ -124,39 +117,49 @@ const ImageGridStyle = styled.div`
 `
 
 const ImageContainerStyle = styled.div`
+    position: relative;
     display: inline-block;
     margin-bottom: 15px;
     width: 100%;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
 `
 
 const ImageItemStyle = styled.img`
     width: 90%;
     display: block;
     border-radius: 5px;
-    transition: all 0.3s ease;
     border: 1px solid #858585;
     cursor: pointer;
 
     &:hover {
-      transform: scale(1.02);
       box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
 `
 
 const ButtonContainer = styled.div`
   margin-top: 0.4rem;
+  position: absolute;
+  top: -0.2rem;
+  left: 0.2rem;
 `;
 
 const Button = styled.button`
   padding: 0.2rem 0.2rem 0 0.2rem;
-  background-color: #dfdfdf;
-  opacity: ;
+  background-color: ${({ theme }) => theme.header};
+  color: ${({ theme }) => theme.headerH1};
   transition: opacity 0.3s ease;
   margin-right: 0.3rem;
   border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 
   &:hover {
-    color: #25ac25;
+    color: ;
   }
 `;
 
