@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Image {
     id: string;
     width: number;
@@ -63,4 +65,9 @@ export interface State {
 export interface ImageProps {
     alt: string;
     id: string;
-  }
+}
+
+export interface TooltipProps {
+    children: ReactNode;
+    text: string;
+}

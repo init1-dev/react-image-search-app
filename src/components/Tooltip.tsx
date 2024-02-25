@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { TooltipProps } from '../helpers/interfaces';
 
 const TooltipWrapper = styled.div`
   position: relative;
@@ -23,7 +24,7 @@ const TooltipText = styled.span`
   transition: opacity 0.2s;
 `;
 
-const Tooltip = ({ children, text }) => {
+const Tooltip = ({ children, text }: TooltipProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const showTooltip = () => {
