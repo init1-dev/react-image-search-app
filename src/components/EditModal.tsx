@@ -10,9 +10,7 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState(image.description);
 
-  useEffect(() => {
-    console.log("effect");
-    
+  useEffect(() => {    
     setEditedDescription(image.description);
   }, [image.description]);
   

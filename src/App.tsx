@@ -1,7 +1,4 @@
-import './App.css'
-// import Header from './components/Header'
-// import SearchResult from './components/SearchResult'
-// import Footer from './components/Footer'
+import './App.css';
 
 import '@fortawesome/fontawesome-free/css/all.css';
 

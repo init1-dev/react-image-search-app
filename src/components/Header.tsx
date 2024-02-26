@@ -24,7 +24,6 @@ const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderP
 
   function handleSearchSubmit(e: FormEvent<HTMLFormElement>) {    
     e.preventDefault();
-    console.log(`${appName}`);
     
     if(currentPath.pathname !== appName){
       navigate(appName)
