@@ -191,6 +191,7 @@ const MenuStyle = styled.ul`
 `;
 
 const MenuItemStyle = styled(NavLink)`
+    display: flex;
     font-size: 20px;
     height: 100%;
     transition: color 0.2s ease;
@@ -212,8 +213,13 @@ const MenuItemStyle = styled(NavLink)`
 
 const ToggleThemeButton = styled.li`
     cursor: default;
-    font-size: 15px;
+    font-size: 1.1rem;
+    transition: transform 0.1s;
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+
+    &:hover {
+        transform: scale(1.2);
+    }
 `;
 
 // @media only screen and (max-width: 1024px) (max-width: 700px)

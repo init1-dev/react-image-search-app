@@ -75,7 +75,7 @@ export const Button = styled.button`
         color: white;
 
         &:hover {
-            color: #25ac25;
+            color: #0fe10f;
         }
     }
 `;
@@ -85,7 +85,7 @@ export const ImageContainerStyle = styled.div`
     position: relative;
     margin-bottom: 15px;
     width: 100%;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
 
     &:hover {
         transform: scale(1.02);

@@ -21,7 +21,6 @@ const TooltipText = styled.span`
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
-  transition: opacity 0.2s;
 `;
 
 const Tooltip = ({ children, text }: TooltipProps) => {
