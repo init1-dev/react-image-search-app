@@ -92,7 +92,7 @@ function SearchResults() {
             <SearchBarStyle>
             <FormStyle >
                 <SelectStyle id="orderSelect" value={orderBy} onChange={ (e) => setOrderBy(e.target.value) }>
-                    <option value="older" hidden disabled>Filter</option>
+                    <option value="" hidden disabled>Filter</option>
                     <option value="older">Older</option>
                     <option value="newer">Newer</option>
                     <option value="width">Width</option>
