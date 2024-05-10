@@ -66,7 +66,6 @@ export const ButtonContainer = styled.div`
 export const Button = styled.button`
   padding: 0.2rem 0.2rem 0 0.2rem;
   background-color: #dfdfdf;
-  opacity: ;
   transition: opacity 0.3s ease;
   margin-right: 0.3rem;
   border-radius: 0.5rem;
@@ -113,6 +112,7 @@ export const SearchInputStyle = styled.input`
   border-radius: 1rem;
   border: 1px solid #5d5d5d;
   outline: none;
+  color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.searchBarBg};
   box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
   transition: background-color 0.1s;
@@ -124,7 +124,6 @@ export const SearchInputStyle = styled.input`
 
   &:focus::placeholder {
     color: ${({ theme }) => theme.footerText};
-    filter: invert(100%);
   }
   
   &::-ms-input-placeholder { /* Edge 12 -18 */
@@ -133,10 +132,10 @@ export const SearchInputStyle = styled.input`
 
   &:focus::-ms-input-placeholder {
     color: ${({ theme }) => theme.footerText};
-    filter: invert(100%);
   }
 
   &:focus-visible {
+    color: black;
     background-color: white;
   }
 

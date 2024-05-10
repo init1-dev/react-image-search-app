@@ -30,7 +30,6 @@ const Header = ({ placeholder = "Introduce un término para buscar.." }: HeaderP
     }
     dispatch(setStatusReady());
     dispatch(setTerm(searchInput.trim()));
-    // setSearchInput('');
   }
 
   const location = useLocation();
@@ -112,7 +111,7 @@ const LogoStyle = styled(NavLink)`
 
 const FormStyle = styled.form`
   width: 100%
-`
+`;
 
 const SearchBarStyle = styled.div`
   display: flex;
@@ -137,6 +136,7 @@ const SearchInputStyle = styled.input`
   border-radius: 5rem;
   border: 1px solid #5d5d5d;
   outline: none;
+  color: ${({ theme }) => theme.text};
   background-color: ${({ theme }) => theme.searchBarBg};
   box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
   transition: background-color 0.1s;
@@ -148,7 +148,6 @@ const SearchInputStyle = styled.input`
 
   &:focus::placeholder {
     color: ${({ theme }) => theme.footerText};
-    filter: invert(100%);
   }
   
   &::-ms-input-placeholder { /* Edge 12 -18 */
@@ -157,17 +156,17 @@ const SearchInputStyle = styled.input`
 
   &:focus::-ms-input-placeholder {
     color: ${({ theme }) => theme.footerText};
-    filter: invert(100%);
   }
 
   &:focus-visible {
+    color: black;
     background-color: white;
   }
 
   @media only screen and (max-width: 700px) {
     margin-left: 1rem;
   }
-`
+`;
 
 const MenuStyle = styled.ul`
   width: 40%;
@@ -183,7 +182,7 @@ const MenuStyle = styled.ul`
     margin: 0;
     padding-top: 1rem;
   }
-`
+`;
 
 const MenuItemStyle = styled(NavLink)`
   font-size: 20px;
@@ -194,7 +193,7 @@ const MenuItemStyle = styled(NavLink)`
   &:hover {
     color: ${({ theme }) => theme.btnHoverText};
   }
-`
+`;
 
 const ToggleThemeButton = styled.li`
   background-color: ${({ theme }) => theme.themeButtonBg};

@@ -3,17 +3,16 @@ import { getRandomSearchThunk, getSearchThunk } from './searchThunk';
 import { SavedState, SearchState } from '../../helpers/interfaces';
 
 const DEFAULT_STATE: SearchState = {
-  // images: data.results,
-  images: [],
-  query: '',
-  loading: false,
-  status: 'not_ready',
-  error: null,
+    images: [],
+    query: '',
+    loading: false,
+    status: 'not_ready',
+    error: null,
 };
 
 const searchInitialState: SearchState = (() => {
-  const persistedState = localStorage.getItem("__image__app__state__");
-  return (persistedState) ? JSON.parse(persistedState).search : DEFAULT_STATE;
+    const persistedState = localStorage.getItem("__image__app__state__");
+    return (persistedState) ? JSON.parse(persistedState).search : DEFAULT_STATE;
 })();
 
 const savedInitialState: SavedState = (() => {
@@ -69,7 +68,7 @@ export const searchSlice = createSlice({
                 search.error = action.error?.message ?? "Unknown error occurred";
             })
         }
-  });
+});
 
 // Slice síncrono para fotos guardadas
 export const savedSlice = createSlice({

@@ -1,7 +1,6 @@
 import { configureStore, type Middleware } from "@reduxjs/toolkit";
 
 import { searchSlice, savedSlice } from "./searchResults/searchSlice";
-// import { searchSlice } from "./searchResults/searchSlice";
 
 // import searchReducer from "./searchResults/slice";
 

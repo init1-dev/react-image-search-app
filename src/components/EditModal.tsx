@@ -38,8 +38,8 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
     <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
       <DialogContent>
         <img src={image.src_regular} 
-             alt="Imagen" 
-             style={{ width: '100%', height: '100%', maxHeight: '70vh', objectFit: 'contain', marginBottom: '1rem' }} />
+            alt="Imagen" 
+            style={{ width: '100%', height: '100%', maxHeight: '70vh', objectFit: 'contain', marginBottom: '1rem' }} />
         {isEditing ? (
           <TextField
             value={editedDescription}
