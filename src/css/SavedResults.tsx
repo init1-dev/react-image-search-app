@@ -5,14 +5,14 @@ export const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
     padding: 1.5rem;
     padding-top: unset;
-    margin: 6rem 10% 3rem 10%;
+    margin: 6rem 10% 0% 10%;
 
     @media only screen and (max-width: 1024px) {
-        margin: 6rem 8% 3rem 8%
+        margin: 6rem 8% 0% 8%
     }
 
     @media only screen and (max-width: 700px) {
-        margin: 9rem 0% 2.5rem 0%
+        margin: 9rem 0% 0% 0%
     }
 `;
 
@@ -33,7 +33,7 @@ export const ImageItemStyle = styled.img`
     width: 90%;
     display: block;
     border-radius: 5px;
-    border: 1px solid #858585;
+    border: 1px solid rgba(133, 133, 133, 0.25);
     cursor: pointer;
 
     @media only screen and (max-width: 700px) {
@@ -111,7 +111,9 @@ export const DownloadButton = styled(FileDownloadOutlinedIcon)`
 export const SearchBarStyle = styled.div`
     display: flex;
     width: 100%;
+    gap: 5rem;
     align-items: center;
+    justify-content: center;
     margin: 0;
     margin-bottom: 2rem;
     padding: 0;
@@ -126,14 +128,16 @@ export const SearchBarStyle = styled.div`
 
 export const FormStyle = styled.form`
     display: flex;
+    width: 100%;
+    gap: 2rem;
     align-items: center;
     justify-content: center;
-    width: 100%;
     margin-right: 2rem;
     text-align: center;
 
     @media only screen and (max-width: 700px) {
         flex-direction: column;
+        gap: 1rem;
     }
 `;
 
@@ -185,6 +189,10 @@ export const SelectStyle = styled.select`
     border-radius: 1rem;
     background-color: ${({ theme }) => theme.searchBarBg};
     color: ${({ theme }) => theme.headerH1};
+
+    &:focus, &:focus-visible{
+        outline: unset;
+    }
 
     @media only screen and (max-width: 700px) {
         width: 100%;

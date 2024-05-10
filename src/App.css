@@ -76,3 +76,7 @@ select option {
 .shadow {
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
 }
+
+.disabled {
+    cursor: not-allowed !important;
+}
