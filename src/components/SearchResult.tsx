@@ -134,6 +134,14 @@ const ImageGridStyle = styled.div`
     }
 `
 
+const ImageItemStyle = styled.img`
+    width: 90%;
+    display: block;
+    border-radius: 5px;
+    border: 1px solid #858585;
+    cursor: pointer;
+`;
+
 const ImageContainerStyle = styled.div`
     position: relative;
     display: inline-block;
@@ -143,20 +151,12 @@ const ImageContainerStyle = styled.div`
 
     &:hover {
         transform: scale(1.02);
-    }
-`
 
-const ImageItemStyle = styled.img`
-    width: 90%;
-    display: block;
-    border-radius: 5px;
-    border: 1px solid #858585;
-    cursor: pointer;
-
-    &:hover {
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        ${ImageItemStyle} {
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        }
     }
-`
+`;
 
 const ButtonContainer = styled.div`
     position: absolute;

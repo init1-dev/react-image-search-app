@@ -17,6 +17,8 @@ export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query
 
         const data = await resp.json();
 
+        console.log(data);
+
         return data.results;
     } 
     catch (err) {

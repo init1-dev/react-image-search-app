@@ -92,11 +92,12 @@ function SearchResults() {
             <SearchBarStyle>
             <FormStyle >
                 <SelectStyle id="orderSelect" value={orderBy} onChange={ (e) => setOrderBy(e.target.value) }>
-                <option value="older">Older</option>
-                <option value="newer">Newer</option>
-                <option value="width">Width</option>
-                <option value="height">Height</option>
-                <option value="likes">Likes</option>
+                    <option value="older" hidden disabled>Filter</option>
+                    <option value="older">Older</option>
+                    <option value="newer">Newer</option>
+                    <option value="width">Width</option>
+                    <option value="height">Height</option>
+                    <option value="likes">Likes</option>
                 </SelectStyle>
             </FormStyle>
             </SearchBarStyle>
@@ -126,7 +127,7 @@ function SearchResults() {
                                 <InfoOutlinedIcon onClick={() => handleModal(image)} />
                             </Tooltip> 
                         </Button>
-                        <span>{image.likes} ❤️</span>
+                        <span className="shadow">{image.likes} ❤️</span>
                     </ButtonContainer>
                 </ImageContainerStyle>
                 )

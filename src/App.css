@@ -72,3 +72,7 @@ select option {
     50%   {transform:scaleY(-1) rotate(0deg)}
     100%  {transform:scaleY(-1) rotate(-135deg)}
 }
+
+.shadow {
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+}

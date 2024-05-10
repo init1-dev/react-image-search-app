@@ -5,7 +5,6 @@ import HeightOutlinedIcon from '@mui/icons-material/HeightOutlined';
 import SettingsEthernetOutlinedIcon from '@mui/icons-material/SettingsEthernetOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import styled from 'styled-components';
-// import styled from "styled-components";
 
 const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -14,7 +13,7 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
     useEffect(() => {    
         setEditedDescription(image.description);
     }, [image.description]);
-  
+
     const handleEditToggle = () => {
         setIsEditing(!isEditing);
     };

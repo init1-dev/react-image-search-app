@@ -27,45 +27,32 @@ export const ImageGridStyle = styled.div`
     @media only screen and (max-width: 700px) {
         column-count: 1;
     }
-`
-
-export const ImageContainerStyle = styled.div`
-    display: inline-block;
-    margin-bottom: 15px;
-    width: 100%;
-
-    @media only screen and (max-width: 1024px) {
-        align-items: center;
-    }
-
-    @media only screen and (max-width: 700px) {
-        column-count: 1;
-    }
-`
+`;
 
 export const ImageItemStyle = styled.img`
     width: 90%;
     display: block;
     border-radius: 5px;
-    transition: all 0.3s ease;
     border: 1px solid #858585;
     cursor: pointer;
-
-    &:hover {
-        transform: scale(1.02);
-        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    }
 
     @media only screen and (max-width: 700px) {
         width: 100%;
     }
-`
+`;
 
 export const ButtonContainer = styled.div`
-    margin-top: 0.5rem;
+    padding: 0.2rem;
     display: inline-flex;
+    position: absolute;
+    top: 0.3rem;
+    left: 0.3rem;
+    border-radius: 0.3rem;
+    background-color: rgba(55, 62, 73, 0.6);
+    box-shadow: 1px 1px 5px black;
 
     span {
+        color: white;
         display: flex;
         align-items: center;
         margin-left: 0.5rem;
@@ -76,16 +63,16 @@ export const Button = styled.button`
     padding: unset;
     background-color: unset;
     border: unset;
-    transition: opacity 0.3s ease;
     margin-right: 0.3rem;
     cursor: pointer;
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
 
     &:focus, &:focus-visible {
         outline: unset;
     }
 
     div svg {
-        color: ${({ theme }) => theme.text};
+        color: white;
 
         &:hover {
             color: #25ac25;
@@ -93,9 +80,33 @@ export const Button = styled.button`
     }
 `;
 
+export const ImageContainerStyle = styled.div`
+    display: inline-block;
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.02);
+
+        ${ImageItemStyle} {
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        }
+    }
+
+    @media only screen and (max-width: 1024px) {
+        align-items: center;
+    }
+
+    @media only screen and (max-width: 700px) {
+        column-count: 1;
+    }
+`;
+
 export const DownloadButton = styled(FileDownloadOutlinedIcon)`
     
-`
+`;
 
 export const SearchBarStyle = styled.div`
     display: flex;
@@ -124,7 +135,7 @@ export const FormStyle = styled.form`
     @media only screen and (max-width: 700px) {
         flex-direction: column;
     }
-`
+`;
 
 export const SearchInputStyle = styled.input`
     width: 78%;
@@ -164,11 +175,13 @@ export const SearchInputStyle = styled.input`
         width: 100%;
         margin-bottom: 1rem;
     }
-`
+`;
 
 export const SelectStyle = styled.select`
-    width: 20%;
-    padding: 0.8rem;
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    border-color: transparent;
+    border-right: 1rem solid transparent;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     border-radius: 1rem;
     background-color: ${({ theme }) => theme.searchBarBg};
     color: ${({ theme }) => theme.headerH1};
@@ -176,4 +189,4 @@ export const SelectStyle = styled.select`
     @media only screen and (max-width: 700px) {
         width: 100%;
     }
-`
+`;
