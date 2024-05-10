@@ -53,14 +53,14 @@ export interface State {
     saved: {
         images: [],
         query: string
-      },
-      search: {
-        loading: boolean,
-        query: string,
-        status: string,
-        images: [],
-        error: null
-      }
+    },
+    search: {
+    loading: boolean,
+    query: string,
+    status: string,
+    images: [],
+    error: null
+    }
 }
 
 export interface ImageProps {
@@ -79,8 +79,8 @@ export interface ImageData {
     width: number;
     height: number;
     likes: number;
-  }
-  
+}
+
 export interface EditModalProps extends Omit<DialogProps, 'onClose'> {
     open: boolean;
     onClose: () => void;
@@ -95,4 +95,4 @@ export interface SelectedPic {
     width: number;
     height: number;
     likes: number;
-  }
+}

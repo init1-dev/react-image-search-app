@@ -39,9 +39,22 @@ function SearchResults() {
 
     const getOrderedPhotos = (images: SavedImg[], filter: string) => {
         if (filter === 'newer') {
-        return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => nextPhoto['created_at'] - prevPhoto['created_at']).reverse();
+            return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => {
+                    const prevDate = new Date(prevPhoto.created_at);
+                    const nextDate = new Date(nextPhoto.created_at);
+                    return nextDate.getTime() - prevDate.getTime();
+            }).reverse();
         }
-        return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => nextPhoto[filter] - prevPhoto[filter]);
+        return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => {
+            const nextValue = nextPhoto[filter as keyof SavedImg];
+            const prevValue = prevPhoto[filter as keyof SavedImg];
+
+            if(typeof nextValue !== 'number' || typeof prevValue !== 'number'){
+                return 0;
+            }
+
+            return nextValue - prevValue;
+        });
     }
 
     const handleCloseModal = () => {
