@@ -5,7 +5,7 @@ export const SearchPhotos = () => {
 
     return (
         <>
-            <Header placeholder="Introduce un término para buscar.." />
+            <Header />
             <SearchResult />
         </>
     )

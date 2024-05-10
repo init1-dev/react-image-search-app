@@ -9,8 +9,6 @@ export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query
     const fetchUrl = `${searchUrl}client_id=${accessKey}&${resultsPerPage}&query=${query}`;
     
     try{
-        console.log(fetchUrl);
-        
         const resp = await fetch(fetchUrl)
 
         if (!resp.ok) {

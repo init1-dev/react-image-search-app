@@ -5,7 +5,7 @@ export const SavedPhotos = () => {
 
     return (
         <>
-            <Header placeholder="Introduce un término para buscar.." />
+            <Header />
             <SavedResults></SavedResults>
         </>
     )

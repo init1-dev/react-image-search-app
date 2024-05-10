@@ -44,7 +44,9 @@ function SearchResults() {
             } else if (status === 'pending') {
             setIsLoading(true);
             } else if (status === 'fulfilled') {
-            setIsLoading(false);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 500);
             }
         } else if (query === ''){
             if (status === 'ready'){
@@ -61,7 +63,9 @@ function SearchResults() {
     }, [dispatch, images, query, status, error]);
     
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (<span className="loader-container">
+                <div className="loader"></div>
+            </span>)
     }
 
     return (
@@ -72,7 +76,7 @@ function SearchResults() {
                     return (
                         <ImageContainerStyle key={image.id}>
                                 <ImageItemStyle
-                                    src={(image.urls?.regular) ? image.urls.regular : image.urls.small}
+                                    src={(image.urls?.small) ? image.urls.small : image.urls.regular}
                                     width={400}
                                     alt={image.description ? image.description : ''}
                                     loading="lazy"
@@ -96,10 +100,10 @@ function SearchResults() {
 const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
     padding: 1.5rem;
-    padding: 7rem 10% 3rem 10%;
+    padding: 7rem 10% 5rem 10%;
 
     @media only screen and (max-width: 1024px) {
-        padding: 6rem 0% 3rem 4%;
+        padding: 6rem 0% 4rem 4%;
     }
 
     @media only screen and (max-width: 700px) {

@@ -1,27 +1,74 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 #root {
-  font-family: Plus Jakarta Sans, sans-serif;
+    font-family: Plus Jakarta Sans, sans-serif;
 }
 
 body {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .t-white {
-  color: white;
+    color: white;
 }
 
 select option {
-  font-size: 120%;
+    font-size: 120%;
 }
 
 .logoActive {
-  border-bottom: 5px solid #25ac25;
-  border-radius: 0.4rem;
+    border-bottom: 3px solid #25ac25 !important;
 }
 
 .img {
-  width: 350px;
+    width: 350px;
+}
+
+&::-webkit-scrollbar {
+    width: 5px;
+}
+
+&::-webkit-scrollbar-track {
+    background: none;
+}
+
+&::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 6px;
+}
+
+&::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.loader-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10rem;
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #8d8d8d;
+    animation:
+        l20-1 0.8s infinite linear alternate,
+        l20-2 1.6s infinite linear;
+}
+@keyframes l20-1{
+    0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
+    12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
+    25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
+    50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+    62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
+    75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
+    100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
+}
+@keyframes l20-2{ 
+    0%    {transform:scaleY(1)  rotate(0deg)}
+    49.99%{transform:scaleY(1)  rotate(135deg)}
+    50%   {transform:scaleY(-1) rotate(0deg)}
+    100%  {transform:scaleY(-1) rotate(-135deg)}
 }

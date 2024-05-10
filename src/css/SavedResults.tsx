@@ -4,14 +4,15 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 export const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
     padding: 1.5rem;
+    padding-top: unset;
     margin: 6rem 10% 3rem 10%;
 
     @media only screen and (max-width: 1024px) {
-        margin: 5rem 8% 3rem 8%
+        margin: 6rem 8% 3rem 8%
     }
 
     @media only screen and (max-width: 700px) {
-        margin: 7rem 0% 2.5rem 0%
+        margin: 9rem 0% 2.5rem 0%
     }
 `;
 
@@ -77,18 +78,23 @@ export const Button = styled.button`
     border: unset;
     transition: opacity 0.3s ease;
     margin-right: 0.3rem;
+    cursor: pointer;
 
-    &:hover {
-        color: #25ac25;
+    &:focus, &:focus-visible {
+        outline: unset;
     }
 
     div svg {
         color: ${({ theme }) => theme.text};
+
+        &:hover {
+            color: #25ac25;
+        }
     }
 `;
 
 export const DownloadButton = styled(FileDownloadOutlinedIcon)`
-    cursor: pointer;
+    
 `
 
 export const SearchBarStyle = styled.div`
@@ -110,7 +116,7 @@ export const SearchBarStyle = styled.div`
 export const FormStyle = styled.form`
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     margin-right: 2rem;
     text-align: center;

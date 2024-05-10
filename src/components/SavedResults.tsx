@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch } from "../hooks/store";
-import { deletePhoto, editDescription, searchByTerm } from '../store/searchResults/searchSlice';
+import { deletePhoto, editDescription } from '../store/searchResults/searchSlice';
 import { SavedImg, SelectedPic, State } from "../helpers/interfaces";
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -9,7 +9,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 import Tooltip from "./Tooltip";
 import { saveAs } from 'file-saver';
-import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SearchInputStyle, SectionStyle, SelectStyle } from "../css/SavedResults";
+import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../css/SavedResults";
 import EditModal from "./EditModal";
 import Toast from "../helpers/alerts/swal";
 
@@ -17,7 +17,6 @@ import Toast from "../helpers/alerts/swal";
 function SearchResults() {
     const dispatch = useAppDispatch();
 
-    const [searchInput, setSearchInput] = useState('');
     const [orderBy, setOrderBy] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPic, setSelectedPic] = useState<SelectedPic>({
@@ -67,11 +66,6 @@ function SearchResults() {
 
     const filterBySearch = getOrderedPhotos(getFilteredPhotos(saved, query), orderBy);
 
-    const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {    
-        e.preventDefault();
-        dispatch(searchByTerm(searchInput))
-    };
-
     const handleDownload = (url: string, description: string) => {
         saveAs(
         url,
@@ -96,8 +90,7 @@ function SearchResults() {
         <>
         <SectionStyle>
             <SearchBarStyle>
-            <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
-                <SearchInputStyle type="search" autoComplete="off" name="" id="search-box" placeholder="Busca entre tus fotos.." value={searchInput} onChange={(e) => { setSearchInput(e.target.value) }} />
+            <FormStyle >
                 <SelectStyle id="orderSelect" value={orderBy} onChange={ (e) => setOrderBy(e.target.value) }>
                 <option value="older">Older</option>
                 <option value="newer">Newer</option>
@@ -112,9 +105,10 @@ function SearchResults() {
                 return (
                 <ImageContainerStyle key={image.id}>
                     <ImageItemStyle
-                        src={image.src_regular}
+                        src={image.src_preview}
                         width={400}
                         alt={image.description}
+                        onClick={() => handleModal(image)}
                     />
                     <ButtonContainer>
                         <Button>
