@@ -5,6 +5,7 @@ import HeightOutlinedIcon from '@mui/icons-material/HeightOutlined';
 import SettingsEthernetOutlinedIcon from '@mui/icons-material/SettingsEthernetOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import styled from 'styled-components';
+import { handleCopyUrl } from '../helpers/handleCopyUrl';
 
 const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -69,10 +70,11 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
             </div>
             <div>
             {isEditing ? (
-                <Button variant="contained" onClick={handleSaveDescription}>Guardar</Button>
+                <Button variant="contained" onClick={handleSaveDescription}>SAVE</Button>
             ) : (
-                <Button variant="contained" onClick={handleEditToggle}>Editar descripción</Button>
+                <Button variant="contained" onClick={handleEditToggle}>EDIT DESC</Button>
             )}
+            <Button onClick={ () => handleCopyUrl(image.src_regular) } style={{marginLeft:"1rem"}} variant="contained">COPY URL</Button>
             </div>
         </DialogContentModal>
         </Dialog>

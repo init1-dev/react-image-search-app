@@ -80,3 +80,9 @@ select option {
 .disabled {
     cursor: not-allowed !important;
 }
+
+.swal2-container {
+    z-index: 1500 !important;
+}
+
+/* swal2-popup swal2-toast swal2-icon-success swal2-show */

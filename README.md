@@ -7,7 +7,8 @@ DOCUMENTATION PENDING
 # OPTIONAL
 
 - Tags system in saved images to filter images by tag
-- Pagination for saved, lazy load for searchs
+- lazy load for searchs
+- pagination into component
 
 # OTHERS
 

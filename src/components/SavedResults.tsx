@@ -10,6 +10,7 @@ import { MdFirstPage } from "react-icons/md";
 import { MdLastPage } from "react-icons/md";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { IoMdArrowDropright } from "react-icons/io";
+import { MdContentCopy } from "react-icons/md";
 
 import Tooltip from "./Tooltip";
 import { saveAs } from 'file-saver';
@@ -17,6 +18,7 @@ import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle
 import EditModal from "./EditModal";
 import Toast from "../helpers/alerts/swal";
 import styled from "styled-components";
+import { handleCopyUrl } from "../helpers/handleCopyUrl";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -46,7 +48,7 @@ function SearchResults() {
     const getFilteredPhotos = (images:SavedImg[] , searchTerm: string) => {
         const filtered = images.filter(image => image.description?.toLowerCase().includes(searchTerm.toLowerCase()));
         return filtered;
-    }
+    };
 
     const getOrderedPhotos = (images: SavedImg[], filter: string) => {
         if (filter === 'newer') {
@@ -66,7 +68,7 @@ function SearchResults() {
 
             return nextValue - prevValue;
         });
-    }
+    };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -177,6 +179,11 @@ function SearchResults() {
                                     <DownloadButton />
                                 </Tooltip>
                             </Button>
+                            <Button onClick={ () => (handleCopyUrl(image.src_regular)) }>
+                                <Tooltip text={'Copy url'}>
+                                    <CopyUrlButton />
+                                </Tooltip>
+                            </Button>
                             <Button>
                                 <Tooltip text={'Get info'}>
                                     <InfoOutlinedIcon onClick={() => handleModal(image)} />
@@ -240,6 +247,10 @@ const Pagination = styled.div`
         margin-bottom: 5rem;
     }
 `;
+
+const CopyUrlButton = styled(MdContentCopy)`
+    font-size: 18px;
+`
 
 const PaginationButton = styled.button`
     display: flex;
