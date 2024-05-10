@@ -5,12 +5,11 @@ import { deletePhoto, editDescription, searchByTerm } from '../store/searchResul
 import { SavedImg, SelectedPic, State } from "../helpers/interfaces";
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import Tooltip from "./Tooltip";
 import { saveAs } from 'file-saver';
-import { Button, ButtonContainer, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SearchInputStyle, SectionStyle, SelectStyle } from "../css/SavedResults";
+import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SearchInputStyle, SectionStyle, SelectStyle } from "../css/SavedResults";
 import EditModal from "./EditModal";
 import Toast from "../helpers/alerts/swal";
 
@@ -105,22 +104,22 @@ function SearchResults() {
                         alt={image.description}
                     />
                     <ButtonContainer>
-                    <Button>
-                        <Tooltip text={'Remove from saved'}>
-                        <DeleteOutlineOutlinedIcon onClick={ () => handleDelete(image) } />
-                        </Tooltip>
-                    </Button>
-                    <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
-                    <Tooltip text={'Download image'}>
-                        <FileDownloadOutlinedIcon />
-                    </Tooltip>
-                    </Button>
-                    <Button>
-                        <Tooltip text={'Get info'}>
-                        <InfoOutlinedIcon onClick={() => handleModal(image)} />
-                        </Tooltip> 
-                    </Button>
-                    <span>{image.likes} ❤️</span>
+                        <Button>
+                            <Tooltip text={'Remove from saved'}>
+                                <DeleteOutlineOutlinedIcon onClick={ () => handleDelete(image) } />
+                            </Tooltip>
+                        </Button>
+                        <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
+                            <Tooltip text={'Download image'}>
+                                <DownloadButton />
+                            </Tooltip>
+                        </Button>
+                        <Button>
+                            <Tooltip text={'Get info'}>
+                                <InfoOutlinedIcon onClick={() => handleModal(image)} />
+                            </Tooltip> 
+                        </Button>
+                        <span>{image.likes} ❤️</span>
                     </ButtonContainer>
                 </ImageContainerStyle>
                 )

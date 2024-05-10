@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
@@ -6,11 +7,11 @@ export const SectionStyle= styled.main`
     margin: 6rem 10% 3rem 10%;
 
     @media only screen and (max-width: 1024px) {
-      margin: 5rem 8% 3rem 8%
+        margin: 5rem 8% 3rem 8%
     }
 
     @media only screen and (max-width: 700px) {
-      margin: 7rem 0% 2.5rem 0%
+        margin: 7rem 0% 2.5rem 0%
     }
 `;
 
@@ -19,11 +20,11 @@ export const ImageGridStyle = styled.div`
     column-gap: 0;
     
     @media only screen and (max-width: 1024px) {
-      column-count: 2;
+        column-count: 2;
     }
 
     @media only screen and (max-width: 700px) {
-      column-count: 1;
+        column-count: 1;
     }
 `
 
@@ -33,11 +34,11 @@ export const ImageContainerStyle = styled.div`
     width: 100%;
 
     @media only screen and (max-width: 1024px) {
-      align-items: center;
+        align-items: center;
     }
 
     @media only screen and (max-width: 700px) {
-      column-count: 1;
+        column-count: 1;
     }
 `
 
@@ -50,109 +51,123 @@ export const ImageItemStyle = styled.img`
     cursor: pointer;
 
     &:hover {
-      transform: scale(1.02);
-      box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        transform: scale(1.02);
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     }
 
     @media only screen and (max-width: 700px) {
-      width: 100%;
+        width: 100%;
     }
 `
 
 export const ButtonContainer = styled.div`
-  margin-top: 0.4rem;
+    margin-top: 0.5rem;
+    display: inline-flex;
+
+    span {
+        display: flex;
+        align-items: center;
+        margin-left: 0.5rem;
+    }
 `;
 
 export const Button = styled.button`
-  padding: 0.2rem 0.2rem 0 0.2rem;
-  background-color: #dfdfdf;
-  transition: opacity 0.3s ease;
-  margin-right: 0.3rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
+    padding: unset;
+    background-color: unset;
+    border: unset;
+    transition: opacity 0.3s ease;
+    margin-right: 0.3rem;
 
-  &:hover {
-    color: #25ac25;
-  }
+    &:hover {
+        color: #25ac25;
+    }
+
+    div svg {
+        color: ${({ theme }) => theme.text};
+    }
 `;
 
-export const SearchBarStyle = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  margin: 0;
-  margin-bottom: 2rem;
-  padding: 0;
-  font-size: 20px;
-  font-weight: 900;
-  color: ${({ theme }) => theme.headerH1};
+export const DownloadButton = styled(FileDownloadOutlinedIcon)`
+    cursor: pointer;
+`
 
-  @media only screen and (max-width: 700px) {
-    display: block;
-  }
+export const SearchBarStyle = styled.div`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 2rem;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 900;
+    color: ${({ theme }) => theme.headerH1};
+
+    @media only screen and (max-width: 700px) {
+        display: block;
+    }
 `;
 
 export const FormStyle = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-right: 2rem;
-  text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 2rem;
+    text-align: center;
 
-  @media only screen and (max-width: 700px) {
-    flex-direction: column;
-  }
+    @media only screen and (max-width: 700px) {
+        flex-direction: column;
+    }
 `
 
 export const SearchInputStyle = styled.input`
-  width: 78%;
-  padding: 0.8rem;
-  margin: 0;
-  border-radius: 1rem;
-  border: 1px solid #5d5d5d;
-  outline: none;
-  color: ${({ theme }) => theme.text};
-  background-color: ${({ theme }) => theme.searchBarBg};
-  box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
-  transition: background-color 0.1s;
+    width: 78%;
+    padding: 0.8rem;
+    margin: 0;
+    border-radius: 1rem;
+    border: 1px solid #5d5d5d;
+    outline: none;
+    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.searchBarBg};
+    box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
+    transition: background-color 0.1s;
 
-  &::placeholder {
-    color: ${({ theme }) => theme.footerText};
-    opacity: 1; /* Firefox */
-  }
+    &::placeholder {
+        color: ${({ theme }) => theme.footerText};
+        opacity: 1; /* Firefox */
+    }
 
-  &:focus::placeholder {
-    color: ${({ theme }) => theme.footerText};
-  }
-  
-  &::-ms-input-placeholder { /* Edge 12 -18 */
-    color: ${({ theme }) => theme.footerText};
-  }
+    &:focus::placeholder {
+        color: ${({ theme }) => theme.footerText};
+    }
+    
+    &::-ms-input-placeholder { /* Edge 12 -18 */
+        color: ${({ theme }) => theme.footerText};
+    }
 
-  &:focus::-ms-input-placeholder {
-    color: ${({ theme }) => theme.footerText};
-  }
+    &:focus::-ms-input-placeholder {
+        color: ${({ theme }) => theme.footerText};
+    }
 
-  &:focus-visible {
-    color: black;
-    background-color: white;
-  }
+    &:focus-visible {
+        color: black;
+        background-color: white;
+    }
 
-  @media only screen and (max-width: 700px) {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
+    @media only screen and (max-width: 700px) {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
 `
 
 export const SelectStyle = styled.select`
-  width: 20%;
-  padding: 0.8rem;
-  border-radius: 1rem;
-  background-color: ${({ theme }) => theme.searchBarBg};
-  color: ${({ theme }) => theme.headerH1};
+    width: 20%;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    background-color: ${({ theme }) => theme.searchBarBg};
+    color: ${({ theme }) => theme.headerH1};
 
-  @media only screen and (max-width: 700px) {
-    width: 100%;
-  }
+    @media only screen and (max-width: 700px) {
+        width: 100%;
+    }
 `
