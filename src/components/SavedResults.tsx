@@ -265,12 +265,18 @@ const PaginationButton = styled.button`
     aspect-ratio: 16/9;
     border-radius: 0.25rem;
     border: unset;
-    color: black;
+    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.searchBarBg};
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6)) opacity(100%);
 
     &.active {
         color: black;
         font-weight: 800;
         background-color: #0fe10f;
+    }
+
+    &.disabled {
+        filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.2)) opacity(50%);
     }
 `;
 
