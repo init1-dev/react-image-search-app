@@ -12,6 +12,8 @@ DOCUMENTATION PENDING
 - check if image exists before adding
 - search on saved fix showing "1 to 15 of..." for custom search message instead all photos
 - search placeholder
+- maintain last term search
+- search term in url params
 
 # OTHERS
 
