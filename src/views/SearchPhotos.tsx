@@ -5,7 +5,7 @@ export const SearchPhotos = () => {
 
     return (
         <>
-            <Header />
+            <Header currentPage={0} setPage={()=>{}} />
             <SearchResult />
         </>
     )

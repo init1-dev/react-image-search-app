@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { NavLink, useLocation  } from "react-router-dom";
+import { NavLink, useLocation, useNavigate  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -9,13 +9,16 @@ import { searchByTerm, setStatusReady, setTerm } from "../store/searchResults/se
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 import { FaHeart } from "react-icons/fa";
+import { SearchResultsProps } from "../helpers/interfaces";
+import { setPageNavigate } from "../helpers/pageFunctions";
 
-const Header = () => {
+const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const [searchInput, setSearchInput] = useState('');
     const { theme, handleToggleTheme } = useTheme();
     const currentPath = useLocation();
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -32,9 +35,11 @@ const Header = () => {
         const updatedInput = e.currentTarget.value;
         setSearchInput(updatedInput);
 
-        if(currentPath.pathname !== appName){
-            dispatch(searchByTerm(updatedInput));
+        if(currentPath.pathname !== appName && currentPage !== 1){
+            navigate(setPageNavigate(currentPath.pathname, 1));
+            setPage(1);
         }
+        dispatch(searchByTerm(updatedInput));
     }
 
     const placeholder = (currentPath.pathname === appName)

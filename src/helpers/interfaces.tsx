@@ -1,5 +1,5 @@
 import { DialogProps } from "@mui/material/Dialog";
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface Image {
     id: string;
@@ -12,6 +12,7 @@ export interface Image {
         full: string;
     };
     description: string | null;
+    alt_description: string | null;
     user: {
         username: string;
         name: string;
@@ -95,4 +96,9 @@ export interface SelectedPic {
     width: number;
     height: number;
     likes: number;
+}
+
+export interface SearchResultsProps {
+    currentPage: number;
+    setPage: Dispatch<SetStateAction<number>>;
 }

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useMemo, useState } from "react";
 import { useAppDispatch } from "../hooks/store";
 import { deletePhoto, editDescription } from '../store/searchResults/searchSlice';
-import { SavedImg, SelectedPic, State } from "../helpers/interfaces";
+import { SavedImg, SearchResultsProps, SelectedPic, State } from "../helpers/interfaces";
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -19,19 +19,24 @@ import EditModal from "./EditModal";
 import Toast from "../helpers/alerts/swal";
 import styled from "styled-components";
 import { handleCopyUrl } from "../helpers/handleCopyUrl";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setPageNavigate } from "../helpers/pageFunctions";
 
-function SearchResults() {
+function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
     const saved = useSelector((state: State) => state.saved.images);
     const query = useSelector((state: State) => state.saved.query);
 
-    const [page, setPage] = useState(1);
+    const currentPath = useLocation();
+    const navigate = useNavigate();
+
     const imagesPerPage = 15;
 
     const handlePageChange = (e: React.MouseEvent<HTMLButtonElement>, pageNumber: number) => {
         e.preventDefault();
         e.stopPropagation();
         setPage(pageNumber);
+        navigate(setPageNavigate(currentPath.pathname, pageNumber));
     }
 
     const [orderBy, setOrderBy] = useState('');
@@ -82,10 +87,10 @@ function SearchResults() {
     const totalPages = Math.ceil(filterBySearch.length / imagesPerPage);
     
     const getPageImages = useMemo(() => {
-        const startIndex = (page - 1) * imagesPerPage;
+        const startIndex = (currentPage - 1) * imagesPerPage;
         const endIndex = startIndex + imagesPerPage;
         return filterBySearch.slice(startIndex, endIndex);
-    }, [page, imagesPerPage, filterBySearch]);
+    }, [currentPage, imagesPerPage, filterBySearch]);
     
     const pageItems = getPageImages;
 
@@ -108,15 +113,15 @@ function SearchResults() {
             title: "Removed successfully"
         });
 
-        if(pageImages === 1 && page !== 1){
-            setPage(page - 1);
+        if(pageImages === 1 && currentPage !== 1){
+            setPage(currentPage - 1);
         }
     };
 
     const renderPageNumbers = () => {
         const pagesArray = Array.from(Array(totalPages), (_, index) => index + 1 );
-        let startPage = page - 1;
-        let endPage = page + 1;
+        let startPage = currentPage - 1;
+        let endPage = currentPage + 1;
 
         if(startPage <= 1) {
             startPage = 1;
@@ -137,7 +142,7 @@ function SearchResults() {
                 <SearchBarStyle>
                     <FormStyle >
                         <small>
-                            Showing {((page - 1) * imagesPerPage) + 1} to {Math.min(page * imagesPerPage, saved.length)} of {saved.length} images
+                            Showing {((currentPage - 1) * imagesPerPage) + 1} to {Math.min(currentPage * imagesPerPage, saved.length)} of {saved.length} images
                         </small>
 
                         <SelectStyle id="orderSelect" value={orderBy} onChange={ (e) => setOrderBy(e.target.value) }>
@@ -205,10 +210,10 @@ function SearchResults() {
                 {
                     filterBySearch.length > 15 &&
                     <>
-                        <PaginationButton type="button" className={page === 1 ? "disabled" : ""} disabled={page === 1} onClick={(e) => handlePageChange(e, 1)}>
+                        <PaginationButton type="button" className={currentPage === 1 ? "disabled" : ""} disabled={currentPage === 1} onClick={(e) => handlePageChange(e, 1)}>
                             <MdFirstPage />
                         </PaginationButton>
-                        <PaginationButton type="button" className={page === 1 ? "disabled" : ""} disabled={page === 1} onClick={(e) => handlePageChange(e, page - 1)}>
+                        <PaginationButton type="button" className={currentPage === 1 ? "disabled" : ""} disabled={currentPage === 1} onClick={(e) => handlePageChange(e, currentPage - 1)}>
                             <IoMdArrowDropleft />
                         </PaginationButton>
                         {renderPageNumbers().map((pageNumber) => (
@@ -216,15 +221,15 @@ function SearchResults() {
                                 type="button"
                                 key={pageNumber} 
                                 onClick={(e) => handlePageChange(e, pageNumber)}
-                                className={pageNumber === page ? 'active' : ""}
+                                className={pageNumber === currentPage ? 'active' : ""}
                             >
                                 { pageNumber }
                             </PaginationButton>
                         ))}
-                        <PaginationButton type="button" className={page === totalPages ? "disabled" : ""} disabled={page === totalPages} onClick={(e) => handlePageChange(e, page + 1)}>
+                        <PaginationButton type="button" className={currentPage === totalPages ? "disabled" : ""} disabled={currentPage === totalPages} onClick={(e) => handlePageChange(e, currentPage + 1)}>
                             <IoMdArrowDropright />
                         </PaginationButton>
-                        <PaginationButton type="button" className={page === totalPages ? "disabled" : ""} disabled={page === totalPages} onClick={(e) => handlePageChange(e, totalPages)}>
+                        <PaginationButton type="button" className={currentPage === totalPages ? "disabled" : ""} disabled={currentPage === totalPages} onClick={(e) => handlePageChange(e, totalPages)}>
                             <MdLastPage />
                         </PaginationButton>
                     </>
