@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { appName } from "../Routes";
 import { useTheme } from "../hooks/themeHooks";
-import { searchByTerm, setStatusReady, setTerm } from "../store/searchResults/searchSlice";
+import { savedQuery, searchByTerm, searchQuery, setStatusReady, setTerm } from "../store/searchResults/searchSlice";
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 import { FaHeart } from "react-icons/fa";
@@ -13,11 +13,15 @@ import { SearchResultsProps } from "../helpers/interfaces";
 import { setPageNavigate } from "../helpers/pageFunctions";
 
 import SearchComponent from "./SearchComponent";
+import { useAppSelector } from "../hooks/store";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
+    const currentPath = useLocation();
+    const query = useAppSelector(currentPath.pathname.includes("saved") ? savedQuery : searchQuery);
+    console.log("header query: " + query);
+    
     const [searchInput, setSearchInput] = useState('');
     const { theme, handleToggleTheme } = useTheme();
-    const currentPath = useLocation();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -29,7 +33,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
             dispatch(setStatusReady());
             dispatch(setTerm(searchInput.trim()));
         } else {
-            dispatch(searchByTerm(searchInput))
+            dispatch(searchByTerm(searchInput));
         }
     }
 
@@ -59,7 +63,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                         <WallpaperOutlinedIcon className={location.pathname === appName ? "logoActive" : ""} />
                     </LogoStyle>
                     <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
-                        <SearchComponent placeholder={placeholder} handleChange={handleChange} />
+                        <SearchComponent placeholder={query ? "Last search: " + query : placeholder} handleChange={handleChange} />
                     </FormStyle>
                 </SearchBarStyle>
 

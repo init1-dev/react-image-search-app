@@ -112,4 +112,5 @@ export const searchLoading = (state: { search: SearchState }) =>  state.search.l
 export const searchStatus = (state: { search: SearchState }) => state.search.status;
 export const searchError = (state: { search: SearchState }) =>  state.search.error;
 
-export const savedPhotos = (state: { saved: SavedState }) => state.saved;
+export const savedPhotos = (state: { saved: SavedState }) => state.saved.images;
+export const savedQuery = (state: { saved: SavedState }) => state.saved.query;

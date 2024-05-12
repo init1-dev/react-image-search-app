@@ -12,7 +12,7 @@ import Toast from "../helpers/alerts/swal";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
-    const [ isLoading, setIsLoading ] = useState<boolean>(true);
+    const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const saved = useAppSelector(savedPhotos);
     const images = useAppSelector(searchPhotos);
     const query = useAppSelector(searchQuery);
@@ -20,7 +20,7 @@ function SearchResults() {
     const error = useAppSelector(searchError);
 
     const handleSave = (img: Image) => {
-        const isImageAlreadySaved = saved.images.find(image => image.id === img.id);
+        const isImageAlreadySaved = saved.find(image => image.id === img.id);
         if (isImageAlreadySaved) {
             Toast.fire({
                 icon: "warning",
@@ -79,33 +79,40 @@ function SearchResults() {
     }
 
     return (
-        <>
         <SectionStyle>
-            <ImageGridStyle>
-                {!isLoading && Array.isArray(images) ? images.map((image) => {
-                    return (
-                        <ImageContainerStyle key={image.id}>
-                                <ImageItemStyle
-                                    src={(image.urls?.small) ? image.urls.small : image.urls.regular}
-                                    width={400}
-                                    alt={image.description ? image.description : ''}
-                                    loading="lazy"
-                                />
-                                <ButtonContainer onClick={ () => handleSave(image) }>
-                                <Button>
-                                    <Tooltip text={'Add to saved'}>
-                                    <HeartIcon />
-                                    </Tooltip>
-                                </Button>
-                                </ButtonContainer>
-                        </ImageContainerStyle>
-                        )
-                    }) : '<h1>Cargando..</h1>' }
-            </ImageGridStyle>
+            { images.length > 0
+                ?   <ImageGridStyle>
+                        { images.map((image) => {
+                                return (
+                                    <ImageContainerStyle key={image.id}>
+                                            <ImageItemStyle
+                                                src={(image.urls?.small) ? image.urls.small : image.urls.regular}
+                                                width={400}
+                                                alt={image.description ? image.description : ''}
+                                                loading="lazy"
+                                            />
+                                            <ButtonContainer onClick={ () => handleSave(image) }>
+                                            <Button>
+                                                <Tooltip text={'Add to saved'}>
+                                                <HeartIcon />
+                                                </Tooltip>
+                                            </Button>
+                                            </ButtonContainer>
+                                    </ImageContainerStyle>
+                                )
+                        })}
+                    </ImageGridStyle>
+                : <TextContainer>
+                    <p>Make a search to see something here</p>
+                </TextContainer>
+            }
         </SectionStyle>
-        </>
     )
 }
+
+const TextContainer = styled.div`
+    text-align: center;
+`;
 
 const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
