@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { NavLink, useLocation, useNavigate  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -11,6 +11,8 @@ import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 import { FaHeart } from "react-icons/fa";
 import { SearchResultsProps } from "../helpers/interfaces";
 import { setPageNavigate } from "../helpers/pageFunctions";
+
+import SearchComponent from "./SearchComponent";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const [searchInput, setSearchInput] = useState('');
@@ -31,7 +33,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
         }
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const updatedInput = e.currentTarget.value;
         setSearchInput(updatedInput);
 
@@ -57,14 +59,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                         <WallpaperOutlinedIcon className={location.pathname === appName ? "logoActive" : ""} />
                     </LogoStyle>
                     <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
-                    <SearchInputStyle 
-                        type="search" 
-                        autoComplete="off" 
-                        name="" 
-                        id="search-box" 
-                        placeholder={ placeholder } 
-                        value={searchInput} 
-                        onChange={(e) => { handleChange(e) }} />
+                        <SearchComponent placeholder={placeholder} handleChange={handleChange} />
                     </FormStyle>
                 </SearchBarStyle>
 
@@ -97,7 +92,7 @@ const TopBarStyle = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
-    gap: 5rem;
+    gap: 2rem;
     height: 65px;
 
     @media only screen and (max-width: 700px) {
@@ -121,7 +116,8 @@ const LogoStyle = styled(NavLink)`
 `;
 
 const FormStyle = styled.form`
-    width: 100%
+    width: 100%;
+    margin-left: 2rem;
 `;
 
 const SearchBarStyle = styled.div`
@@ -136,46 +132,6 @@ const SearchBarStyle = styled.div`
 
     @media only screen and (max-width: 700px) {
         width: 85%;
-        margin-right: 1.2rem
-    }
-`;
-
-const SearchInputStyle = styled.input`
-    width: 100%;
-    padding: 0.6rem 1rem;
-    margin: 0 0 0 2rem;
-    border-radius: 5rem;
-    border: 1px solid #5d5d5d;
-    outline: none;
-    color: ${({ theme }) => theme.text};
-    background-color: ${({ theme }) => theme.searchBarBg};
-    box-shadow: rgb(0 0 0 / 40%) 1px 1px 2px;
-    transition: background-color 0.1s;
-
-    &::placeholder {
-        color: ${({ theme }) => theme.footerText};
-        opacity: 1; /* Firefox */
-    }
-
-    &:focus::placeholder {
-        color: ${({ theme }) => theme.footerText};
-    }
-    
-    &::-ms-input-placeholder { /* Edge 12 -18 */
-        color: ${({ theme }) => theme.footerText};
-    }
-
-    &:focus::-ms-input-placeholder {
-        color: ${({ theme }) => theme.footerText};
-    }
-
-    &:focus-visible {
-        color: black;
-        background-color: white;
-    }
-
-    @media only screen and (max-width: 700px) {
-        margin-left: 1rem;
     }
 `;
 
