@@ -12,7 +12,7 @@ const Footer = () => {
           <Link href="https://www.linkedin.com/in/in1t-jorge-guillen/" target="_blank" rel="noopener noreferrer">
             <SocialImg src={linked} alt="" />
           </Link>
-          <Link href="https://github.com/init1-dev" target="_blank" rel="noopener noreferrer">
+          <Link href="https://github.com/init1-dev/react-image-search-app" target="_blank" rel="noopener noreferrer">
             <SocialImg src={gh} alt="" />
           </Link>
         </SocialStyle>

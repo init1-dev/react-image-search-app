@@ -111,3 +111,5 @@ export const searchQuery = (state: { search: SearchState }) =>  state.search.que
 export const searchLoading = (state: { search: SearchState }) =>  state.search.loading;
 export const searchStatus = (state: { search: SearchState }) => state.search.status;
 export const searchError = (state: { search: SearchState }) =>  state.search.error;
+
+export const savedPhotos = (state: { saved: SavedState }) => state.saved;

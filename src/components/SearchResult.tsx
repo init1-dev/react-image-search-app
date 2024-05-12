@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { savePhoto, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
+import { savePhoto, savedPhotos, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
 import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/searchThunk";
 
 import { FaHeart } from "react-icons/fa";
@@ -13,12 +13,22 @@ import Toast from "../helpers/alerts/swal";
 function SearchResults() {
     const dispatch = useAppDispatch();
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
+    const saved = useAppSelector(savedPhotos);
     const images = useAppSelector(searchPhotos);
     const query = useAppSelector(searchQuery);
     const status = useAppSelector(searchStatus);
     const error = useAppSelector(searchError);
 
     const handleSave = (img: Image) => {
+        const isImageAlreadySaved = saved.images.find(image => image.id === img.id);
+        if (isImageAlreadySaved) {
+            Toast.fire({
+                icon: "warning",
+                title: "Image already saved"
+            })
+            return;
+        }
+
         dispatch(savePhoto({
             id: img.id,
             src_preview: img.urls.small,
