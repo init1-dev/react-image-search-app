@@ -3,8 +3,8 @@ import { MdFirstPage } from "react-icons/md";
 import { MdLastPage } from "react-icons/md";
 import { IoMdArrowDropleft } from "react-icons/io";
 import { IoMdArrowDropright } from "react-icons/io";
-import { SavedImg } from "../helpers/interfaces";
-import { setPageNavigate } from "../helpers/pageFunctions";
+import { SavedImg } from "../../helpers/interfaces";
+import { setPageNavigate } from "../../helpers/pageFunctions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
 

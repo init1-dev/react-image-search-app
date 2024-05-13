@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { TooltipProps } from '../helpers/interfaces';
+import { TooltipProps } from '../../helpers/interfaces';
 
 const TooltipWrapper = styled.div`
   position: relative;

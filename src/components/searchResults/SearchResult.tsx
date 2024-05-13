@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { useAppDispatch, useAppSelector } from "../hooks/store";
-import { savePhoto, savedPhotos, searchError, searchPhotos, searchQuery, searchStatus } from '../store/searchResults/searchSlice';
-import { getRandomSearchThunk, getSearchThunk } from "../store/searchResults/searchThunk";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { savePhoto, savedPhotos, searchError, searchPhotos, searchQuery, searchStatus } from '../../store/searchResults/searchSlice';
+import { getRandomSearchThunk, getSearchThunk } from "../../store/searchResults/searchThunk";
 
 import { FaHeart } from "react-icons/fa";
-import { Image } from "../helpers/interfaces";
-import Tooltip from "./Tooltip";
-import Toast from "../helpers/alerts/swal";
+import { Image } from "../../helpers/interfaces";
+import Tooltip from "../shared/Tooltip";
+import Toast from "../../helpers/alerts/swal";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -34,6 +34,7 @@ function SearchResults() {
             src_preview: img.urls.small,
             src_regular: img.urls.regular,
             src_full: img.urls.full,
+            tags: img.tags,
             alt_description: img.description,
             description: img.description === null ? img.alt_description : img.description,
             width: img.width,

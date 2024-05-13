@@ -3,17 +3,17 @@ import { NavLink, useLocation, useNavigate  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { appName } from "../Routes";
-import { useTheme } from "../hooks/themeHooks";
-import { savedQuery, searchByTerm, searchQuery, setStatusReady, setTerm } from "../store/searchResults/searchSlice";
+import { appName } from "../../Routes";
+import { useTheme } from "../../hooks/themeHooks";
+import { savedQuery, searchByTerm, searchQuery, setStatusReady, setTerm } from "../../store/searchResults/searchSlice";
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 import { FaHeart } from "react-icons/fa";
-import { SearchResultsProps } from "../helpers/interfaces";
-import { setPageNavigate } from "../helpers/pageFunctions";
+import { SearchResultsProps } from "../../helpers/interfaces";
+import { setPageNavigate } from "../../helpers/pageFunctions";
 
-import SearchComponent from "./SearchComponent";
-import { useAppSelector } from "../hooks/store";
+import SearchComponent from "../SearchComponent";
+import { useAppSelector } from "../../hooks/store";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const currentPath = useLocation();
@@ -74,7 +74,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                         </MenuItemStyle>
                     </li>
                     <ToggleThemeButton onClick={handleToggleTheme}>
-                    {theme === 'light' ? '🌙' : '☀️'}
+                    { theme === 'light' ? '🌙' : '☀️' }
                     </ToggleThemeButton>
                 </MenuStyle>
 
@@ -114,8 +114,12 @@ const LogoStyle = styled(NavLink)`
     height: 100%;
     display: contents;
 
-    &:hover {
-        transform: scale(1.05);
+    svg {
+        transition: transform 0.15s ease-in-out;
+
+        &:hover{
+            transform: scale3d(1.2, 1.2, 0.3);
+        }
     }
 `;
 
@@ -178,7 +182,8 @@ const MenuItemStyle = styled(NavLink)`
 
 const ToggleThemeButton = styled.li`
     cursor: default;
-    font-size: 1.1rem;
+    display: flex;
+    font-size: 18px;
     transition: transform 0.1s;
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
 

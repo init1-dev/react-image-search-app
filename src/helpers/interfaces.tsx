@@ -1,6 +1,11 @@
 import { DialogProps } from "@mui/material/Dialog";
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
+export interface TagInterface {
+    title: string;
+    type: string;
+}
+
 export interface Image {
     id: string;
     width: number;
@@ -11,6 +16,7 @@ export interface Image {
         small: string;
         full: string;
     };
+    tags: TagInterface[];
     description: string | null;
     alt_description: string | null;
     user: {
@@ -42,6 +48,7 @@ export interface SavedImg {
     src_preview: string;
     src_regular: string;
     src_full: string;
+    tags: TagInterface[];
     alt_description: string;
     description: string;
     width: number;
