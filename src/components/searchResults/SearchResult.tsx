@@ -23,7 +23,8 @@ function SearchResults() {
     const error = useAppSelector(searchError);
 
     const params = useParams();
-    console.log(params);
+    // console.log(params);
+    // console.log(images);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPic, setSelectedPic] = useState<SelectedPic>({

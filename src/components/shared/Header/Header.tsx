@@ -4,16 +4,18 @@ import { useDispatch } from "react-redux";
 
 import { appName } from "../../../Routes";
 import { useTheme } from "../../../hooks/themeHooks";
-import { savedQuery, searchByTerm, searchQuery, setStatusReady, setTerm } from "../../../store/searchResults/searchSlice";
+import { clearSaved, savedQuery, searchByTerm, searchQuery, setStatusReady, setTerm } from "../../../store/searchResults/searchSlice";
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 import { FaHeart } from "react-icons/fa";
 import { SearchResultsProps } from "../../../helpers/interfaces";
 import { setPageNavigate } from "../../../helpers/pageFunctions";
+import { LuListRestart } from "react-icons/lu";
 
 import SearchComponent from "../../SearchComponent";
 import { useAppSelector } from "../../../hooks/store";
 import { FormStyle, HeaderStyle, LogoStyle, MenuItemStyle, MenuStyle, SearchBarStyle, ToggleThemeButton, TopBarStyle } from "./HeaderStyles";
+import { IconButton, Tooltip } from "@mui/material";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const currentPath = useLocation();
@@ -48,6 +50,10 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
         dispatch(searchByTerm(updatedInput));
     }
 
+    const handleResetApp = () => {
+        dispatch(clearSaved());
+    }
+
     const placeholder = (currentPath.pathname === appName)
         ? "Search by term"
         : "Search in your images";
@@ -77,6 +83,19 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                             <FaHeart 
                                 className={location.pathname === appName + "/saved" ? "logoActive" : ""} 
                             />
+                        </MenuItemStyle>
+                    </li>
+
+                    <li>
+                        <MenuItemStyle to={appName + "/saved"}>
+                            <Tooltip title="Reset saved">
+                                <IconButton>
+                                    <LuListRestart 
+                                        className="button" 
+                                        onClick={() => handleResetApp()} 
+                                    />
+                                </IconButton>
+                            </Tooltip>
                         </MenuItemStyle>
                     </li>
 

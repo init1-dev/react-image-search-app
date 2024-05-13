@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { deletePhoto, editDescription, savedQuery } from '../../store/searchResults/searchSlice';
+import { deletePhoto, editDescription, imageTags, savedQuery } from '../../store/searchResults/searchSlice';
 import { SavedImg, SearchResultsProps, SelectedPic, State } from "../../helpers/interfaces";
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -16,19 +16,22 @@ import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
 import { handleCopyUrl } from "../../helpers/handleCopyUrl";
 import PaginationComponent from "./PaginationComponent";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
     const saved = useSelector((state: State) => state.saved.images);
     const query = useAppSelector(savedQuery);
+    const tags: string[] = useAppSelector(imageTags);
+
+    console.log("tags:", tags);
 
     // console.log(query);
-    console.log(saved);
+    // console.log(saved);
 
-    const params = useParams();
+    // const params = useParams();
 
-    console.log(params);
+    // console.log(params);
 
     const imagesPerPage = 15;
 

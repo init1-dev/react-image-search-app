@@ -6,6 +6,11 @@ export interface TagInterface {
     type: string;
 }
 
+export interface SavedTags {
+    name: string;
+    count: number;
+}
+
 export interface Image {
     id: string;
     width: number;
@@ -39,8 +44,9 @@ export interface SearchState {
 }
 
 export interface SavedState {
-    images: Image[],
-    query: string
+    images: Image[];
+    tags: SavedTags[];
+    query: string;
 }
 
 export interface SavedImg {

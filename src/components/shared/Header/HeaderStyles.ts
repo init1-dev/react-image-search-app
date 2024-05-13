@@ -87,6 +87,10 @@ export const MenuItemStyle = styled(NavLink)`
         color: ${({ theme }) => theme.btnHoverText};
     }
 
+    svg.button {
+        color: ${({ theme }) => theme.text};
+    }
+
     svg {
         color: red;
         transition: transform 0.15s ease-in-out;

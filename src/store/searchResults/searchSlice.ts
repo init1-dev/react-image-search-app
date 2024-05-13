@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getRandomSearchThunk, getSearchThunk } from './searchThunk';
-import { SavedState, SearchState } from '../../helpers/interfaces';
+import { SavedState, SearchState, TagInterface } from '../../helpers/interfaces';
 
 const DEFAULT_STATE: SearchState = {
     images: [],
@@ -17,7 +17,7 @@ const searchInitialState: SearchState = (() => {
 
 const savedInitialState: SavedState = (() => {
     const persistedState = localStorage.getItem("__image__app__state__");
-    return (persistedState) ? JSON.parse(persistedState).saved : { images: [], query: ''};
+    return (persistedState) ? JSON.parse(persistedState).saved : { images: [], tags: [], query: ''};
 })();
 
 // Slice asíncrono para la búsqueda
@@ -76,7 +76,18 @@ export const savedSlice = createSlice({
     initialState: savedInitialState,
     reducers: {
         savePhoto: (state, action) => {
-            if (!state.images.find(image => image.id === action.payload.id)) state.images.push(action.payload);
+            const { id, tags } = action.payload;
+            if(!state.images.find(image => image.id === id)){
+                state.images.push(action.payload);
+            }
+            tags.forEach((tag: TagInterface) => {
+                const existingTagIndex = state.tags.findIndex(savedTag => savedTag.name === tag.title);
+                if(existingTagIndex !== -1) {
+                    state.tags[existingTagIndex].count++;
+                } else {
+                    state.tags.push({ name: tag.title, count: 1 });
+                }
+            });
         },
         deletePhoto: (state, action) => {
             return {
@@ -99,12 +110,17 @@ export const savedSlice = createSlice({
         resetSearchTerm: (state) => {
             state.query = '';
             return state;
+        },
+        clearSaved: (state) => {
+            state.images = [];
+            state.query = '';
+            state.tags = [];
         }
     }
 });
 
 export const { setTerm, resetTerm, setStatusReady } = searchSlice.actions;
-export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm, editDescription } = savedSlice.actions;
+export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm, editDescription, clearSaved } = savedSlice.actions;
 
 export const searchPhotos = (state: { search: SearchState }) =>  state.search.images;
 export const searchQuery = (state: { search: SearchState }) =>  state.search.query;
@@ -114,3 +130,4 @@ export const searchError = (state: { search: SearchState }) =>  state.search.err
 
 export const savedPhotos = (state: { saved: SavedState }) => state.saved.images;
 export const savedQuery = (state: { saved: SavedState }) => state.saved.query;
+export const imageTags = (state: { saved: SavedState }) => state.saved.tags;
