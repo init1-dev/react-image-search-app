@@ -114,6 +114,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const resultsLength = filterBySearch.length;
     const getResultsFrom = ((currentPage - 1) * imagesPerPage) + 1;
     const getResultsTo = Math.min(currentPage * imagesPerPage, resultsLength);
+    const inQuery = query !== "" && `in query '${query}'`;
 
     return (
         <>
@@ -122,9 +123,9 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                     ?   <>
                             <SearchBarStyle>
                                 <FormStyle >
-                                    <small>{ 
+                                    <small>{
                                         resultsLength > 0
-                                            && `Showing ${getResultsFrom} to ${getResultsTo} of ${resultsLength} images`
+                                            && `Showing ${getResultsFrom} to ${getResultsTo} of ${resultsLength} images ${inQuery}`
                                     }</small>
 
                                     <SelectStyle id="orderSelect" value={orderBy} onChange={ (e) => setOrderBy(e.target.value) }>
