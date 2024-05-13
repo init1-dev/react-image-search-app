@@ -57,12 +57,24 @@ const PaginationComponent = ({
             {
                 filterBySearch.length > 15 &&
                 <>
-                    <PaginationButton type="button" className={currentPage === 1 ? "disabled" : ""} disabled={currentPage === 1} onClick={(e) => handlePageChange(e, 1)}>
+                    <PaginationButton 
+                        type="button" 
+                        className={currentPage === 1 ? "disabled" : ""} 
+                        disabled={currentPage === 1} 
+                        onClick={(e) => handlePageChange(e, 1)}
+                    >
                         <MdFirstPage />
                     </PaginationButton>
-                    <PaginationButton type="button" className={currentPage === 1 ? "disabled" : ""} disabled={currentPage === 1} onClick={(e) => handlePageChange(e, currentPage - 1)}>
+
+                    <PaginationButton 
+                        type="button" 
+                        className={currentPage === 1 ? "disabled" : ""} 
+                        disabled={currentPage === 1} 
+                        onClick={(e) => handlePageChange(e, currentPage - 1)}
+                    >
                         <IoMdArrowDropleft />
                     </PaginationButton>
+
                     {renderPageNumbers().map((pageNumber) => (
                         <PaginationButton 
                             type="button"
@@ -73,10 +85,22 @@ const PaginationComponent = ({
                             { pageNumber }
                         </PaginationButton>
                     ))}
-                    <PaginationButton type="button" className={currentPage === totalPages ? "disabled" : ""} disabled={currentPage === totalPages} onClick={(e) => handlePageChange(e, currentPage + 1)}>
+
+                    <PaginationButton 
+                        type="button" 
+                        className={currentPage === totalPages ? "disabled" : ""} 
+                        disabled={currentPage === totalPages} 
+                        onClick={(e) => handlePageChange(e, currentPage + 1)}
+                    >
                         <IoMdArrowDropright />
                     </PaginationButton>
-                    <PaginationButton type="button" className={currentPage === totalPages ? "disabled" : ""} disabled={currentPage === totalPages} onClick={(e) => handlePageChange(e, totalPages)}>
+
+                    <PaginationButton 
+                        type="button" 
+                        className={currentPage === totalPages ? "disabled" : ""} 
+                        disabled={currentPage === totalPages} 
+                        onClick={(e) => handlePageChange(e, totalPages)}
+                    >
                         <MdLastPage />
                     </PaginationButton>
                 </>
