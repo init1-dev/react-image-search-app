@@ -109,16 +109,15 @@ const TopBarStyle = styled.div`
 
 const LogoStyle = styled(NavLink)`
     color: ${({ theme }) => theme.headerH1};
-    transition: transform 0.1s;
-    transform-origin: center center;
     height: 100%;
     display: contents;
 
     svg {
         transition: transform 0.15s ease-in-out;
+        text-rendering: optimizeLegibility;
 
         &:hover{
-            transform: scale3d(1.2, 1.2, 0.3);
+            transform: scale(1.1);
         }
     }
 `;
