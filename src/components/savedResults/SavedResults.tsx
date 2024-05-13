@@ -111,9 +111,9 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
         }
     };
 
-    const resultsLength = saved.length;
+    const resultsLength = filterBySearch.length;
     const getResultsFrom = ((currentPage - 1) * imagesPerPage) + 1;
-    const getResultsTo = Math.min(currentPage * imagesPerPage, saved.length);
+    const getResultsTo = Math.min(currentPage * imagesPerPage, resultsLength);
 
     return (
         <>
@@ -184,9 +184,14 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                             })}
                             </ImageGridStyle>
                         </>
-                    :   <TextContainer>
-                            <p>Save images to see them here</p>
-                    </TextContainer>
+                    :   saved.length > 0
+                            ? <TextContainer>
+                                <p>Nothing match</p>
+                            </TextContainer>
+
+                            : <TextContainer>
+                                <p>Save images to see them here</p>
+                            </TextContainer>
                 }
                 
             </SectionStyle>
