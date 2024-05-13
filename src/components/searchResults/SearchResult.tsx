@@ -108,6 +108,7 @@ function SearchResults() {
                             { images.map((image) => {
                                     return (
                                         <ImageContainerStyle key={image.id}>
+                                            <Tooltip title="Click to details" followCursor>
                                                 <ImageItemStyle
                                                     src={(image.urls?.small) ? image.urls.small : image.urls.regular}
                                                     width={400}
@@ -115,15 +116,17 @@ function SearchResults() {
                                                     loading="lazy"
                                                     onClick={() => handleModal(formatImage(image))}
                                                 />
-                                                <ButtonContainer onClick={ (e) => handleSave(e, image) }>
-                                                    <Button>
-                                                        <Tooltip title="Add to saved">
-                                                            <span>
-                                                                <HeartIcon />
-                                                            </span>
-                                                        </Tooltip>
-                                                    </Button>
-                                                </ButtonContainer>
+                                            </Tooltip>
+
+                                            <ButtonContainer onClick={ (e) => handleSave(e, image) }>
+                                                <Button>
+                                                    <Tooltip title="Add to saved">
+                                                        <span>
+                                                            <HeartIcon />
+                                                        </span>
+                                                    </Tooltip>
+                                                </Button>
+                                            </ButtonContainer>
                                         </ImageContainerStyle>
                                     )
                             })}
@@ -190,7 +193,7 @@ const ImageItemStyle = styled.img`
     display: block;
     border-radius: 5px;
     border: 1px solid #858585;
-    cursor: pointer;
+    cursor: zoom-in;
 `;
 
 const ImageContainerStyle = styled.div`

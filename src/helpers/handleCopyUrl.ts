@@ -6,7 +6,8 @@ export const handleCopyUrl = (url: string) => {
         .then(() => {
             Toast.fire({
                 icon: "success",
-                title: "Url copied successfully"
+                html: `<h4 class="swal-success">Url copied successfully</h4>`,
+                background: "#499b49"
             });
         })
 }

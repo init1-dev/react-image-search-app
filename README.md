@@ -13,6 +13,7 @@ DOCUMENTATION PENDING
 - maintain last term search
 - search term in url params (fix current)
 - search page select for horizontal, vertical or both
+- check possible bug trying to save image if random search with empty input returns more than 1
 
 # OTHERS
 

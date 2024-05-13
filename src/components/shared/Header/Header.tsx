@@ -95,11 +95,8 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     <li>
                         <MenuItemStyle to={appName + "/saved"}>
                             <Tooltip title="Reset saved">
-                                <IconButton>
-                                    <LuListRestart 
-                                        className="button" 
-                                        onClick={() => handleResetApp()} 
-                                    />
+                                <IconButton onClick={() => handleResetApp()}>
+                                    <LuListRestart className="button" />
                                 </IconButton>
                             </Tooltip>
                         </MenuItemStyle>

@@ -117,7 +117,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const resultsLength = filterBySearch.length;
     const getResultsFrom = ((currentPage - 1) * imagesPerPage) + 1;
     const getResultsTo = Math.min(currentPage * imagesPerPage, resultsLength);
-    const inQuery = query !== "" && `in query '${query}'`;
+    const inQuery = query !== "" ? `in query '${query}'` : "";
 
     return (
         <>
