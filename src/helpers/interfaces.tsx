@@ -1,5 +1,5 @@
 import { DialogProps } from "@mui/material/Dialog";
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export interface TagInterface {
     title: string;
@@ -80,11 +80,6 @@ export interface State {
 export interface ImageProps {
     alt: string;
     id: string;
-}
-
-export interface TooltipProps {
-    children: ReactNode;
-    text: string;
 }
 
 export interface ImageData {

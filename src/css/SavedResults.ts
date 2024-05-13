@@ -63,7 +63,7 @@ export const Button = styled.button`
     padding: unset;
     background-color: unset;
     border: unset;
-    margin-right: 0.3rem;
+    margin-right: 0rem;
     cursor: pointer;
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
 
@@ -71,7 +71,7 @@ export const Button = styled.button`
         outline: unset;
     }
 
-    div svg {
+    span svg {
         color: white;
 
         &:hover {

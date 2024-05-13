@@ -7,11 +7,11 @@ import { getRandomSearchThunk, getSearchThunk } from "../../store/searchResults/
 
 import { FaHeart } from "react-icons/fa";
 import { Image, SavedImg, SelectedPic } from "../../helpers/interfaces";
-import Tooltip from "../shared/Tooltip";
 import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
 import EditModal from "../savedResults/EditModal";
 import { useParams } from "react-router-dom";
+import { Tooltip } from "@mui/material";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ function SearchResults() {
     const error = useAppSelector(searchError);
 
     const params = useParams();
-    // console.log(params);
+    console.log(params);
     // console.log(images);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -116,11 +116,13 @@ function SearchResults() {
                                                     onClick={() => handleModal(formatImage(image))}
                                                 />
                                                 <ButtonContainer onClick={ (e) => handleSave(e, image) }>
-                                                <Button>
-                                                    <Tooltip text={'Add to saved'}>
-                                                    <HeartIcon />
-                                                    </Tooltip>
-                                                </Button>
+                                                    <Button>
+                                                        <Tooltip title="Add to saved">
+                                                            <span>
+                                                                <HeartIcon />
+                                                            </span>
+                                                        </Tooltip>
+                                                    </Button>
                                                 </ButtonContainer>
                                         </ImageContainerStyle>
                                     )

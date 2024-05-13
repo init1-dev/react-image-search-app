@@ -66,7 +66,9 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
 
                 <SearchBarStyle>
                     <LogoStyle to={appName} className="logo">
-                        <WallpaperOutlinedIcon className={location.pathname === appName ? "logoActive" : ""} />
+                        <Tooltip title="Go to search">
+                            <WallpaperOutlinedIcon className={location.pathname === appName ? "logoActive" : ""} />
+                        </Tooltip>
                     </LogoStyle>
 
                     <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
@@ -80,9 +82,13 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                 <MenuStyle>
                     <li>
                         <MenuItemStyle to={appName + "/saved"}>
-                            <FaHeart 
-                                className={location.pathname === appName + "/saved" ? "logoActive" : ""} 
-                            />
+                            <Tooltip title="Saved images">
+                                <IconButton>
+                                    <FaHeart 
+                                        className={location.pathname === appName + "/saved" ? "logoActive" : ""} 
+                                    />
+                                </IconButton>
+                            </Tooltip>
                         </MenuItemStyle>
                     </li>
 
@@ -100,7 +106,9 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     </li>
 
                     <ToggleThemeButton onClick={handleToggleTheme}>
-                        { theme === 'light' ? '🌙' : '☀️' }
+                        <Tooltip title="Toggle theme">
+                            <span>{ theme === 'light' ? '🌙' : '☀️' }</span>
+                        </Tooltip>
                     </ToggleThemeButton>
                 </MenuStyle>
 

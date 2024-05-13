@@ -2,13 +2,12 @@ import { useSelector } from "react-redux";
 import { useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { deletePhoto, editDescription, imageTags, savedQuery } from '../../store/searchResults/searchSlice';
-import { SavedImg, SearchResultsProps, SelectedPic, State } from "../../helpers/interfaces";
+import { SavedImg, SavedTags, SearchResultsProps, SelectedPic, State } from "../../helpers/interfaces";
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { MdContentCopy } from "react-icons/md";
 
-import Tooltip from "../shared/Tooltip";
 import { saveAs } from 'file-saver';
 import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../../css/SavedResults";
 import EditModal from "./EditModal";
@@ -16,13 +15,14 @@ import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
 import { handleCopyUrl } from "../../helpers/handleCopyUrl";
 import PaginationComponent from "./PaginationComponent";
+import { Tooltip } from "@mui/material";
 // import { useParams } from "react-router-dom";
 
 function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
     const saved = useSelector((state: State) => state.saved.images);
     const query = useAppSelector(savedQuery);
-    const tags: string[] = useAppSelector(imageTags);
+    const tags: SavedTags[] = useAppSelector(imageTags);
 
     console.log("tags:", tags);
 
@@ -162,23 +162,31 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                                     />
                                     <ButtonContainer>
                                         <Button>
-                                            <Tooltip text={'Remove from saved'}>
-                                                <DeleteOutlineOutlinedIcon onClick={ () => handleDelete(image, pageItems.length) } />
+                                            <Tooltip title={'Remove from saved'}>
+                                                <span>
+                                                    <DeleteOutlineOutlinedIcon onClick={ () => handleDelete(image, pageItems.length) } />
+                                                </span>
                                             </Tooltip>
                                         </Button>
                                         <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
-                                            <Tooltip text={'Download image'}>
-                                                <DownloadButton />
+                                            <Tooltip title={'Download image'}>
+                                                <span>
+                                                    <DownloadButton />
+                                                </span>
                                             </Tooltip>
                                         </Button>
                                         <Button onClick={ () => (handleCopyUrl(image.src_regular)) }>
-                                            <Tooltip text={'Copy url'}>
-                                                <CopyUrlButton />
+                                            <Tooltip title={'Copy url'}>
+                                                <span>
+                                                    <CopyUrlButton />
+                                                </span>
                                             </Tooltip>
                                         </Button>
                                         <Button>
-                                            <Tooltip text={'Get info'}>
-                                                <InfoOutlinedIcon onClick={() => handleModal(image)} />
+                                            <Tooltip title={'Get info'}>
+                                                <span>
+                                                    <InfoOutlinedIcon onClick={() => handleModal(image)} />
+                                                </span>
                                             </Tooltip> 
                                         </Button>
                                         <span className="shadow">{image.likes} ❤️</span>
