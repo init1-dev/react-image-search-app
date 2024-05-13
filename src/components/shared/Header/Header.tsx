@@ -15,7 +15,7 @@ import { LuListRestart } from "react-icons/lu";
 import SearchComponent from "../../SearchComponent";
 import { useAppSelector } from "../../../hooks/store";
 import { FormStyle, HeaderStyle, LogoStyle, MenuItemStyle, MenuStyle, SearchBarStyle, ToggleThemeButton, TopBarStyle } from "./HeaderStyles";
-import { IconButton, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const currentPath = useLocation();
@@ -83,11 +83,11 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     <li>
                         <MenuItemStyle to={appName + "/saved"}>
                             <Tooltip title="Saved images">
-                                <IconButton>
+                                <>
                                     <FaHeart 
                                         className={location.pathname === appName + "/saved" ? "logoActive" : ""} 
                                     />
-                                </IconButton>
+                                </>
                             </Tooltip>
                         </MenuItemStyle>
                     </li>
@@ -95,9 +95,12 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     <li>
                         <MenuItemStyle to={appName + "/saved"}>
                             <Tooltip title="Reset saved">
-                                <IconButton onClick={() => handleResetApp()}>
-                                    <LuListRestart className="button" />
-                                </IconButton>
+                                <>
+                                    <LuListRestart 
+                                        className="button"
+                                        onClick={() => handleResetApp()} 
+                                    />
+                                </>
                             </Tooltip>
                         </MenuItemStyle>
                     </li>
