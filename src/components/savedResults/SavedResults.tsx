@@ -16,6 +16,7 @@ import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
 import { handleCopyUrl } from "../../helpers/handleCopyUrl";
 import PaginationComponent from "./PaginationComponent";
+import { useParams } from "react-router-dom";
 
 function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
@@ -24,6 +25,10 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
 
     // console.log(query);
     console.log(saved);
+
+    const params = useParams();
+
+    console.log(params);
 
     const imagesPerPage = 15;
 

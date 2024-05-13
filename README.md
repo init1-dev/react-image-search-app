@@ -12,6 +12,7 @@ DOCUMENTATION PENDING
 - search on saved fix showing "1 to 15 of..." for custom search message instead all photos
 - maintain last term search
 - search term in url params (fix current)
+- search page select for horizontal, vertical or both
 
 # OTHERS
 

@@ -5,20 +5,26 @@ import { SearchPhotos } from './views/SearchPhotos';
 import { SavedPhotos } from './views/SavedPhotos';
 
 export const appName = '/react-image-search-app';
+const paramsStr = `:page?/:query?`;
 
 const appRouter = createBrowserRouter([
     {
         id: "root",
-        path: appName,
+        path: "/",
         Component: RootView,
         children: [
             {
-                path: appName,
+                path: `${appName}/${paramsStr}`,
                 Component: SearchPhotos
             },
             {
-                path: appName + "/saved",
-                Component: SavedPhotos
+                path: `${appName}/saved/${paramsStr}`,
+                Component: SavedPhotos,
+                action: ({ params }) => {
+                    const { page = 1, query = "" } = params;
+
+                    return redirect(`${appName}/saved/${page}/${query}`);
+                }
             },
             {
                 path: "*",
