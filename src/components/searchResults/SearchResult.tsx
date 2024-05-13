@@ -44,12 +44,16 @@ function SearchResults() {
         setIsModalOpen(false);
     };
 
-    const handleSave = (img: Image) => {
+    const handleSave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, img: Image) => {
+        const target = e.target as HTMLDivElement;
+        target.classList.add("heart-red");
+        
         const isImageAlreadySaved = saved.find(image => image.id === img.id);
         if (isImageAlreadySaved) {
             Toast.fire({
                 icon: "warning",
-                title: "Image already saved"
+                html: `<h4 class="swal-warning">Already saved</h4>`,
+                background: "#9b8249"
             })
             return;
         }
@@ -59,7 +63,8 @@ function SearchResults() {
         dispatch(savePhoto(formatedImg))
         Toast.fire({
             icon: "success",
-            title: "Added successfully"
+            html: `<h4 class="swal-success">Added successfully</h4>`,
+            background: "#499b49"
         })
     }
 
@@ -109,7 +114,7 @@ function SearchResults() {
                                                     loading="lazy"
                                                     onClick={() => handleModal(formatImage(image))}
                                                 />
-                                                <ButtonContainer onClick={ () => handleSave(image) }>
+                                                <ButtonContainer onClick={ (e) => handleSave(e, image) }>
                                                 <Button>
                                                     <Tooltip text={'Add to saved'}>
                                                     <HeartIcon />

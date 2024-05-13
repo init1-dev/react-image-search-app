@@ -86,6 +86,7 @@ select option {
 }
 
 .swal2-toast {
+    padding: 0.5em !important;
     margin-bottom: 3rem;
 }
 
@@ -95,6 +96,32 @@ select option {
 
 .MuiDialogContent-root {
     border-radius: 0.5rem;
+}
+
+.swal-success, .swal-warning {
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-top: 0.1rem !important;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    filter: drop-shadow(1px 1px 2px rgb(0 0 0 / 0.8))
+}
+
+.swal-success {
+    color: white;
+}
+
+.swal-warning {
+    color: white;
+}
+
+.swal2-close {
+    color: white !important;
+    filter: drop-shadow(1px 1px 2px rgb(0 0 0 / 0.8))
+}
+
+.heart-red {
+    color: red !important;
 }
 
 /* swal2-popup swal2-toast swal2-icon-success swal2-show */

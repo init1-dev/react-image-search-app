@@ -102,7 +102,8 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
         dispatch(deletePhoto(image.id));
         Toast.fire({
             icon: "success",
-            title: "Removed successfully"
+            html: `<h4 class="swal-success">Removed successfully</h4>`,
+            background: "#499b49"
         });
 
         if(pageImages === 1 && currentPage !== 1){
@@ -110,20 +111,20 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
         }
     };
 
+    const resultsLength = saved.length;
     const getResultsFrom = ((currentPage - 1) * imagesPerPage) + 1;
     const getResultsTo = Math.min(currentPage * imagesPerPage, saved.length);
-    const savedLength = saved.length;
 
     return (
         <>
             <SectionStyle>
-                { savedLength > 0
+                { resultsLength > 0
                     ?   <>
                             <SearchBarStyle>
                                 <FormStyle >
                                     <small>{ 
-                                        savedLength > 0
-                                            && `Showing ${getResultsFrom} to ${getResultsTo} of ${savedLength} images`
+                                        resultsLength > 0
+                                            && `Showing ${getResultsFrom} to ${getResultsTo} of ${resultsLength} images`
                                     }</small>
 
                                     <SelectStyle id="orderSelect" value={orderBy} onChange={ (e) => setOrderBy(e.target.value) }>
