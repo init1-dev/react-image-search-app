@@ -1,4 +1,4 @@
-import Header from '../components/shared/Header';
+import Header from '../components/shared/Header/Header';
 import SearchResult from '../components/searchResults/SearchResult';
 
 export const SearchPhotos = () => {
