@@ -37,46 +37,52 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
-        <DialogContentModal>
-            <img src={image.src_regular} 
-                alt="Imagen" 
-                style={{ width: '100%', height: '100%', maxHeight: '70vh', objectFit: 'contain', marginBottom: '1rem' }} />
-            {isEditing ? (
-            <ModalTextField
-                value={editedDescription}
-                onChange={handleDescriptionChange}
-                fullWidth
-                multiline
-                autoFocus
-                id="standard-basic" variant="standard"
-                onKeyDown={handleKeyDown}
-            />
-            ) : (
-            <span>Desc: <strong>{editedDescription.substring(0,20)}</strong></span>
-            )}
-            <div style={{display:'flex', alignItems:'center', margin: '0.5rem 0 1rem 0'}}>
-            <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
-                <SettingsEthernetOutlinedIcon style={{marginRight: '0.5rem'}}/>
-                <strong>{`${image.width}`}</strong>
-            </span>
-            <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
-                <HeightOutlinedIcon style={{marginRight: '0.5rem'}}/>
-                <strong>{`${image.height}`}</strong>
-            </span>
-            <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
-                <FavoriteBorderOutlinedIcon style={{marginRight: '0.5rem'}}/>
-                <strong>{`${image.likes}`}</strong>
-            </span>
-            </div>
-            <div>
-            {isEditing ? (
-                <Button variant="contained" onClick={handleSaveDescription}>SAVE</Button>
-            ) : (
-                <Button variant="contained" onClick={handleEditToggle}>EDIT DESC</Button>
-            )}
-            <Button onClick={ () => handleCopyUrl(image.src_regular) } style={{marginLeft:"1rem"}} variant="contained">COPY URL</Button>
-            </div>
-        </DialogContentModal>
+            <DialogContentModal>
+                <img src={image.src_regular} 
+                    alt="Imagen" 
+                    style={{ width: '100%', height: '100%', maxHeight: '70vh', objectFit: 'contain', marginBottom: '1rem' }} 
+                />
+
+                {isEditing ? (
+                    <ModalTextField
+                        value={editedDescription}
+                        onChange={handleDescriptionChange}
+                        fullWidth
+                        multiline
+                        autoFocus
+                        id="standard-basic" variant="standard"
+                        onKeyDown={handleKeyDown}
+                    />
+                ) : (
+                    <span>Desc: <strong>{editedDescription.substring(0,20)}</strong></span>
+                )}
+
+                <div style={{display:'flex', alignItems:'center', margin: '0.5rem 0 1rem 0'}}>
+                    <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
+                        <SettingsEthernetOutlinedIcon style={{marginRight: '0.5rem'}}/>
+                        <strong>{`${image.width}`}</strong>
+                    </span>
+
+                    <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
+                        <HeightOutlinedIcon style={{marginRight: '0.5rem'}}/>
+                        <strong>{`${image.height}`}</strong>
+                    </span>
+
+                    <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
+                        <FavoriteBorderOutlinedIcon style={{marginRight: '0.5rem'}}/>
+                        <strong>{`${image.likes}`}</strong>
+                    </span>
+                </div>
+
+                <div>
+                    {isEditing ? (
+                        <Button variant="contained" onClick={handleSaveDescription}>SAVE</Button>
+                    ) : (
+                        <Button variant="contained" onClick={handleEditToggle}>EDIT DESC</Button>
+                    )}
+                    <Button onClick={ () => handleCopyUrl(image.src_regular) } style={{marginLeft:"1rem"}} variant="contained">COPY URL</Button>
+                </div>
+            </DialogContentModal>
         </Dialog>
     );
 };
