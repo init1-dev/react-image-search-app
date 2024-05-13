@@ -2,6 +2,7 @@ import { styled as styledMui, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent } from 'react';
+import Paper from '@mui/material/Paper';
 
 interface SearchComponentProps {
     placeholder: string;
@@ -15,16 +16,22 @@ const SearchComponent = ({
     return (
         <Search>
             <SearchIconWrapper>
-            <SearchIcon />
+                <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
-                placeholder={ placeholder }
-                onChange={ (e) => {handleChange(e) }}
-                inputProps={{ 'aria-label': 'search' }}
-            />
+            <InputBox elevation={2}>
+                <StyledInputBase
+                    placeholder={ placeholder }
+                    onChange={ (e) => {handleChange(e) }}
+                    inputProps={{ 'aria-label': 'search' }}
+                />
+            </InputBox>
         </Search>
     );
 }
+
+const InputBox = styledMui(Paper)(() => ({
+    color: 'inherit'
+}));
 
 const Search = styledMui('div')(({ theme }) => ({
     position: 'relative',

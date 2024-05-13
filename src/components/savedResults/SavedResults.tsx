@@ -154,12 +154,14 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                             { pageItems.map((image: SavedImg) => {
                                 return (
                                 <ImageContainerStyle key={image.id}>
-                                    <ImageItemStyle
-                                        src={image.src_preview}
-                                        width={400}
-                                        alt={image.description}
-                                        onClick={() => handleModal(image)}
-                                    />
+                                    <Tooltip title="Click to details" followCursor>
+                                        <ImageItemStyle
+                                            src={image.src_preview}
+                                            width={400}
+                                            alt={image.description}
+                                            onClick={() => handleModal(image)}
+                                        />
+                                    </Tooltip>
                                     <ButtonContainer>
                                         <Button>
                                             <Tooltip title={'Remove from saved'}>

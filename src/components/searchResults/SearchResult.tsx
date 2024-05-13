@@ -170,6 +170,7 @@ const HeartIcon = styled(FaHeart)`
     font-size: 20px;
 
     &:hover{
+        cursor: pointer;
         color: red;
         fill: red;
     }

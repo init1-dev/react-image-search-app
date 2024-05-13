@@ -34,7 +34,7 @@ export const ImageItemStyle = styled.img`
     display: block;
     border-radius: 5px;
     border: 1px solid rgba(133, 133, 133, 0.25);
-    cursor: pointer;
+    cursor: zoom-in;
 
     @media only screen and (max-width: 700px) {
         width: 100%;
