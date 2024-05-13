@@ -85,4 +85,16 @@ select option {
     z-index: 1500 !important;
 }
 
+.swal2-toast {
+    margin-bottom: 3rem;
+}
+
+.MuiPaper-root {
+    background-color: transparent !important;
+}
+
+.MuiDialogContent-root {
+    border-radius: 0.5rem;
+}
+
 /* swal2-popup swal2-toast swal2-icon-success swal2-show */

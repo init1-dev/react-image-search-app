@@ -184,11 +184,15 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                 }
                 
             </SectionStyle>
+
             <EditModal 
                 open={isModalOpen} 
                 onClose={handleCloseModal} 
                 onSave={(description: string) => handleSaveDescription(selectedPic.id, description)} 
-                image={selectedPic as SelectedPic} />
+                image={selectedPic as SelectedPic} 
+                isEditVisible={true}
+            />
+
             <PaginationComponent 
                 filterBySearch={filterBySearch} 
                 currentPage={currentPage}

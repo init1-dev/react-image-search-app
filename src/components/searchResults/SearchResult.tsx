@@ -6,9 +6,11 @@ import { savePhoto, savedPhotos, searchError, searchPhotos, searchQuery, searchS
 import { getRandomSearchThunk, getSearchThunk } from "../../store/searchResults/searchThunk";
 
 import { FaHeart } from "react-icons/fa";
-import { Image } from "../../helpers/interfaces";
+import { Image, SavedImg, SelectedPic } from "../../helpers/interfaces";
 import Tooltip from "../shared/Tooltip";
 import Toast from "../../helpers/alerts/swal";
+import { formatImage } from "../../helpers/Images/formatImage";
+import EditModal from "../savedResults/EditModal";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -18,6 +20,25 @@ function SearchResults() {
     const query = useAppSelector(searchQuery);
     const status = useAppSelector(searchStatus);
     const error = useAppSelector(searchError);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedPic, setSelectedPic] = useState<SelectedPic>({
+        id: '',
+        src_regular: '',
+        description: '',
+        width: 0,
+        height: 0,
+        likes: 0
+    });
+
+    const handleModal = (image: SavedImg) => {
+        setIsModalOpen(true);
+        setSelectedPic(image);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     const handleSave = (img: Image) => {
         const isImageAlreadySaved = saved.find(image => image.id === img.id);
@@ -29,19 +50,9 @@ function SearchResults() {
             return;
         }
 
-        dispatch(savePhoto({
-            id: img.id,
-            src_preview: img.urls.small,
-            src_regular: img.urls.regular,
-            src_full: img.urls.full,
-            tags: img.tags,
-            alt_description: img.description,
-            description: img.description === null ? img.alt_description : img.description,
-            width: img.width,
-            height: img.height,
-            likes: img.likes,
-            created_at: new Date(Date.now()).toLocaleDateString("es-ES"),
-        }))
+        const formatedImg = formatImage(img);
+
+        dispatch(savePhoto(formatedImg))
         Toast.fire({
             icon: "success",
             title: "Added successfully"
@@ -80,34 +91,44 @@ function SearchResults() {
     }
 
     return (
-        <SectionStyle>
-            { images.length > 0
-                ?   <ImageGridStyle>
-                        { images.map((image) => {
-                                return (
-                                    <ImageContainerStyle key={image.id}>
-                                            <ImageItemStyle
-                                                src={(image.urls?.small) ? image.urls.small : image.urls.regular}
-                                                width={400}
-                                                alt={image.description ? image.description : ''}
-                                                loading="lazy"
-                                            />
-                                            <ButtonContainer onClick={ () => handleSave(image) }>
-                                            <Button>
-                                                <Tooltip text={'Add to saved'}>
-                                                <HeartIcon />
-                                                </Tooltip>
-                                            </Button>
-                                            </ButtonContainer>
-                                    </ImageContainerStyle>
-                                )
-                        })}
-                    </ImageGridStyle>
-                : <TextContainer>
-                    <p>Make a search to see something here</p>
-                </TextContainer>
-            }
-        </SectionStyle>
+        <>
+            <SectionStyle>
+                { images.length > 0
+                    ?   <ImageGridStyle>
+                            { images.map((image) => {
+                                    return (
+                                        <ImageContainerStyle key={image.id}>
+                                                <ImageItemStyle
+                                                    src={(image.urls?.small) ? image.urls.small : image.urls.regular}
+                                                    width={400}
+                                                    alt={image.description ? image.description : ''}
+                                                    loading="lazy"
+                                                    onClick={() => handleModal(formatImage(image))}
+                                                />
+                                                <ButtonContainer onClick={ () => handleSave(image) }>
+                                                <Button>
+                                                    <Tooltip text={'Add to saved'}>
+                                                    <HeartIcon />
+                                                    </Tooltip>
+                                                </Button>
+                                                </ButtonContainer>
+                                        </ImageContainerStyle>
+                                    )
+                            })}
+                        </ImageGridStyle>
+                    : <TextContainer>
+                        <p>Make a search to see something here</p>
+                    </TextContainer>
+                }
+            </SectionStyle>
+
+            <EditModal 
+                open={isModalOpen} 
+                onClose={handleCloseModal} 
+                image={selectedPic as SelectedPic} 
+                isEditVisible={false}
+            />
+        </>
     )
 }
 

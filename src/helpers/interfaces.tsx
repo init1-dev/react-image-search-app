@@ -92,8 +92,9 @@ export interface ImageData {
 export interface EditModalProps extends Omit<DialogProps, 'onClose'> {
     open: boolean;
     onClose: () => void;
-    onSave: (description: string) => void;
     image: ImageData;
+    isEditVisible?: boolean;
+    onSave?: (description: string) => void;
 }
 
 export interface SelectedPic {

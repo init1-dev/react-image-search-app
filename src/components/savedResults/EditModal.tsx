@@ -7,7 +7,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import styled from 'styled-components';
 import { handleCopyUrl } from '../../helpers/handleCopyUrl';
 
-const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
+const EditModal = ({ open, onClose, onSave, image, isEditVisible }: EditModalProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedDescription, setEditedDescription] = useState(image.description);
 
@@ -20,8 +20,10 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
     };
 
     const handleSaveDescription = () => {
-        onSave(editedDescription);
-        handleEditToggle();
+        if(onSave){
+            onSave(editedDescription);
+            handleEditToggle();
+        }
     };
 
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +36,10 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
         handleSaveDescription();
         }
     };
+
+    const isEditingButton = isEditing
+        ? <Button variant="contained" onClick={handleSaveDescription}>SAVE</Button> 
+        : <Button variant="contained" onClick={handleEditToggle}>EDIT DESC</Button>
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
@@ -54,7 +60,14 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
                         onKeyDown={handleKeyDown}
                     />
                 ) : (
-                    <span>Desc: <strong>{editedDescription.substring(0,20)}</strong></span>
+                    <span>
+                        Desc: <strong>
+                                { editedDescription.length > 25
+                                    ? editedDescription.substring(0,25) + "..."
+                                    : editedDescription 
+                                }
+                            </strong>
+                    </span>
                 )}
 
                 <div style={{display:'flex', alignItems:'center', margin: '0.5rem 0 1rem 0'}}>
@@ -75,12 +88,15 @@ const EditModal = ({ open, onClose, onSave, image }: EditModalProps) => {
                 </div>
 
                 <div>
-                    {isEditing ? (
-                        <Button variant="contained" onClick={handleSaveDescription}>SAVE</Button>
-                    ) : (
-                        <Button variant="contained" onClick={handleEditToggle}>EDIT DESC</Button>
-                    )}
-                    <Button onClick={ () => handleCopyUrl(image.src_regular) } style={{marginLeft:"1rem"}} variant="contained">COPY URL</Button>
+                    <Button 
+                        onClick={ () => handleCopyUrl(image.src_regular) } 
+                        style={{marginRight:"1rem"}} 
+                        variant="contained"
+                    >
+                        COPY URL
+                    </Button>
+                    { isEditVisible
+                        && isEditingButton }
                 </div>
             </DialogContentModal>
         </Dialog>
