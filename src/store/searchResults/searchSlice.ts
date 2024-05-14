@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getRandomSearchThunk, getSearchThunk } from './searchThunk';
 import { SavedState, SearchState, TagInterface } from '../../helpers/interfaces';
+import { updateTags } from '../../helpers/updateTags';
 
 const DEFAULT_STATE: SearchState = {
     images: [],
@@ -20,7 +21,6 @@ const savedInitialState: SavedState = (() => {
     return (persistedState) ? JSON.parse(persistedState).saved : { images: [], tags: [], query: ''};
 })();
 
-// Slice asíncrono para la búsqueda
 export const searchSlice = createSlice({
     name: 'search',
     initialState: searchInitialState,
@@ -70,7 +70,6 @@ export const searchSlice = createSlice({
         }
 });
 
-// Slice síncrono para fotos guardadas
 export const savedSlice = createSlice({
     name: 'saved',
     initialState: savedInitialState,
@@ -90,10 +89,12 @@ export const savedSlice = createSlice({
             });
         },
         deletePhoto: (state, action) => {
-            return {
-                ...state,
-                images: state.images.filter(image => image.id !== action.payload) 
-            };
+            const index = state.images.findIndex((image) => image.id === action.payload);
+            const imageToDelete = state.images[index];
+            const tags = imageToDelete.tags.map(tag => tag.title);
+            const updatedTags = updateTags(state.tags, tags);
+            state.tags = updatedTags;
+            state.images.splice(index, 1);
         },
         editDescription: (state, action) => {
             const { id, newDescription } = action.payload;

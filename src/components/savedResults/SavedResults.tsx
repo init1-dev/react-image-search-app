@@ -28,9 +28,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
 
     // console.log(query);
     // console.log(saved);
-
     // const params = useParams();
-
     // console.log(params);
 
     const imagesPerPage = 15;
@@ -43,7 +41,8 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
         description: '',
         width: 0,
         height: 0,
-        likes: 0
+        likes: 0,
+        tags: []
     });
 
     const getFilteredPhotos = (images:SavedImg[] , searchTerm: string) => {

@@ -38,15 +38,15 @@ const EditModal = ({ open, onClose, onSave, image, isEditVisible }: EditModalPro
     };
 
     const isEditingButton = isEditing
-        ? <Button variant="contained" onClick={handleSaveDescription}>SAVE</Button> 
-        : <Button variant="contained" onClick={handleEditToggle}>EDIT DESC</Button>
+        ? <StyledButton variant="contained" onClick={handleSaveDescription}>SAVE</StyledButton> 
+        : <StyledButton variant="contained" onClick={handleEditToggle}>EDIT DESC</StyledButton>
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
             <DialogContentModal>
                 <img src={image.src_regular} 
                     alt="Imagen" 
-                    style={{ width: '100%', height: '100%', maxHeight: '70vh', objectFit: 'contain', marginBottom: '1rem' }} 
+                    style={{ width: '100%', height: '100%', maxHeight: '70vh', objectFit: 'contain', marginBottom: '1rem' }}
                 />
 
                 {isEditing ? (
@@ -82,22 +82,32 @@ const EditModal = ({ open, onClose, onSave, image, isEditVisible }: EditModalPro
                     </span>
 
                     <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
-                        <FavoriteBorderOutlinedIcon style={{marginRight: '0.5rem'}}/>
+                        <FavoriteBorderOutlinedIcon style={{marginRight: '0.5rem', fill:"red"}}/>
                         <strong>{`${image.likes}`}</strong>
                     </span>
                 </div>
 
-                <div>
-                    <Button 
+                <TagsContainer>
+                    { 
+                        image.tags && image.tags.map((tag, i) => {
+                            return (
+                                <Tag key={i}>#{tag.title}</Tag>
+                            );
+                        })
+                    }
+                </TagsContainer>
+
+                <ButtonsContainer>
+                    <StyledButton 
                         onClick={ () => handleCopyUrl(image.src_regular) } 
                         style={{marginRight:"1rem"}} 
                         variant="contained"
                     >
                         COPY URL
-                    </Button>
+                    </StyledButton>
                     { isEditVisible
                         && isEditingButton }
-                </div>
+                </ButtonsContainer>
             </DialogContentModal>
         </Dialog>
     );
@@ -113,6 +123,38 @@ const ModalTextField = styled(TextField)`
         color: ${({ theme }) => theme.text};
         background-color: ${({ theme }) => theme.searchBarBg};
     }
+`;
+
+const TagsContainer = styled.div`
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+`;
+
+const Tag = styled.p`
+    font-family: Plus Jakarta Sans, sans-serif;
+    font-size: 0.7em;
+    font-weight: 600;
+    padding: 0.5rem;
+    background-color: ${({ theme }) => theme.themeButtonBg};
+    border-radius: 0.5rem;
+    width: max-content;
+    margin: 0;
+    color: ${({ theme }) => theme.text};
+    text-transform: uppercase;
+`;
+
+const ButtonsContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+`;
+
+const StyledButton = styled(Button)`
+    width: 100%;
 `;
 
 export default EditModal;

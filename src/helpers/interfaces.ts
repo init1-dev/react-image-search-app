@@ -88,6 +88,7 @@ export interface ImageData {
     width: number;
     height: number;
     likes: number;
+    tags: TagInterface[];
 }
 
 export interface EditModalProps extends Omit<DialogProps, 'onClose'> {
@@ -105,6 +106,7 @@ export interface SelectedPic {
     width: number;
     height: number;
     likes: number;
+    tags: TagInterface[];
 }
 
 export interface SearchResultsProps {

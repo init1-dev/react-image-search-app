@@ -10,8 +10,8 @@ import { Image, SavedImg, SelectedPic } from "../../helpers/interfaces";
 import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
 import EditModal from "../savedResults/EditModal";
-import { useParams } from "react-router-dom";
 import { Tooltip } from "@mui/material";
+// import { useParams } from "react-router-dom";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ function SearchResults() {
     const status = useAppSelector(searchStatus);
     const error = useAppSelector(searchError);
 
-    const params = useParams();
+    // const params = useParams();
     // console.log(params);
     // console.log(images);
 
@@ -33,7 +33,8 @@ function SearchResults() {
         description: '',
         width: 0,
         height: 0,
-        likes: 0
+        likes: 0,
+        tags: []
     });
 
     const handleModal = (image: SavedImg) => {
