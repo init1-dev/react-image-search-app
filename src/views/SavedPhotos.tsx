@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import Header from "../components/shared/Header/Header"
-import SavedResults from "../components/savedResults/SavedResults"
+import SavedResults from "../components/savedResults/SavedResults";
 import { getPageFromUrl } from "../helpers/pageFunctions";
 import { useState } from "react";
 
