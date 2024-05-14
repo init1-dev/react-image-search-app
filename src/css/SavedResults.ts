@@ -123,6 +123,7 @@ export const SearchBarStyle = styled.div`
 
     @media only screen and (max-width: 700px) {
         display: block;
+        margin-bottom: 1rem;
     }
 `;
 
