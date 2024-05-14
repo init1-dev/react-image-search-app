@@ -6,7 +6,6 @@ DOCUMENTATION PENDING
 - maintain last term search
 - search term in url params (fix current)
 - Tags system in saved images to filter images by tag (work in progress)
-- handle tags when delete img update count
 
 - check possible bug trying to save image if random search with empty input returns more than 1
 

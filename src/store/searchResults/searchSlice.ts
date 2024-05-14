@@ -92,8 +92,8 @@ export const savedSlice = createSlice({
             const index = state.images.findIndex((image) => image.id === action.payload);
             const imageToDelete = state.images[index];
             const tags = imageToDelete.tags.map(tag => tag.title);
-            const updatedTags = updateTags(state.tags, tags);
-            state.tags = updatedTags;
+
+            updateTags(state.tags, tags);
             state.images.splice(index, 1);
         },
         editDescription: (state, action) => {

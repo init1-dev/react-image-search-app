@@ -16,6 +16,7 @@ import styled from "styled-components";
 import { handleCopyUrl } from "../../helpers/handleCopyUrl";
 import PaginationComponent from "./PaginationComponent";
 import { Tooltip } from "@mui/material";
+import PopularTags from "../Tags/PopularTags";
 // import { useParams } from "react-router-dom";
 
 function SearchResults({currentPage, setPage}: SearchResultsProps) {
@@ -23,8 +24,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const saved = useSelector((state: State) => state.saved.images);
     const query = useAppSelector(savedQuery);
     const tags: SavedTags[] = useAppSelector(imageTags);
-
-    console.log(tags);
+    // const popularTags: SavedTags[] = null;
 
     // console.log(query);
     // console.log(saved);
@@ -149,6 +149,8 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                                 </FormStyle>
                             </SearchBarStyle>
 
+                            <PopularTags tags={tags} />
+
                             <ImageGridStyle>
                             { pageItems.map((image: SavedImg) => {
                                 return (
@@ -234,6 +236,6 @@ const TextContainer = styled.div`
 
 const CopyUrlButton = styled(MdContentCopy)`
     font-size: 18px;
-`
+`;
 
 export default SearchResults;

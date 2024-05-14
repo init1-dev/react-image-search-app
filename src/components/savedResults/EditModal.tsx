@@ -181,15 +181,16 @@ const ModalTextField = styled(TextField)`
     }
 `;
 
-const TagsContainer = styled.div`
+export const TagsContainer = styled.div`
     display: flex;
+    align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1rem;
 `;
 
-const Tag = styled.p`
+export const Tag = styled.p`
     font-family: Plus Jakarta Sans, sans-serif;
     font-size: 0.7em;
     font-weight: 600;
