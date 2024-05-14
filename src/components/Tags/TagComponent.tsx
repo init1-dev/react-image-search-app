@@ -23,12 +23,13 @@ const StyledChip = styled(Chip)`
         background-color: ${({ theme }) => theme.searchBarBg};
         color: ${({ theme }) => theme.text};
         border: 0.1em solid transparent;
+        cursor: pointer;
     }
 
     &.MuiChip-root:hover {
         background-color: ${({ theme }) => theme.header};
-        color: white;
-        border: 0.1em solid white;
+        color: ${({ theme }) => theme.text};
+        border: 0.1em solid ${({ theme }) => theme.body};
     }
 
     /* &.MuiChip-root:focus {
