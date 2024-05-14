@@ -77,11 +77,13 @@ export const MenuStyle = styled.ul`
 `;
 
 export const MenuItemStyle = styled(NavLink)`
-    display: flex;
-    font-size: 20px;
-    height: 100%;
-    transition: color 0.2s ease;
-    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    span {
+        display: flex;
+        font-size: 20px;
+        height: 100%;
+        transition: color 0.2s ease;
+        filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    }
 
     &:hover {
         color: ${({ theme }) => theme.btnHoverText};

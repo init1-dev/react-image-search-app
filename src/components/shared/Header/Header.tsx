@@ -83,11 +83,11 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     <li>
                         <MenuItemStyle to={appName + "/saved"}>
                             <Tooltip title="Saved images">
-                                <>
+                                <span>
                                     <FaHeart 
                                         className={location.pathname === appName + "/saved" ? "logoActive" : ""} 
                                     />
-                                </>
+                                </span>
                             </Tooltip>
                         </MenuItemStyle>
                     </li>
@@ -95,12 +95,12 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     <li>
                         <MenuItemStyle to={appName + "/saved"}>
                             <Tooltip title="Reset saved">
-                                <>
+                                <span>
                                     <LuListRestart 
                                         className="button"
                                         onClick={() => handleResetApp()} 
                                     />
-                                </>
+                                </span>
                             </Tooltip>
                         </MenuItemStyle>
                     </li>

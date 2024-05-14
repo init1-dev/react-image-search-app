@@ -24,7 +24,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const query = useAppSelector(savedQuery);
     const tags: SavedTags[] = useAppSelector(imageTags);
 
-    console.log("tags:", tags);
+    console.log(tags);
 
     // console.log(query);
     // console.log(saved);
