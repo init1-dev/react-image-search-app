@@ -1,18 +1,26 @@
 import { Chip } from "@mui/material";
 import styled from "styled-components";
 import { SavedTags } from "../../helpers/interfaces";
+import { Dispatch, SetStateAction } from "react";
 
 interface TagsProps {
     tag: SavedTags;
+    activeTag: string;
+    setTag: Dispatch<SetStateAction<string>>;
 }
 
 const TagComponent = ({
-    tag
+    tag,
+    activeTag,
+    setTag
 }: TagsProps) => {
     
+    const HandleTag = (tagName: string) => {
+        return activeTag === tagName ? "" : tagName;
+    }
 
     return (
-        <StyledChip label={"#" + tag.name} />
+        <StyledChip label={"#" + tag.name} onClick={() => setTag(HandleTag(tag.name))} />
     )
 }
 

@@ -26,6 +26,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const query = useAppSelector(savedQuery);
     const tags: SavedTags[] = useAppSelector(imageTags);
     const popularTags: SavedTags[] = GetPopularTags(tags);
+    
 
     // console.log(query);
     // console.log(saved);
@@ -36,6 +37,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
 
     const [orderBy, setOrderBy] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeTag, setActiveTag] = useState('');
     const [selectedPic, setSelectedPic] = useState<SelectedPic>({
         id: '',
         src_regular: '',
@@ -44,12 +46,23 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
         height: 0,
         likes: 0,
         tags: []
-    });
+    });    
 
     const getFilteredPhotos = (images:SavedImg[] , searchTerm: string) => {
         const filtered = images.filter(image => image.description?.toLowerCase().includes(searchTerm.toLowerCase()));
         return filtered;
     };
+
+    const getPhotosByTag = (images: SavedImg[], tag: string) => {
+        if(activeTag === ""){
+            return images;
+        }
+        const imagesWithTag = images.filter(image => {
+            const tags = image.tags.map(tag => tag.title);
+            return tags.includes(tag);
+        });
+        return imagesWithTag;
+    }
 
     const getOrderedPhotos = (images: SavedImg[], filter: string) => {
         if (filter === 'newer') {
@@ -79,7 +92,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
         dispatch(editDescription({ id, newDescription }))
     };
 
-    const filterBySearch = getOrderedPhotos(getFilteredPhotos(saved, query), orderBy);
+    const filterBySearch = getOrderedPhotos(getPhotosByTag(getFilteredPhotos(saved, query), activeTag), orderBy);
     
     const getPageImages = useMemo(() => {
         const startIndex = (currentPage - 1) * imagesPerPage;
@@ -150,7 +163,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                                 </FormStyle>
                             </SearchBarStyle>
 
-                            <PopularTags tags={popularTags} />
+                            <PopularTags tags={popularTags} activeTag={activeTag} setTag={setActiveTag} />
 
                             <ImageGridStyle>
                             { pageItems.map((image: SavedImg) => {

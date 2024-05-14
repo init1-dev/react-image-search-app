@@ -45,7 +45,6 @@ $npm run dev
 ### TODO:
 - maintain last term search
 - search term in url params (fix current)
-- Tags system: develop functionality to filter by tag
 - Deploy on amazon s3
 
 ### KNOWN BUGS
