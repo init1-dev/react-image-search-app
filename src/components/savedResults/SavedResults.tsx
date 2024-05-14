@@ -17,6 +17,7 @@ import { handleCopyUrl } from "../../helpers/handleCopyUrl";
 import PaginationComponent from "./PaginationComponent";
 import { Tooltip } from "@mui/material";
 import PopularTags from "../Tags/PopularTags";
+import { GetPopularTags } from "../../helpers/getPopularTags";
 // import { useParams } from "react-router-dom";
 
 function SearchResults({currentPage, setPage}: SearchResultsProps) {
@@ -24,7 +25,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const saved = useSelector((state: State) => state.saved.images);
     const query = useAppSelector(savedQuery);
     const tags: SavedTags[] = useAppSelector(imageTags);
-    // const popularTags: SavedTags[] = null;
+    const popularTags: SavedTags[] = GetPopularTags(tags);
 
     // console.log(query);
     // console.log(saved);
@@ -149,7 +150,7 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
                                 </FormStyle>
                             </SearchBarStyle>
 
-                            <PopularTags tags={tags} />
+                            <PopularTags tags={popularTags} />
 
                             <ImageGridStyle>
                             { pageItems.map((image: SavedImg) => {

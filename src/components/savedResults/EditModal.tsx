@@ -161,10 +161,12 @@ const DialogContentModal = styled(DialogContent)`
 
     img {
         filter: drop-shadow(1.5px 1.5px 3px rgb(0 0 0 / 0.6));
+        max-height: unset !important;
+        height: calc(100% - 200px) !important;
 
-        @media only screen and (max-width: 700px) {
+        /* @media only screen and (max-width: 700px) {
             max-height: 60vh !important;
-        }
+        } */
     }
 `;
 
