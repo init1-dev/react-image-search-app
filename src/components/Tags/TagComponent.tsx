@@ -20,7 +20,11 @@ const TagComponent = ({
     }
 
     return (
-        <StyledChip label={"#" + tag.name} onClick={() => setTag(HandleTag(tag.name))} />
+        <StyledChip 
+            label={"#" + tag.name} 
+            onClick={() => setTag(HandleTag(tag.name))}
+            className={activeTag === tag.name ? 'active' : ''}
+        />
     )
 }
 
@@ -40,11 +44,9 @@ const StyledChip = styled(Chip)`
         border: 0.1em solid ${({ theme }) => theme.body};
     }
 
-    /* &.MuiChip-root:focus {
-        background-color: #FFF;
-        color: #02242D;
-        border: 0.1em solid #02242D;
-    } */
+    &.active {
+        background-color: #006a88;
+    }
 `;
 
 export default TagComponent;

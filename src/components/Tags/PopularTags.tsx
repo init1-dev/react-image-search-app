@@ -16,7 +16,12 @@ const PopularTags = ({
     activeTag,
     setTag
 }: PopularTagsProps) => {
-    
+
+    const handleTagReset = () => {
+        if(activeTag !== "") {
+            setTag("");
+        }
+    };
 
     return (
         <TagsContainer>
@@ -36,7 +41,7 @@ const PopularTags = ({
                     })
                 }
                 <Tooltip title={'Reset filter'}>
-                    <ResetTagButton onClick={() => setTag("")}>
+                    <ResetTagButton onClick={() => handleTagReset()}>
                         <ResetButton />
                     </ResetTagButton>
                 </Tooltip>
