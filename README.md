@@ -46,6 +46,7 @@ $npm run dev
 - maintain last term search
 - search term in url params (fix current)
 - Tags system: develop functionality to filter by tag
+- Deploy on amazon s3
 
 ### KNOWN BUGS
 - Possible bug trying to save image in random search with empty input when returns more than 1
