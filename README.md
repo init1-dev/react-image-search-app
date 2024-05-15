@@ -43,6 +43,7 @@ $npm run dev
 ## Next Updates
 
 ### TODO:
+- Add confirm popup to reset saved state
 - Deploy on amazon s3
 
 ### KNOWN BUGS

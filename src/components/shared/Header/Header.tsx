@@ -17,6 +17,7 @@ import { useAppSelector } from "../../../hooks/store";
 import { FormStyle, HeaderStyle, LogoStyle, MenuItemStyle, MenuStyle, SearchBarStyle, ToggleThemeButton, TopBarStyle } from "./HeaderStyles";
 import { Tooltip } from "@mui/material";
 import { SearchContext } from "../../../helpers/SearchContext";
+import Toast, { PopUp } from "../../../helpers/alerts/swal";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const currentPath = useLocation();
@@ -64,7 +65,21 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
     }
 
     const handleResetApp = () => {
-        dispatch(clearSaved());
+        PopUp.fire({
+            icon: "warning",
+            title: `<small style="all:unset;">¿Are you sure?</small>`,
+            html: `<small>Your gallery will be cleared</small>`,
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                Toast.fire({
+                    icon: "success",
+                    html: `<h4 class="swal-success">Cleared successfully</h4>`,
+                    background: "#499b49"
+                });
+                dispatch(clearSaved());
+            }
+        })
     }
 
     const placeholder = (currentPath.pathname === appName)

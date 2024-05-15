@@ -58,4 +58,8 @@ export interface Theme {
     header {
       background-color: ${({ theme }) => theme.header};
     }
+    .swal2-modal {
+      background-color: ${({ theme }) => theme.appBg};
+      color: ${({ theme }) => theme.text};
+    }
   `;

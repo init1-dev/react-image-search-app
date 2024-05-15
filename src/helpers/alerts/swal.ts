@@ -13,4 +13,9 @@ const Toast = Swal.mixin({
     }
 })
 
+export const PopUp = Swal.mixin({
+    showConfirmButton: true,
+    showCancelButton: true
+})
+
 export default Toast;
