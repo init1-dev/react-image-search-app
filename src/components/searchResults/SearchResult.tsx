@@ -9,9 +9,8 @@ import { FaHeart } from "react-icons/fa";
 import { Image, SavedImg, SelectedPic } from "../../helpers/interfaces";
 import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
-import EditModal from "../savedResults/EditModal";
+import EditModal from "../shared/EditModal";
 import { Tooltip } from "@mui/material";
-// import { useParams } from "react-router-dom";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -21,10 +20,6 @@ function SearchResults() {
     const query = useAppSelector(searchQuery);
     const status = useAppSelector(searchStatus);
     const error = useAppSelector(searchError);
-
-    // const params = useParams();
-    // console.log(params);
-    // console.log(images);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPic, setSelectedPic] = useState<SelectedPic>({

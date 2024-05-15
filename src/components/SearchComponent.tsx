@@ -1,31 +1,49 @@
 import { styled as styledMui, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import Paper from '@mui/material/Paper';
+import ClearIcon from '@mui/icons-material/Clear';
 
 interface SearchComponentProps {
     placeholder: string;
     handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    searchInput: string;
+    setSearchInput: Dispatch<SetStateAction<string>>;
 }
 
 const SearchComponent = ({
     placeholder,
-    handleChange
+    handleChange,
+    searchInput,
+    setSearchInput
 }: SearchComponentProps) => {
+    const handleClearInput = () => {
+        setSearchInput('');
+        handleChange({currentTarget: {value: ''}} as ChangeEvent<HTMLInputElement>);
+    };
+
     return (
-        <Search>
+        <StyledSearch>
             <SearchIconWrapper>
                 <SearchIcon />
             </SearchIconWrapper>
             <InputBox elevation={2}>
                 <StyledInputBase
+                    value={searchInput}
                     placeholder={ placeholder }
                     onChange={ (e) => {handleChange(e) }}
                     inputProps={{ 'aria-label': 'search' }}
+                    endAdornment={
+                        searchInput && (
+                            <ClearIconWrapper onClick={() => handleClearInput()}>
+                                <ClearIcon />
+                            </ClearIconWrapper>
+                        )
+                    }
                 />
             </InputBox>
-        </Search>
+        </StyledSearch>
     );
 }
 
@@ -33,7 +51,7 @@ const InputBox = styledMui(Paper)(() => ({
     color: 'inherit'
 }));
 
-const Search = styledMui('div')(({ theme }) => ({
+const StyledSearch = styledMui('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -56,6 +74,16 @@ const SearchIconWrapper = styledMui('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+}));
+
+const ClearIconWrapper = styledMui('div')(({ theme }) => ({
+    display: 'flex',
+    position: 'absolute',
+    right: theme.spacing(2),
+    top: '50%',
+    transform: 'translateY(-50%)',
+    cursor: 'pointer',
+    color: 'inherit',
 }));
 
 const StyledInputBase = styledMui(InputBase)(({ theme }) => ({

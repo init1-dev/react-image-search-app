@@ -43,8 +43,8 @@ $npm run dev
 ## Next Updates
 
 ### TODO:
-- maintain last term search
 - search term in url params (fix current)
+
 - Deploy on amazon s3
 
 ### KNOWN BUGS

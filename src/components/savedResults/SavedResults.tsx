@@ -10,7 +10,7 @@ import { MdContentCopy } from "react-icons/md";
 
 import { saveAs } from 'file-saver';
 import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../../css/SavedResults";
-import EditModal from "./EditModal";
+import EditModal from "../shared/EditModal";
 import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
 import { handleCopyUrl } from "../../helpers/handleCopyUrl";
@@ -18,7 +18,6 @@ import PaginationComponent from "./PaginationComponent";
 import { Tooltip } from "@mui/material";
 import PopularTags from "../Tags/PopularTags";
 import { GetPopularTags } from "../../helpers/getPopularTags";
-// import { useParams } from "react-router-dom";
 
 function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
@@ -26,12 +25,6 @@ function SearchResults({currentPage, setPage}: SearchResultsProps) {
     const query = useAppSelector(savedQuery);
     const tags: SavedTags[] = useAppSelector(imageTags);
     const popularTags: SavedTags[] = GetPopularTags(tags);
-    
-
-    // console.log(query);
-    // console.log(saved);
-    // const params = useParams();
-    // console.log(params);
 
     const imagesPerPage = 15;
 

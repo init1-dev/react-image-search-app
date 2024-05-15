@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { useLocation, useNavigate  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -16,13 +16,14 @@ import SearchComponent from "../../SearchComponent";
 import { useAppSelector } from "../../../hooks/store";
 import { FormStyle, HeaderStyle, LogoStyle, MenuItemStyle, MenuStyle, SearchBarStyle, ToggleThemeButton, TopBarStyle } from "./HeaderStyles";
 import { Tooltip } from "@mui/material";
+import { SearchContext } from "../../../helpers/SearchContext";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const currentPath = useLocation();
-    const query = useAppSelector(currentPath.pathname.includes("saved") ? savedQuery : searchQuery);
-    console.log("header query: " + query);
+    const Search = useContext(SearchContext);
+    const query = useAppSelector(Search ? savedQuery : searchQuery);
     
-    const [searchInput, setSearchInput] = useState('');
+    const [searchInput, setSearchInput] = useState(query);
     const { theme, handleToggleTheme } = useTheme();
 
     const dispatch = useDispatch();
@@ -30,12 +31,12 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
 
     const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
-        if(currentPath.pathname === appName){
+
+        if(Search) {
+            dispatch(searchByTerm(searchInput));
+        } else {
             dispatch(setStatusReady());
             dispatch(setTerm(searchInput.trim()));
-        } else {
-            dispatch(searchByTerm(searchInput));
         }
     }
 
@@ -43,11 +44,15 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
         const updatedInput = e.currentTarget.value;
         setSearchInput(updatedInput);
 
-        if(currentPath.pathname !== appName && currentPage !== 1){
-            navigate(setPageNavigate(currentPath.pathname, 1));
-            setPage(1);
+        if(Search){
+            
+            if(currentPage !== 1){
+                navigate(setPageNavigate(currentPath.pathname, 1));
+                setPage(1);
+            }
+    
+            dispatch(searchByTerm(updatedInput));
         }
-        dispatch(searchByTerm(updatedInput));
     }
 
     const handleResetApp = () => {
@@ -57,6 +62,10 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const placeholder = (currentPath.pathname === appName)
         ? "Search by term"
         : "Search in your images";
+
+    const customMessage = Search
+        ? "Last search in saved: " + query
+        : "Last search: " + query
 
     const location = useLocation();
 
@@ -73,8 +82,10 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
 
                     <FormStyle onSubmit={ (e) => handleSearchSubmit(e) }>
                         <SearchComponent 
-                            placeholder={query ? "Last search: " + query : placeholder} 
-                            handleChange={handleChange} 
+                            placeholder={query ? customMessage : placeholder}
+                            handleChange={handleChange}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
                         />
                     </FormStyle>
                 </SearchBarStyle>
