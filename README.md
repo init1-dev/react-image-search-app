@@ -43,8 +43,6 @@ $npm run dev
 ## Next Updates
 
 ### TODO:
-- search term in url params (fix current)
-
 - Deploy on amazon s3
 
 ### KNOWN BUGS
@@ -54,6 +52,10 @@ $npm run dev
 - develop: in search view -> lazy load to get more results
 - develop: in search view -> if image saved fill heart red, if clicked again delete from saved
 - develop: in saved view -> dialog to select filters, image format (ver, hor), nº of results, etc..
+
+### FUTURE IDEAS
+- develop: migrate saved from localStorage to database
+- develop: feature -> create image collections
 
 ## Contact
 
