@@ -18,6 +18,15 @@ const appRouter = createBrowserRouter([
                 Component: SearchPhotos
             },
             {
+                path: `${appName}/saved/:reset?`,
+                Component: SavedPhotos,
+                action: ({ params }) => {
+                    const { reset } = params;
+
+                    return redirect(`${appName}/saved?reset=${reset}`);
+                }
+            },
+            {
                 path: `${appName}/saved/${paramsStr}`,
                 Component: SavedPhotos,
                 action: ({ params }) => {

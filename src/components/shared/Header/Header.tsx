@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { useLocation, useNavigate  } from "react-router-dom";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { appName } from "../../../Routes";
@@ -22,12 +22,20 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const currentPath = useLocation();
     const Search = useContext(SearchContext);
     const query = useAppSelector(Search ? savedQuery : searchQuery);
+    const { reset } = useParams();
     
     const [searchInput, setSearchInput] = useState(query);
     const { theme, handleToggleTheme } = useTheme();
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(reset === '1'){
+            setSearchInput('');
+            navigate(appName + "/saved");
+        }
+    }, [reset, navigate])
 
     const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

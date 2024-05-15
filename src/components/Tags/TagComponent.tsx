@@ -2,6 +2,10 @@ import { Chip } from "@mui/material";
 import styled from "styled-components";
 import { SavedTags } from "../../helpers/interfaces";
 import { Dispatch, SetStateAction } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { resetSearchTerm, savedQuery } from "../../store/searchResults/searchSlice";
+import { useNavigate } from "react-router-dom";
+import { appName } from "../../Routes";
 
 interface TagsProps {
     tag: SavedTags;
@@ -14,8 +18,15 @@ const TagComponent = ({
     activeTag,
     setTag
 }: TagsProps) => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const query: string = useAppSelector(savedQuery);
     
     const HandleTag = (tagName: string) => {
+        if(query !== ""){
+            navigate(`${appName}/saved/1`)
+            dispatch(resetSearchTerm());
+        }
         return activeTag === tagName ? "" : tagName;
     }
 

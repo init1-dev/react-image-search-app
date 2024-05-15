@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getRandomSearchThunk, getSearchThunk } from './searchThunk';
-import { SavedState, SearchState, TagInterface } from '../../helpers/interfaces';
+import { SavedState, SearchState } from '../../helpers/interfaces';
 import { updateTags } from '../../helpers/updateTags';
+import { createTags } from '../../helpers/createTags';
 
 const DEFAULT_STATE: SearchState = {
     images: [],
@@ -79,14 +80,7 @@ export const savedSlice = createSlice({
             if(!state.images.find(image => image.id === id)){
                 state.images.push(action.payload);
             }
-            tags.forEach((tag: TagInterface) => {
-                const existingTagIndex = state.tags.findIndex(savedTag => savedTag.name === tag.title);
-                if(existingTagIndex !== -1) {
-                    state.tags[existingTagIndex].count++;
-                } else {
-                    state.tags.push({ name: tag.title, count: 1 });
-                }
-            });
+            createTags(state, tags);
         },
         deletePhoto: (state, action) => {
             const index = state.images.findIndex((image) => image.id === action.payload);
