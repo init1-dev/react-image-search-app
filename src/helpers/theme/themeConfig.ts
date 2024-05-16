@@ -73,4 +73,11 @@ export interface Theme {
     .swal2-icon {
       font-size: 12px;
     }
+    .MuiButton-root {
+      font-weight: 600 !important;
+      font-family: Plus Jakarta Sans, sans-serif !important;
+    }
+    .MuiTypography-root {
+      font-family: Plus Jakarta Sans, sans-serif !important;
+    }
   `;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { savePhoto, savedPhotos, searchError, searchPhotos, searchQuery, searchStatus } from '../../store/searchResults/searchSlice';
+import { deletePhoto, savePhoto, savedPhotos, searchError, searchPhotos, searchQuery, searchStatus } from '../../store/searchResults/searchSlice';
 import { getRandomSearchThunk, getSearchThunk } from "../../store/searchResults/searchThunk";
 
 import { FaHeart } from "react-icons/fa";
@@ -42,27 +42,26 @@ function SearchResults() {
     };
 
     const handleSave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, img: Image) => {
-        const target = e.target as HTMLDivElement;
-        target.classList.add("heart-red");
+        const isImageAlreadySaved = saved.some(image => image.id === img.id);
         
-        const isImageAlreadySaved = saved.find(image => image.id === img.id);
         if (isImageAlreadySaved) {
             Toast.fire({
-                icon: "warning",
-                html: `<h4 class="swal-warning">Already saved</h4>`,
-                background: "#9b8249"
+                icon: "success",
+                html: `<h4 class="swal-warning">Deleted successfully</h4>`,
+                background: "#499b49"
             })
-            return;
+            dispatch(deletePhoto(img.id))
+        } else {
+            const target = e.target as HTMLDivElement;
+            const formatedImg = formatImage(img);
+            target.classList.add("heart-red");
+            Toast.fire({
+                icon: "success",
+                html: `<h4 class="swal-success">Added successfully</h4>`,
+                background: "#499b49"
+            })
+            dispatch(savePhoto(formatedImg))
         }
-
-        const formatedImg = formatImage(img);
-
-        dispatch(savePhoto(formatedImg))
-        Toast.fire({
-            icon: "success",
-            html: `<h4 class="swal-success">Added successfully</h4>`,
-            background: "#499b49"
-        })
     }
 
     useEffect(() => {
@@ -102,29 +101,30 @@ function SearchResults() {
                 { images.length > 0
                     ?   <ImageGridStyle>
                             { images.map((image) => {
-                                    return (
-                                        <ImageContainerStyle key={image.id}>
-                                            <Tooltip title="Click to details" followCursor>
-                                                <ImageItemStyle
-                                                    src={(image.urls?.small) ? image.urls.small : image.urls.regular}
-                                                    width={400}
-                                                    alt={image.description ? image.description : ''}
-                                                    loading="lazy"
-                                                    onClick={() => handleModal(formatImage(image))}
-                                                />
-                                            </Tooltip>
+                                const isImageSaved = saved.some((currentImage) => image.id === currentImage.id);
+                                return (
+                                    <ImageContainerStyle key={image.id}>
+                                        <Tooltip title="Click to details" followCursor>
+                                            <ImageItemStyle
+                                                src={(image.urls?.small) ? image.urls.small : image.urls.regular}
+                                                width={400}
+                                                alt={image.description ? image.description : ''}
+                                                loading="lazy"
+                                                onClick={() => handleModal(formatImage(image))}
+                                            />
+                                        </Tooltip>
 
-                                            <ButtonContainer onClick={ (e) => handleSave(e, image) }>
-                                                <Button>
-                                                    <Tooltip title="Add to saved">
-                                                        <span>
-                                                            <HeartIcon />
-                                                        </span>
-                                                    </Tooltip>
-                                                </Button>
-                                            </ButtonContainer>
-                                        </ImageContainerStyle>
-                                    )
+                                        <ButtonContainer onClick={ (e) => handleSave(e, image) }>
+                                            <Button>
+                                                <Tooltip title={ isImageSaved ? "Delete from saved" : "Add to saved" }>
+                                                    <span>
+                                                        { isImageSaved ? <HeartIcon style={{fill:"red"}}/> : <HeartIcon /> }
+                                                    </span>
+                                                </Tooltip>
+                                            </Button>
+                                        </ButtonContainer>
+                                    </ImageContainerStyle>
+                                )
                             })}
                         </ImageGridStyle>
                     : <TextContainer>
