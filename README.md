@@ -43,7 +43,6 @@ $npm run dev
 ## Next Updates
 
 ### TODO:
-- Deploy on amazon s3
 
 ### KNOWN BUGS
 - Possible bug trying to save image in random search with empty input when returns more than 1
