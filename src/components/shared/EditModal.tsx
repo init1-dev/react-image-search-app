@@ -100,7 +100,7 @@ const EditModal = ({ open, onClose, onSave, image, isEditVisible }: EditModalPro
                                     <TbArrowAutofitWidth style={{marginRight: '0.5rem'}}/>
                                 </StyledSpan>
                             </Tooltip>
-                            <strong>{`${image.width}`}</strong>
+                            <strong>{`${image.width}`}<small>px</small></strong>
                         </span>
 
                         <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
@@ -109,7 +109,7 @@ const EditModal = ({ open, onClose, onSave, image, isEditVisible }: EditModalPro
                                     <TbArrowAutofitHeight style={{marginRight: '0.5rem'}}/>
                                 </StyledSpan>
                             </Tooltip>
-                            <strong>{`${image.height}`}</strong>
+                            <strong>{`${image.height}`}<small>px</small></strong>
                         </span>
 
                         <span style={{display:'flex', alignItems:'center', marginRight: '1rem'}}>
