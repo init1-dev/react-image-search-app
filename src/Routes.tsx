@@ -4,7 +4,7 @@ import { RootView } from './views/RootView';
 import { SearchPhotos } from './views/SearchPhotos';
 import { SavedPhotos } from './views/SavedPhotos';
 
-export const appName = '/react-image-search-app';
+export const appName = '';
 const paramsStr = `:page?/:query?`;
 
 const appRouter = createBrowserRouter([

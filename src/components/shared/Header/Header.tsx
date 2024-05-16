@@ -95,7 +95,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
 
     const placeholder = (currentPath.pathname === appName)
         ? "Search by term"
-        : "Search in your images";
+        : "Search saved by description";
 
     const customMessage = Search
         ? "Last search in saved: " + query
@@ -108,7 +108,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
             <TopBarStyle>
 
                 <SearchBarStyle>
-                    <LogoStyle to={appName} className="logo">
+                    <LogoStyle to="/" className="logo">
                         <Tooltip title="Go to search">
                             <WallpaperOutlinedIcon className={location.pathname === appName ? "logoActive" : ""} />
                         </Tooltip>
@@ -126,7 +126,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
 
                 <MenuStyle>
                     <li>
-                        <MenuItemStyle to={appName + "/saved"}>
+                        <MenuItemStyle to="/saved">
                             <Tooltip title="Saved images">
                                 <span>
                                     <FaHeart 
@@ -138,7 +138,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     </li>
 
                     <li>
-                        <MenuItemStyle to={appName + "/saved"}>
+                        <MenuItemStyle to="/saved">
                             <Tooltip title="Reset saved">
                                 <span>
                                     <LuListRestart 

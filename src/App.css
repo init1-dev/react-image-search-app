@@ -96,10 +96,6 @@ select option {
     background-color: transparent !important;
 }
 
-.MuiDialogContent-root {
-    border-radius: 0.5rem;
-}
-
 .swal-success, .swal-warning {
     margin: 0 !important;
     padding: 0 !important;

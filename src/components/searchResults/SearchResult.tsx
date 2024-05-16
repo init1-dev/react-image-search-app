@@ -43,8 +43,9 @@ function SearchResults() {
 
     const handleSave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, img: Image) => {
         const isImageAlreadySaved = saved.some(image => image.id === img.id);
-        
+        const target = e.target as HTMLDivElement;
         if (isImageAlreadySaved) {
+            target.classList.remove("heart-red");
             Toast.fire({
                 icon: "success",
                 html: `<h4 class="swal-warning">Deleted successfully</h4>`,
@@ -52,7 +53,6 @@ function SearchResults() {
             })
             dispatch(deletePhoto(img.id))
         } else {
-            const target = e.target as HTMLDivElement;
             const formatedImg = formatImage(img);
             target.classList.add("heart-red");
             Toast.fire({

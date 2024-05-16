@@ -2,7 +2,7 @@
   "name": "react-image-search-app",
   "private": true,
   "version": "1.0",
-  "homepage": "https://init1-dev.github.io/react-image-search-app",
+  "homepage": "http://react-image-search-app.s3-website.eu-west-3.amazonaws.com",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -41,7 +41,6 @@
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "gh-pages": "^6.1.1",
     "typescript": "^5.3.3",
     "vite": "^5.1.4"
   }

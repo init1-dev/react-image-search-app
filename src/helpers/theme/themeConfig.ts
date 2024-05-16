@@ -78,6 +78,10 @@ export interface Theme {
       font-family: Plus Jakarta Sans, sans-serif !important;
     }
     .MuiTypography-root {
+      color: ${({ theme }) => theme.text} !important;
       font-family: Plus Jakarta Sans, sans-serif !important;
+    }
+    .MuiIconButton-root {
+      color: ${({ theme }) => theme.text} !important;
     }
   `;
