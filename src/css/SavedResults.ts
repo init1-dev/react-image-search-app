@@ -35,6 +35,7 @@ export const ImageItemStyle = styled.img`
     border-radius: 5px;
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
     cursor: zoom-in;
+    transition: all 0.3s ease;
 
     @media only screen and (max-width: 700px) {
         width: 100%;
