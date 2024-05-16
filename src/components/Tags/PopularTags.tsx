@@ -56,7 +56,7 @@ export const TagsContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 
     @media only screen and (max-width: 700px) {
         flex-direction: column;

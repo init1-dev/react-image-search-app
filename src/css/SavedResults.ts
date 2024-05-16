@@ -33,7 +33,7 @@ export const ImageItemStyle = styled.img`
     width: 90%;
     display: block;
     border-radius: 5px;
-    border: 1px solid rgba(133, 133, 133, 0.25);
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
     cursor: zoom-in;
 
     @media only screen and (max-width: 700px) {
