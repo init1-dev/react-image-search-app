@@ -43,6 +43,7 @@ $npm run dev
 ## Next Updates
 
 ### TODO:
+- swal PopUp, make background darker
 - Deploy on amazon s3
 
 ### KNOWN BUGS

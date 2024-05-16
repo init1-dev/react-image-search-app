@@ -61,5 +61,16 @@ export interface Theme {
     .swal2-modal {
       background-color: ${({ theme }) => theme.appBg};
       color: ${({ theme }) => theme.text};
+      filter: drop-shadow(1px 1px 1.5px rgb(0 0 0 / 0.6));
+      
+      .swal2-title {
+        padding-top: 0.5rem;
+      }
+    }
+    .swal2-backdrop-show {
+      background: rgba(0,0,0,0.6);
+    }
+    .swal2-icon {
+      font-size: 12px;
     }
   `;

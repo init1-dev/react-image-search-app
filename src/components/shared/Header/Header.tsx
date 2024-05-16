@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { appName } from "../../../Routes";
 import { useTheme } from "../../../hooks/themeHooks";
-import { clearSaved, savedQuery, searchByTerm, searchQuery, setStatusReady, setTerm } from "../../../store/searchResults/searchSlice";
+import { clearSaved, savedPhotos, savedQuery, searchByTerm, searchQuery, setStatusReady, setTerm } from "../../../store/searchResults/searchSlice";
 
 import WallpaperOutlinedIcon from '@mui/icons-material/WallpaperOutlined';
 import { FaHeart } from "react-icons/fa";
@@ -22,6 +22,8 @@ import Toast, { PopUp } from "../../../helpers/alerts/swal";
 const Header = ({currentPage, setPage}: SearchResultsProps) => {
     const currentPath = useLocation();
     const Search = useContext(SearchContext);
+    const saved = useAppSelector(savedPhotos);
+    const savedLength = saved.length;
     const query = useAppSelector(Search ? savedQuery : searchQuery);
     const { reset } = useParams();
     
@@ -65,21 +67,30 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
     }
 
     const handleResetApp = () => {
-        PopUp.fire({
-            icon: "warning",
-            title: `<small style="all:unset;">¿Are you sure?</small>`,
-            html: `<small>Your gallery will be cleared</small>`,
-        })
-        .then((result) => {
-            if(result.isConfirmed){
-                Toast.fire({
-                    icon: "success",
-                    html: `<h4 class="swal-success">Cleared successfully</h4>`,
-                    background: "#499b49"
-                });
-                dispatch(clearSaved());
-            }
-        })
+        if(savedLength > 0){
+            PopUp.fire({
+                icon: "error",
+                title: `<small style="all:unset;">¿Are you sure?</small>`,
+                html: `<small>Your gallery will be cleared</small>`,
+                confirmButtonColor: 'red'
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    Toast.fire({
+                        icon: "success",
+                        html: `<h4 class="swal-success">Cleared successfully</h4>`,
+                        background: "#499b49"
+                    });
+                    dispatch(clearSaved());
+                }
+            })
+        } else {
+            Toast.fire({
+                icon: "warning",
+                html: `<h4 class="swal-warning">Already empty</h4>`,
+                background: "#9b8249"
+            });
+        }
     }
 
     const placeholder = (currentPath.pathname === appName)
