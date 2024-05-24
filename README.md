@@ -43,6 +43,9 @@ $npm run dev
 ## Next Updates
 
 ### TODO:
+- improve saved select
+- empty search bring 15 random photos instead 1
+- improve the way photo details can be closed
 
 ### KNOWN BUGS
 - Possible bug trying to save image in random search with empty input when returns more than 1

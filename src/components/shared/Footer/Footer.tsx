@@ -6,7 +6,7 @@ import { Tooltip } from '@mui/material';
 const Footer = () => {
     return (
         <FooterStyle>
-            <Tooltip title="My github profile" followCursor>
+            <Tooltip title="My github profile">
                 <SocialText 
                     href="https://github.com/init1-dev" 
                     target="_blank" 
@@ -17,7 +17,7 @@ const Footer = () => {
             </Tooltip>
 
             <SocialStyle>
-                <Tooltip title="My LinkedIn" followCursor>
+                <Tooltip title="My LinkedIn">
                     <Link 
                         href="https://www.linkedin.com/in/in1t-jorge-guillen/" 
                         target="_blank" 
@@ -27,7 +27,7 @@ const Footer = () => {
                     </Link>
                 </Tooltip>
 
-                <Tooltip title="This app repository" followCursor>
+                <Tooltip title="This app repository">
                     <Link 
                         href="https://github.com/init1-dev/react-image-search-app" 
                         target="_blank" 

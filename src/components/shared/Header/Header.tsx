@@ -130,7 +130,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                             <Tooltip title="Saved images">
                                 <span>
                                     <FaHeart 
-                                        className={location.pathname === appName + "/saved" ? "logoActive" : ""} 
+                                        className={location.pathname === "/saved" ? "logoActive" : ""}
                                     />
                                 </span>
                             </Tooltip>
