@@ -23,6 +23,8 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
 
       - name: Sync S3 bucket
         uses: jakejarvis/s3-sync-action@master

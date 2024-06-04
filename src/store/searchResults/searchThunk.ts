@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const searchUrl = 'https://api.unsplash.com/search/photos?';
 const randomUrl = 'https://api.unsplash.com/photos/random?';
-const accessKey = '2id9a7MZhL9MgUyiCB9BYB2Je3d0hSOYpdbFz0zEXRQ';
+const accessKey = import.meta.env.VITE_API_KEY;
 const resultsPerPage = 15;
 const randomCount = 15;
 
