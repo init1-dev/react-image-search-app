@@ -3,10 +3,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 const searchUrl = 'https://api.unsplash.com/search/photos?';
 const randomUrl = 'https://api.unsplash.com/photos/random?';
 const accessKey = '2id9a7MZhL9MgUyiCB9BYB2Je3d0hSOYpdbFz0zEXRQ';
-const resultsPerPage = 'per_page=15';
+const resultsPerPage = 15;
+const randomCount = 15;
 
 export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query: string) => {
-    const fetchUrl = `${searchUrl}client_id=${accessKey}&${resultsPerPage}&query=${query}`;
+    const fetchUrl = `${searchUrl}client_id=${accessKey}&per_page=${resultsPerPage}&query=${query}`;
     
     try{
         const resp = await fetch(fetchUrl)
@@ -17,8 +18,6 @@ export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query
 
         const data = await resp.json();
 
-        console.log(data);
-
         return data.results;
     } 
     catch (err) {
@@ -28,7 +27,7 @@ export const getSearchThunk = createAsyncThunk('search/fetchPhotos', async(query
 
 export const getRandomSearchThunk = createAsyncThunk('search/fetchRandomPhoto', async() => {
     try {
-        const fetchUrl = `${randomUrl}client_id=${accessKey}&${resultsPerPage}`;
+        const fetchUrl = `${randomUrl}client_id=${accessKey}&count=${randomCount}`;
 
         const resp = await fetch(fetchUrl)
         
@@ -38,7 +37,7 @@ export const getRandomSearchThunk = createAsyncThunk('search/fetchRandomPhoto', 
 
         const data = await resp.json();
         
-        return [data];
+        return data;
     } 
     catch(err) {
         throw new Error(`Error: ${err}`);

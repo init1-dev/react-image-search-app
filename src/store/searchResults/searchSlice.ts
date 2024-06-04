@@ -78,9 +78,11 @@ export const savedSlice = createSlice({
         savePhoto: (state, action) => {
             const { id, tags } = action.payload;
             if(!state.images.find(image => image.id === id)){
-                state.images.push(action.payload);
+                const imageTags = tags || [{title: 'random', type: 'search'}];
+                state.images.push({...action.payload, tags: imageTags});
             }
-            createTags(state, tags);
+            const tagsToCreate = tags || [{title: 'random', type: 'search'}];
+            createTags(state, tagsToCreate);
         },
         deletePhoto: (state, action) => {
             const index = state.images.findIndex((image) => image.id === action.payload);
