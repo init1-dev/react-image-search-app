@@ -3,16 +3,14 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
-    padding: 1.5rem;
-    padding-top: unset;
-    margin: 6rem 10% 0% 10%;
+    padding: 6rem 10% 2rem 10%;
 
     @media only screen and (max-width: 1024px) {
-        margin: 6rem 8% 0% 8%
+        padding: 6rem 0% 2rem 4%;
     }
 
     @media only screen and (max-width: 700px) {
-        margin: 9rem 0% 0% 0%
+        padding: 9rem 0% 1rem 8%;
     }
 `;
 
@@ -36,10 +34,6 @@ export const ImageItemStyle = styled.img`
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
     cursor: zoom-in;
     transition: all 0.3s ease;
-
-    @media only screen and (max-width: 700px) {
-        width: 100%;
-    }
 `;
 
 export const ButtonContainer = styled.div`
@@ -82,8 +76,8 @@ export const Button = styled.button`
 `;
 
 export const ImageContainerStyle = styled.div`
-    display: inline-block;
     position: relative;
+    display: inline-block;
     margin-bottom: 15px;
     width: 100%;
     transition: transform 0.3s ease;
@@ -97,11 +91,13 @@ export const ImageContainerStyle = styled.div`
     }
 
     @media only screen and (max-width: 1024px) {
-        align-items: center;
-    }
+        &:hover {
+            transform: unset;
 
-    @media only screen and (max-width: 700px) {
-        column-count: 1;
+            ${ImageItemStyle} {
+                box-shadow: unset;
+            }
+        }
     }
 `;
 
@@ -123,6 +119,7 @@ export const SearchBarStyle = styled.div`
     color: ${({ theme }) => theme.headerH1};
 
     @media only screen and (max-width: 700px) {
+        width: 90%;
         display: block;
         margin-bottom: 1rem;
     }

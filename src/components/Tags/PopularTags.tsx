@@ -52,6 +52,7 @@ const PopularTags = ({
 
 export const TagsContainer = styled.div`
     display: flex;
+    width: 100%;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
@@ -59,6 +60,7 @@ export const TagsContainer = styled.div`
     margin-bottom: 2rem;
 
     @media only screen and (max-width: 700px) {
+        width: 90%;
         flex-direction: column;
     }
 
