@@ -14,6 +14,7 @@ export interface Theme {
     btnHoverText: string;
     themeButtonBg: string;
     searchBarBg: string;
+    activeElement: string;
   }
   
   // Define los temas
@@ -33,6 +34,7 @@ export interface Theme {
     btnHoverText: '#000',
     themeButtonBg: '#E3E3E3',
     searchBarBg: '#EEEEEE',
+    activeElement: '#69d569'
   };
   
   export const darkTheme: Theme = {
@@ -48,6 +50,7 @@ export interface Theme {
     btnHoverText: '#fff',
     themeButtonBg: darkBg,
     searchBarBg: '#21252a',
+    activeElement: '#006a88'
   };
   
   // Estilos globales

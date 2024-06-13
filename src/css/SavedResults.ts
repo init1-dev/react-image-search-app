@@ -185,7 +185,7 @@ export const SelectStyle = styled.select`
     border-color: transparent;
     border-right: 1rem solid transparent;
     padding: 0.5rem 1rem 0.5rem 1rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     background-color: ${({ theme }) => theme.searchBarBg};
     color: ${({ theme }) => theme.headerH1};
 

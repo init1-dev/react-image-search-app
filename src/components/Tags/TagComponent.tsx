@@ -47,6 +47,7 @@ const StyledChip = styled(Chip)`
         color: ${({ theme }) => theme.text};
         border: 0.1em solid transparent;
         cursor: pointer;
+        transition: unset;
     }
 
     &.MuiChip-root:hover {
@@ -56,7 +57,7 @@ const StyledChip = styled(Chip)`
     }
 
     &.active {
-        background-color: #006a88;
+        background-color: ${({ theme }) => theme.activeElement };
     }
 `;
 
