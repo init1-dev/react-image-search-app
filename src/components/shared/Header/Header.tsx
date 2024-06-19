@@ -138,7 +138,7 @@ const Header = ({currentPage, setPage}: SearchResultsProps) => {
                     </li>
 
                     <li>
-                        <MenuItemStyle to="/saved">
+                        <MenuItemStyle to={''}>
                             <Tooltip title="Reset saved">
                                 <span>
                                     <LuListRestart 

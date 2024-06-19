@@ -7,6 +7,8 @@ import { SavedImg } from "../../helpers/interfaces";
 import { setPageNavigate } from "../../helpers/pageFunctions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
+import { useAppSelector } from "../../hooks/store";
+import { stateImagesPerPage } from "../../store/searchResults/searchSlice";
 
 interface PaginationComponentProps {
     filterBySearch: SavedImg[];
@@ -21,9 +23,9 @@ const PaginationComponent = ({
     setPage,
     imagesPerPage
 }: PaginationComponentProps) => {
-
     const currentPath = useLocation();
     const navigate = useNavigate();
+    const perPage: number = useAppSelector(stateImagesPerPage);
 
     const totalPages = Math.ceil(filterBySearch.length / imagesPerPage);
 
@@ -55,7 +57,7 @@ const PaginationComponent = ({
     return (
         <Pagination>
             {
-                filterBySearch.length > 15 &&
+                filterBySearch.length > perPage &&
                 <>
                     <PaginationButton 
                         type="button" 

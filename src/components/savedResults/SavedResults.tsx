@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { deletePhoto, imageTags, stateImagesPerPage, savedQuery, updateImagesPerPage } from '../../store/searchResults/searchSlice';
-import { SavedImg, SavedTags, SearchResultsProps, SelectedPic, State } from "../../helpers/interfaces";
+import { deletePhoto, imageTags, stateImagesPerPage, savedPhotos, savedQuery, updateImagesPerPage } from '../../store/searchResults/searchSlice';
+import { SavedImg, SavedTags, SearchResultsProps, SelectedPic } from "../../helpers/interfaces";
 import { FiFilter } from "react-icons/fi";
 
 import styled from "styled-components";
@@ -18,17 +18,16 @@ import EditModal from "../shared/EditModal";
 import Toast from "../../helpers/alerts/swal";
 import { GetPopularTags } from "../../helpers/getPopularTags";
 import ImagesMasonry from "./ImagesMasonry";
-import { useSelector } from "react-redux";
 
 function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
-    const saved = useSelector((state: State) => state.saved.images);
+    const saved = useAppSelector(savedPhotos);
     const perPage: number = useAppSelector(stateImagesPerPage);
     const query = useAppSelector(savedQuery);
     const tags: SavedTags[] = useAppSelector(imageTags);
     const popularTags: SavedTags[] = GetPopularTags(tags);
 
-    const [imagesPerPage, setImagesPerPage] = useState(perPage);
+    const [imagesPerPage, setImagesPerPage] = useState(perPage || 10);
 
     const [orderBy, setOrderBy] = useState('');
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);

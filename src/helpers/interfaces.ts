@@ -44,7 +44,7 @@ export interface SearchState {
 }
 
 export interface SavedState {
-    images: Image[];
+    images: SavedImg[];
     tags: SavedTags[];
     query: string;
     imagesPerPage: number;

@@ -47,6 +47,10 @@ $npm run dev
 - improve the way photo details can be closed
 
 ### KNOWN BUGS
+- Possible bug in Saved Images (i'm currently trying to solve it)
+    * CURRENT FIX:
+        - Open developer tools (F12) and go to "Application" tab
+        - In "Storage" under Local storage right click http://react-image-search-app.s3-website.eu-west-3.amazonaws.com/ and click "Clear".
 
 ### OPTIONAL
 - develop: in search view -> lazy load to get more results
