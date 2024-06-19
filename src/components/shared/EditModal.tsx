@@ -4,7 +4,7 @@ import { Dialog, DialogContent, TextField, Button, Tooltip, IconButton, AppBar, 
 import { TbArrowAutofitHeight, TbArrowAutofitWidth } from "react-icons/tb";
 import { FaHeart } from "react-icons/fa";
 import styled from 'styled-components';
-import { handleCopyUrl } from '../../helpers/handleCopyUrl';
+import { handleCopyUrl } from '../../helpers/savedImagesFunctions';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { TransitionProps } from '@mui/material/transitions';

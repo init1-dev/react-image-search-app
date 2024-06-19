@@ -2,6 +2,8 @@ import saveAs from "file-saver";
 import { SavedImg } from "./interfaces";
 import { editDescription } from "../store/searchResults/searchSlice";
 import { AppDispatch } from "../store";
+import clipboardCopy from 'clipboard-copy';
+import Toast from './alerts/swal';
 
 export const getFilteredPhotos = (images:SavedImg[] , searchTerm: string) => {
     const filtered = images.filter(image => image.description?.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -45,6 +47,17 @@ export const handleDownload = (url: string, description: string) => {
         `${description}.jpg`
     );
 };
+
+export const handleCopyUrl = (url: string) => {
+    clipboardCopy(url)
+        .then(() => {
+            Toast.fire({
+                icon: "success",
+                html: `<h4 class="swal-success">Url copied successfully</h4>`,
+                background: "#499b49"
+            });
+        })
+}
 
 export const handleSaveDescription = (id: string, newDescription: string, dispatch: AppDispatch) => {
     dispatch(editDescription({ id, newDescription }))

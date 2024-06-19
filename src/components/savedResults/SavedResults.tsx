@@ -1,30 +1,24 @@
-import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { deletePhoto, imageTags, savedQuery } from '../../store/searchResults/searchSlice';
 import { SavedImg, SavedTags, SearchResultsProps, SelectedPic, State } from "../../helpers/interfaces";
+import { FiFilter } from "react-icons/fi";
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { MdContentCopy } from "react-icons/md";
+import styled from "styled-components";
+import { Box, Button, Typography } from "@mui/material";
+import Modal from "@mui/material/Modal";
 
-import { ButtonContainer, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle } from "../../css/SavedResults";
+import { FormStyle, SearchBarStyle, SectionStyle } from "../../css/SavedResults";
+import { getFilteredPhotos, getOrderedPhotos, getPhotosByTag, handleCopyUrl, handleDownload, handleSaveDescription } from "../../helpers/savedImagesFunctions";
+
+import FiltersComponent from "./FiltersComponent";
+import PaginationComponent from "./PaginationComponent";
+import PopularTags from "../Tags/PopularTags";
 import EditModal from "../shared/EditModal";
 import Toast from "../../helpers/alerts/swal";
-import styled from "styled-components";
-import { handleCopyUrl } from "../../helpers/handleCopyUrl";
-import PaginationComponent from "./PaginationComponent";
-import { Box, Button, Tooltip, Typography } from "@mui/material";
-import PopularTags from "../Tags/PopularTags";
 import { GetPopularTags } from "../../helpers/getPopularTags";
-
-import Masonry from '@mui/lab/Masonry';
-import ButtonComponent from "../shared/ButtonComponent";
-import { FiFilter } from "react-icons/fi";
-import FiltersComponent from "./FiltersComponent";
-import Modal from "@mui/material/Modal";
-import { getFilteredPhotos, getOrderedPhotos, getPhotosByTag, handleDownload, handleSaveDescription } from "../../helpers/savedImagesFunctions";
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import ImagesMasonry from "./ImagesMasonry";
 
 function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
@@ -123,52 +117,13 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
 
                             <PopularTags tags={popularTags} activeTag={activeTag} setTag={setActiveTag} />
 
-                            <Masonry 
-                                columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
-                                spacing={3}
-                                style={{overflow:'hidden', display:'flex'}}
-                            >
-                            { pageItems.map((image: SavedImg) => {
-                                return (
-                                <ImageContainerStyle key={image.id}>
-                                    <Tooltip title="Click to details" followCursor>
-                                        <ImageItemStyle
-                                            src={image.src_preview}
-                                            alt={image.description}
-                                            onClick={() => handleImageModal(image)}
-                                        />
-                                    </Tooltip>
-                                    <ButtonContainer>
-                                        <ButtonComponent
-                                            onClick={ () => handleDelete(image, pageItems.length) }
-                                            Icon={DeleteOutlineOutlinedIcon} 
-                                            tooltipText={"Remove from saved"}
-                                        />
-
-                                        <ButtonComponent
-                                            onClick={ () => (handleDownload(image.src_full, image.id)) }
-                                            Icon={FileDownloadOutlinedIcon} 
-                                            tooltipText={"Download image"}
-                                        />
-
-                                        <ButtonComponent
-                                            onClick={ () => (handleCopyUrl(image.src_regular)) }
-                                            Icon={CopyUrlButton} 
-                                            tooltipText={"Copy url"}
-                                        />
-
-                                        <ButtonComponent
-                                            onClick={ () => handleImageModal(image) }
-                                            Icon={InfoOutlinedIcon} 
-                                            tooltipText={"Get info"}
-                                        />
-                                        
-                                        <span className="shadow">{image.likes} ❤️</span>
-                                    </ButtonContainer>
-                                </ImageContainerStyle>
-                                )
-                            })}
-                            </Masonry >
+                            <ImagesMasonry 
+                                pageItems={pageItems} 
+                                handleImageModal={handleImageModal}
+                                handleDelete={handleDelete}
+                                handleDownload={handleDownload}
+                                handleCopyUrl={handleCopyUrl}
+                            />
                         </>
                     :   saved.length > 0
                             ? <TextContainer>
@@ -222,10 +177,6 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
 const TextContainer = styled.div`
     padding-top: 1rem;
     text-align: center;
-`;
-
-const CopyUrlButton = styled(MdContentCopy)`
-    font-size: 18px;
 `;
 
 const FiltersTitle = styled(Typography)`
