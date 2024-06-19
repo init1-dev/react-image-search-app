@@ -9,7 +9,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { MdContentCopy } from "react-icons/md";
 
 import { saveAs } from 'file-saver';
-import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../../css/SavedResults";
+import { ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../../css/SavedResults";
 import EditModal from "../shared/EditModal";
 import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
@@ -20,6 +20,7 @@ import PopularTags from "../Tags/PopularTags";
 import { GetPopularTags } from "../../helpers/getPopularTags";
 
 import Masonry from '@mui/lab/Masonry';
+import ButtonComponent from "../shared/ButtonComponent";
 
 function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const tags: SavedTags[] = useAppSelector(imageTags);
     const popularTags: SavedTags[] = GetPopularTags(tags);
 
-    const imagesPerPage = 15;
+    const [imagesPerPage, setImagesPerPage] = useState(10);
 
     const [orderBy, setOrderBy] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -122,6 +123,13 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
         }
     };
 
+    const handleImagesPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if(currentPage > 1){
+            setPage(1);
+        }
+        setImagesPerPage(Number(e.target.value));
+    }
+
     const resultsLength = filterBySearch.length;
     const getResultsFrom = ((currentPage - 1) * imagesPerPage) + 1;
     const getResultsTo = Math.min(currentPage * imagesPerPage, resultsLength);
@@ -154,20 +162,27 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
                                         <option value="likes">Likes</option>
                                     </SelectStyle>
 
-                                    {/* <label htmlFor="itemsSelect"><small>Img/Page</small></label>
-                                    <SelectStyle id="itemsSelect" value={5} onChange={ () => {} }>
+                                    <label htmlFor="itemsSelect">
+                                        <small>Img/Page</small>
+                                    </label>
+                                    
+                                    <SelectStyle 
+                                        id="itemsSelect" 
+                                        value={imagesPerPage} 
+                                        onChange={ (e) => handleImagesPerPage(e) }
+                                    >
                                         <option value="" hidden disabled>5</option>
                                         <option value={5}>5</option>
                                         <option value={10}>10</option>
                                         <option value={15}>15</option>
-                                    </SelectStyle> */}
+                                    </SelectStyle>
                                 </FormStyle>
                             </SearchBarStyle>
 
                             <PopularTags tags={popularTags} activeTag={activeTag} setTag={setActiveTag} />
 
                             <Masonry 
-                                columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+                                columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
                                 spacing={3}
                                 style={{overflow:'hidden', display:'flex'}}
                             >
@@ -177,40 +192,35 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
                                     <Tooltip title="Click to details" followCursor>
                                         <ImageItemStyle
                                             src={image.src_preview}
-                                            // width={400}
                                             alt={image.description}
                                             onClick={() => handleModal(image)}
                                         />
                                     </Tooltip>
                                     <ButtonContainer>
-                                        <Button>
-                                            <Tooltip title={'Remove from saved'}>
-                                                <span>
-                                                    <DeleteOutlineOutlinedIcon onClick={ () => handleDelete(image, pageItems.length) } />
-                                                </span>
-                                            </Tooltip>
-                                        </Button>
-                                        <Button onClick={ () => (handleDownload(image.src_full, image.id)) }>
-                                            <Tooltip title={'Download image'}>
-                                                <span>
-                                                    <DownloadButton />
-                                                </span>
-                                            </Tooltip>
-                                        </Button>
-                                        <Button onClick={ () => (handleCopyUrl(image.src_regular)) }>
-                                            <Tooltip title={'Copy url'}>
-                                                <span>
-                                                    <CopyUrlButton />
-                                                </span>
-                                            </Tooltip>
-                                        </Button>
-                                        <Button>
-                                            <Tooltip title={'Get info'}>
-                                                <span>
-                                                    <InfoOutlinedIcon onClick={() => handleModal(image)} />
-                                                </span>
-                                            </Tooltip> 
-                                        </Button>
+                                        <ButtonComponent
+                                            onClick={ () => handleDelete(image, pageItems.length) }
+                                            Icon={DeleteOutlineOutlinedIcon} 
+                                            tooltipText={"Remove from saved"}
+                                        />
+
+                                        <ButtonComponent
+                                            onClick={ () => (handleDownload(image.src_full, image.id)) }
+                                            Icon={DownloadButton} 
+                                            tooltipText={"Download image"}
+                                        />
+
+                                        <ButtonComponent
+                                            onClick={ () => (handleCopyUrl(image.src_regular)) }
+                                            Icon={CopyUrlButton} 
+                                            tooltipText={"Copy url"}
+                                        />
+
+                                        <ButtonComponent
+                                            onClick={ () => handleModal(image) }
+                                            Icon={InfoOutlinedIcon} 
+                                            tooltipText={"Get info"}
+                                        />
+                                        
                                         <span className="shadow">{image.likes} ❤️</span>
                                     </ButtonContainer>
                                 </ImageContainerStyle>
