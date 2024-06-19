@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../components/shared/Footer/Footer";
-import { SearchContext } from "../helpers/SearchContext";
+import { SearchContext } from "../context/SearchContext";
 
 
 export const RootView = () => {

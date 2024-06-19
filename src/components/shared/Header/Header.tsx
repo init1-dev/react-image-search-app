@@ -16,7 +16,7 @@ import SearchComponent from "../../SearchComponent";
 import { useAppSelector } from "../../../hooks/store";
 import { FormStyle, HeaderStyle, LogoStyle, MenuItemStyle, MenuStyle, SearchBarStyle, ToggleThemeButton, TopBarStyle } from "./HeaderStyles";
 import { Tooltip } from "@mui/material";
-import { SearchContext } from "../../../helpers/SearchContext";
+import { SearchContext } from "../../../context/SearchContext";
 import Toast, { PopUp } from "../../../helpers/alerts/swal";
 
 const Header = ({currentPage, setPage}: SearchResultsProps) => {

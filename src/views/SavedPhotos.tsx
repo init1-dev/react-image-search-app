@@ -3,7 +3,7 @@ import Header from "../components/shared/Header/Header"
 import SavedResults from "../components/savedResults/SavedResults";
 import { getPageFromUrl } from "../helpers/pageFunctions";
 import { useState } from "react";
-import { SearchContext } from "../helpers/SearchContext";
+import { SearchContext } from "../context/SearchContext";
 
 export const SavedPhotos = () => {
     const currentPath = useLocation();
