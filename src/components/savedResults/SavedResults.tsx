@@ -19,7 +19,7 @@ import { Tooltip } from "@mui/material";
 import PopularTags from "../Tags/PopularTags";
 import { GetPopularTags } from "../../helpers/getPopularTags";
 
-function SearchResults({currentPage, setPage}: SearchResultsProps) {
+function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
     const saved = useSelector((state: State) => state.saved.images);
     const query = useAppSelector(savedQuery);
@@ -245,4 +245,4 @@ const CopyUrlButton = styled(MdContentCopy)`
     font-size: 18px;
 `;
 
-export default SearchResults;
+export default SavedResults;
