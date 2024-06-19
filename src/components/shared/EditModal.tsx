@@ -39,18 +39,24 @@ const EditModal = ({ open, onClose, onSave, image, isEditVisible }: EditModalPro
         }
     };
 
+    const handleClose = () => {
+        onClose();
+        setIsEditing(false);
+        setEditedDescription(image.description);
+    };
+
     const isEditingButton = isEditing
-        ? <StyledButton variant="contained" onClick={handleSaveDescription}>SAVE</StyledButton> 
-        : <StyledButton variant="contained" onClick={handleEditToggle}>EDIT DESC</StyledButton>
+        ? <StyledButton variant="contained" color="success" style={{marginRight:"1rem"}} onClick={handleSaveDescription}>SAVE</StyledButton> 
+        : <StyledButton variant="contained" style={{marginRight:"1rem"}} onClick={handleEditToggle}>EDIT DESC</StyledButton>
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="xl" fullScreen TransitionComponent={Transition}>
+        <Dialog open={open} onClose={handleClose} maxWidth="xl" fullScreen TransitionComponent={Transition}>
             <StyledAppBar sx={{ position: 'relative' }}>
                 <Toolbar>
                     <IconButton
                         edge="start"
                         color="inherit"
-                        onClick={onClose}
+                        onClick={handleClose}
                         aria-label="close"
                         >
                         <CloseIcon />
@@ -140,8 +146,16 @@ const EditModal = ({ open, onClose, onSave, image, isEditVisible }: EditModalPro
                         >
                             COPY URL
                         </StyledButton>
+
                         { isEditVisible
                             && isEditingButton }
+
+                        <StyledButton 
+                            onClick={handleClose}
+                            style={{backgroundColor:'#6c757d', color:'white'}}
+                        >
+                            CLOSE
+                        </StyledButton>
                     </ButtonsContainer>
                 </OptionsBox>
 
