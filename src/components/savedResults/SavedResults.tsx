@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { deletePhoto, editDescription, imageTags, savedQuery } from '../../store/searchResults/searchSlice';
 import { SavedImg, SavedTags, SearchResultsProps, SelectedPic, State } from "../../helpers/interfaces";
@@ -124,6 +124,12 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const getResultsFrom = ((currentPage - 1) * imagesPerPage) + 1;
     const getResultsTo = Math.min(currentPage * imagesPerPage, resultsLength);
     const inQuery = query !== "" ? `in query '${query}'` : "";
+
+    useEffect(() => {
+        if(activeTag !== '' && currentPage !== 1){
+            setPage(1);
+        }
+    }, [activeTag])
 
     return (
         <>
