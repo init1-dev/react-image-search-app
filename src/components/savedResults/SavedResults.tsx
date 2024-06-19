@@ -9,7 +9,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { MdContentCopy } from "react-icons/md";
 
 import { saveAs } from 'file-saver';
-import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageGridStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../../css/SavedResults";
+import { Button, ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../../css/SavedResults";
 import EditModal from "../shared/EditModal";
 import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
@@ -18,6 +18,8 @@ import PaginationComponent from "./PaginationComponent";
 import { Tooltip } from "@mui/material";
 import PopularTags from "../Tags/PopularTags";
 import { GetPopularTags } from "../../helpers/getPopularTags";
+
+import Masonry from '@mui/lab/Masonry';
 
 function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
@@ -164,14 +166,18 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
 
                             <PopularTags tags={popularTags} activeTag={activeTag} setTag={setActiveTag} />
 
-                            <ImageGridStyle>
+                            <Masonry 
+                                columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+                                spacing={3}
+                                style={{overflow:'hidden', display:'flex'}}
+                            >
                             { pageItems.map((image: SavedImg) => {
                                 return (
                                 <ImageContainerStyle key={image.id}>
                                     <Tooltip title="Click to details" followCursor>
                                         <ImageItemStyle
                                             src={image.src_preview}
-                                            width={400}
+                                            // width={400}
                                             alt={image.description}
                                             onClick={() => handleModal(image)}
                                         />
@@ -210,7 +216,7 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
                                 </ImageContainerStyle>
                                 )
                             })}
-                            </ImageGridStyle>
+                            </Masonry >
                         </>
                     :   saved.length > 0
                             ? <TextContainer>

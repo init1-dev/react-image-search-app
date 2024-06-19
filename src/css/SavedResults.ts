@@ -6,29 +6,29 @@ export const SectionStyle= styled.main`
     padding: 6rem 10% 2rem 10%;
 
     @media only screen and (max-width: 1024px) {
-        padding: 6rem 0% 2rem 4%;
+        padding: 6rem 2% 2rem 4%;
     }
 
     @media only screen and (max-width: 700px) {
-        padding: 9rem 0% 1rem 8%;
+        padding: 9rem 4% 1rem 8%;
     }
 `;
 
-export const ImageGridStyle = styled.div`
-    column-count: 4;
-    column-gap: 0;
+// export const ImageGridStyle = styled.div`
+//     column-count: 4;
+//     column-gap: 0;
     
-    @media only screen and (max-width: 1024px) {
-        column-count: 2;
-    }
+//     @media only screen and (max-width: 1024px) {
+//         column-count: 2;
+//     }
 
-    @media only screen and (max-width: 700px) {
-        column-count: 1;
-    }
-`;
+//     @media only screen and (max-width: 700px) {
+//         column-count: 1;
+//     }
+// `;
 
 export const ImageItemStyle = styled.img`
-    width: 90%;
+    width: 100%;
     display: block;
     border-radius: 5px;
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
