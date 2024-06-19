@@ -14,18 +14,29 @@ export const SectionStyle= styled.main`
     }
 `;
 
-// export const ImageGridStyle = styled.div`
-//     column-count: 4;
-//     column-gap: 0;
-    
-//     @media only screen and (max-width: 1024px) {
-//         column-count: 2;
-//     }
+export const ButtonContainer = styled.div`
+    opacity: 0;
+    padding: 0.35rem 0;
+    display: inline-flex;
+    position: absolute;
+    bottom: 0rem;
+    left: 0rem;
+    width: 100%;
+    border-radius: 0 0 0.3rem 0.3rem;
+    background-color: rgba(55, 62, 73, 0.6);
+    transition: opacity 0.2s ease;
 
-//     @media only screen and (max-width: 700px) {
-//         column-count: 1;
-//     }
-// `;
+    span {
+        color: white;
+        display: flex;
+        align-items: center;
+        margin-left: 0.5rem;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        opacity: 1;
+    }
+`;
 
 export const ImageItemStyle = styled.img`
     width: 100%;
@@ -34,24 +45,6 @@ export const ImageItemStyle = styled.img`
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
     cursor: zoom-in;
     transition: all 0.3s ease;
-`;
-
-export const ButtonContainer = styled.div`
-    padding: 0.2rem;
-    display: inline-flex;
-    position: absolute;
-    top: 0.3rem;
-    left: 0.3rem;
-    border-radius: 0.3rem;
-    background-color: rgba(55, 62, 73, 0.6);
-    box-shadow: 1px 1px 5px black;
-
-    span {
-        color: white;
-        display: flex;
-        align-items: center;
-        margin-left: 0.5rem;
-    }
 `;
 
 export const Button = styled.button`
@@ -87,6 +80,10 @@ export const ImageContainerStyle = styled.div`
 
         ${ImageItemStyle} {
             box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        }
+
+        ${ButtonContainer} {
+            opacity: 1;
         }
     }
 
