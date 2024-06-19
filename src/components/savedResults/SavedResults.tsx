@@ -8,7 +8,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { MdContentCopy } from "react-icons/md";
 
-import { ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle } from "../../css/SavedResults";
+import { ButtonContainer, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle } from "../../css/SavedResults";
 import EditModal from "../shared/EditModal";
 import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
@@ -24,6 +24,7 @@ import { FiFilter } from "react-icons/fi";
 import FiltersComponent from "./FiltersComponent";
 import Modal from "@mui/material/Modal";
 import { getFilteredPhotos, getOrderedPhotos, getPhotosByTag, handleDownload, handleSaveDescription } from "../../helpers/savedImagesFunctions";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
@@ -146,7 +147,7 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
 
                                         <ButtonComponent
                                             onClick={ () => (handleDownload(image.src_full, image.id)) }
-                                            Icon={DownloadButton} 
+                                            Icon={FileDownloadOutlinedIcon} 
                                             tooltipText={"Download image"}
                                         />
 

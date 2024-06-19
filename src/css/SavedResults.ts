@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export const SectionStyle= styled.main`
     background-color: ${({ theme }) => theme.body};
@@ -96,10 +95,6 @@ export const ImageContainerStyle = styled.div`
             }
         }
     }
-`;
-
-export const DownloadButton = styled(FileDownloadOutlinedIcon)`
-    
 `;
 
 export const SearchBarStyle = styled.div`
