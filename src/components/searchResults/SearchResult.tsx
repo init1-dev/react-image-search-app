@@ -192,7 +192,7 @@ const ImageItemStyle = styled.img`
     width: 90%;
     display: block;
     border-radius: 5px;
-    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.3));
     cursor: zoom-in;
     transition: all 0.3s ease;
 `;
