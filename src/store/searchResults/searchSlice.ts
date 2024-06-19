@@ -12,6 +12,13 @@ const DEFAULT_STATE: SearchState = {
     error: null,
 };
 
+const SAVED_DEFAULT_STATE: SavedState = {
+    images: [],
+    tags: [],
+    query: '',
+    imagesPerPage: 10
+};
+
 const searchInitialState: SearchState = (() => {
     const persistedState = localStorage.getItem("__image__app__state__");
     return (persistedState) ? JSON.parse(persistedState).search : DEFAULT_STATE;
@@ -19,7 +26,7 @@ const searchInitialState: SearchState = (() => {
 
 const savedInitialState: SavedState = (() => {
     const persistedState = localStorage.getItem("__image__app__state__");
-    return (persistedState) ? JSON.parse(persistedState).saved : { images: [], tags: [], query: ''};
+    return (persistedState) ? JSON.parse(persistedState).saved : SAVED_DEFAULT_STATE;
 })();
 
 export const searchSlice = createSlice({
@@ -112,12 +119,16 @@ export const savedSlice = createSlice({
             state.images = [];
             state.query = '';
             state.tags = [];
+        },
+        updateImagesPerPage: (state, action) => {
+            state.imagesPerPage = action.payload;
+            return state;
         }
     }
 });
 
 export const { setTerm, resetTerm, setStatusReady } = searchSlice.actions;
-export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm, editDescription, clearSaved } = savedSlice.actions;
+export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm, editDescription, clearSaved, updateImagesPerPage } = savedSlice.actions;
 
 export const searchPhotos = (state: { search: SearchState }) =>  state.search.images;
 export const searchQuery = (state: { search: SearchState }) =>  state.search.query;
@@ -128,3 +139,4 @@ export const searchError = (state: { search: SearchState }) =>  state.search.err
 export const savedPhotos = (state: { saved: SavedState }) => state.saved.images;
 export const savedQuery = (state: { saved: SavedState }) => state.saved.query;
 export const imageTags = (state: { saved: SavedState }) => state.saved.tags;
+export const stateImagesPerPage = (state: { saved: SavedState }) => state.saved.imagesPerPage;
