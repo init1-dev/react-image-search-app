@@ -75,6 +75,8 @@ export interface Theme {
     }
     .swal2-icon {
       font-size: 12px;
+    }.swal2-close {
+      box-shadow: unset;
     }
     .MuiButton-root {
       font-weight: 600 !important;

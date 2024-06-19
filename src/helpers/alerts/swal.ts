@@ -1,4 +1,7 @@
 import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal)
 
 const Toast = Swal.mixin({
     toast: true,
@@ -16,6 +19,12 @@ const Toast = Swal.mixin({
 export const PopUp = Swal.mixin({
     showConfirmButton: true,
     showCancelButton: true
+})
+
+export const Modal = MySwal.mixin({
+    position: "center",
+    showCloseButton: true,
+    showConfirmButton: false
 })
 
 export default Toast;

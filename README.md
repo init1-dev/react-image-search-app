@@ -45,6 +45,7 @@ $npm run dev
 ### TODO:
 - improve saved select
 - improve the way photo details can be closed
+- store images/page in localStorage
 
 ### KNOWN BUGS
 

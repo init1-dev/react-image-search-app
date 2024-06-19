@@ -1,26 +1,29 @@
 import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { deletePhoto, editDescription, imageTags, savedQuery } from '../../store/searchResults/searchSlice';
+import { deletePhoto, imageTags, savedQuery } from '../../store/searchResults/searchSlice';
 import { SavedImg, SavedTags, SearchResultsProps, SelectedPic, State } from "../../helpers/interfaces";
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { MdContentCopy } from "react-icons/md";
 
-import { saveAs } from 'file-saver';
-import { ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle, SelectStyle } from "../../css/SavedResults";
+import { ButtonContainer, DownloadButton, FormStyle, ImageContainerStyle, ImageItemStyle, SearchBarStyle, SectionStyle } from "../../css/SavedResults";
 import EditModal from "../shared/EditModal";
 import Toast from "../../helpers/alerts/swal";
 import styled from "styled-components";
 import { handleCopyUrl } from "../../helpers/handleCopyUrl";
 import PaginationComponent from "./PaginationComponent";
-import { Tooltip } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import PopularTags from "../Tags/PopularTags";
 import { GetPopularTags } from "../../helpers/getPopularTags";
 
 import Masonry from '@mui/lab/Masonry';
 import ButtonComponent from "../shared/ButtonComponent";
+import { FiFilter } from "react-icons/fi";
+import FiltersComponent from "./FiltersComponent";
+import Modal from "@mui/material/Modal";
+import { getFilteredPhotos, getOrderedPhotos, getPhotosByTag, handleDownload, handleSaveDescription } from "../../helpers/savedImagesFunctions";
 
 function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
@@ -32,7 +35,8 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const [imagesPerPage, setImagesPerPage] = useState(10);
 
     const [orderBy, setOrderBy] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [IsFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
     const [activeTag, setActiveTag] = useState('');
     const [selectedPic, setSelectedPic] = useState<SelectedPic>({
         id: '',
@@ -42,51 +46,7 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
         height: 0,
         likes: 0,
         tags: []
-    });    
-
-    const getFilteredPhotos = (images:SavedImg[] , searchTerm: string) => {
-        const filtered = images.filter(image => image.description?.toLowerCase().includes(searchTerm.toLowerCase()));
-        return filtered;
-    };
-
-    const getPhotosByTag = (images: SavedImg[], tag: string) => {
-        if(activeTag === ""){
-            return images;
-        }
-        const imagesWithTag = images.filter(image => {
-            const tags = image.tags.map(tag => tag.title);
-            return tags.includes(tag);
-        });
-        return imagesWithTag;
-    }
-
-    const getOrderedPhotos = (images: SavedImg[], filter: string) => {
-        if (filter === 'newer') {
-            return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => {
-                    const prevDate = new Date(prevPhoto.created_at);
-                    const nextDate = new Date(nextPhoto.created_at);
-                    return nextDate.getTime() - prevDate.getTime();
-            }).reverse();
-        }
-        return images.sort((prevPhoto: SavedImg, nextPhoto: SavedImg) => {
-            const nextValue = nextPhoto[filter as keyof SavedImg];
-            const prevValue = prevPhoto[filter as keyof SavedImg];
-
-            if(typeof nextValue !== 'number' || typeof prevValue !== 'number'){
-                return 0;
-            }
-
-            return nextValue - prevValue;
-        });
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleSaveDescription = (id: string, newDescription: string) => {
-        dispatch(editDescription({ id, newDescription }))
-    };
+    });
 
     const filterBySearch = getOrderedPhotos(getPhotosByTag(getFilteredPhotos(saved, query), activeTag), orderBy);
     
@@ -98,17 +58,17 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
     
     const pageItems = getPageImages;
 
-    const handleDownload = (url: string, description: string) => {
-        saveAs(
-        url,
-        `${description}.jpg`
-        );
-    };
-
-    const handleModal = (image: SavedImg) => {
-        setIsModalOpen(true);
+    const handleImageModal = (image: SavedImg) => {
+        setIsEditModalOpen(true);
         setSelectedPic(image);
     };
+
+    const handleCloseImageModal = () => {
+        setIsEditModalOpen(false);
+    };
+
+    const handleFiltersModal = () => setIsFiltersModalOpen(true);
+    const handleClose = () => setIsFiltersModalOpen(false);
 
     const handleDelete = (image: SavedImg, pageImages: number) => {
         dispatch(deletePhoto(image.id));
@@ -153,29 +113,10 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
                                             && `Showing ${getResultsFrom} to ${getResultsTo} of ${resultsLength} images ${inQuery}`
                                     }</small>
 
-                                    <SelectStyle id="orderSelect" value={orderBy} onChange={ (e) => setOrderBy(e.target.value) }>
-                                        <option value="" hidden disabled>Filter</option>
-                                        <option value="older">Older</option>
-                                        <option value="newer">Newer</option>
-                                        <option value="width">Width</option>
-                                        <option value="height">Height</option>
-                                        <option value="likes">Likes</option>
-                                    </SelectStyle>
-
-                                    <label htmlFor="itemsSelect">
-                                        <small>Img/Page</small>
-                                    </label>
-                                    
-                                    <SelectStyle 
-                                        id="itemsSelect" 
-                                        value={imagesPerPage} 
-                                        onChange={ (e) => handleImagesPerPage(e) }
-                                    >
-                                        <option value="" hidden disabled>5</option>
-                                        <option value={5}>5</option>
-                                        <option value={10}>10</option>
-                                        <option value={15}>15</option>
-                                    </SelectStyle>
+                                    <Button variant="contained" onClick={handleFiltersModal}>
+                                        Filters
+                                        <FiFilter style={{fontSize:'17px',marginLeft:'0.5rem'}}/>
+                                    </Button>
                                 </FormStyle>
                             </SearchBarStyle>
 
@@ -193,7 +134,7 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
                                         <ImageItemStyle
                                             src={image.src_preview}
                                             alt={image.description}
-                                            onClick={() => handleModal(image)}
+                                            onClick={() => handleImageModal(image)}
                                         />
                                     </Tooltip>
                                     <ButtonContainer>
@@ -216,7 +157,7 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
                                         />
 
                                         <ButtonComponent
-                                            onClick={ () => handleModal(image) }
+                                            onClick={ () => handleImageModal(image) }
                                             Icon={InfoOutlinedIcon} 
                                             tooltipText={"Get info"}
                                         />
@@ -241,12 +182,31 @@ function SavedResults({currentPage, setPage}: SearchResultsProps) {
             </SectionStyle>
 
             <EditModal 
-                open={isModalOpen} 
-                onClose={handleCloseModal} 
-                onSave={(description: string) => handleSaveDescription(selectedPic.id, description)} 
+                open={isEditModalOpen} 
+                onClose={handleCloseImageModal} 
+                onSave={(description: string) => handleSaveDescription(selectedPic.id, description, dispatch)} 
                 image={selectedPic as SelectedPic} 
                 isEditVisible={true}
             />
+
+            <Modal
+                open={IsFiltersModalOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+            >
+                <FiltersModalStyles>
+                    <FiltersTitle id="modal-modal-title" variant="h6" style={{marginBottom:'2rem'}}>
+                        Filters:
+                    </FiltersTitle>
+
+                    <FiltersComponent 
+                        orderBy={orderBy} 
+                        setOrderBy={setOrderBy} 
+                        imagesPerPage={imagesPerPage} 
+                        handleImagesPerPage={handleImagesPerPage}
+                    />
+                </FiltersModalStyles>
+            </Modal>
 
             <PaginationComponent 
                 filterBySearch={filterBySearch} 
@@ -265,6 +225,32 @@ const TextContainer = styled.div`
 
 const CopyUrlButton = styled(MdContentCopy)`
     font-size: 18px;
+`;
+
+const FiltersTitle = styled(Typography)`
+    color: ${({ theme }) => theme.text};
+`;
+
+const FiltersModalStyles = styled(Box)`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    background-color: ${({ theme }) => theme.html};
+    border-radius: 0.5rem;
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    box-shadow: 24;
+    padding: 2rem 4rem 4rem 4rem;
+
+    @media only screen and (max-width: 1024px) {
+        width: 400px;
+    }
+
+    @media only screen and (max-width: 700px) {
+        width: 50%;
+        
+    }
 `;
 
 export default SavedResults;
