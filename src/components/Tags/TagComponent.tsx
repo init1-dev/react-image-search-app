@@ -40,6 +40,8 @@ const TagComponent = ({
 }
 
 const StyledChip = styled(Chip)`
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.3));
+
     &.MuiChip-root {
         font-size: 15px;
         font-weight: 600;

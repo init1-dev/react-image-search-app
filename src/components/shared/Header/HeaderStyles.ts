@@ -82,7 +82,6 @@ export const MenuItemStyle = styled(NavLink)`
         font-size: 20px;
         height: 100%;
         transition: color 0.2s ease;
-        filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
     }
 
     &:hover {
@@ -108,7 +107,6 @@ export const ToggleThemeButton = styled.li`
     display: flex;
     font-size: 18px;
     transition: transform 0.1s;
-    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
 
     &:hover {
         transform: scale(1.2);
