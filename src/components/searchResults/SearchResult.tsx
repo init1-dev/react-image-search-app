@@ -6,7 +6,7 @@ import { deletePhoto, savePhoto, savedPhotos, searchError, searchPhotos, searchQ
 import { getRandomSearchThunk, getSearchThunk } from "../../store/searchResults/searchThunk";
 
 import { FaHeart } from "react-icons/fa";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { RiImageAddLine } from "react-icons/ri";
 import { Image, SavedImg, SelectedPic } from "../../helpers/interfaces";
 import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
@@ -104,7 +104,7 @@ function SearchResults() {
                     ?   <ImageGridStyle>
                             { images.map((image) => {
                                 const isImageSaved = saved.some((currentImage) => image.id === currentImage.id);
-                                
+
                                 return (
                                     <ImageContainerStyle key={image.id}>
                                         <Tooltip title="Click to details" followCursor>
@@ -119,9 +119,14 @@ function SearchResults() {
 
                                         <ButtonContainer>
                                             <Button onClick={ (e) => handleSave(e, image) }>
-                                                <Tooltip title={ isImageSaved ? "Delete from saved" : "Add to saved" }>
+                                                <Tooltip title={ isImageSaved 
+                                                    ? "Delete from saved" 
+                                                    : "Add to saved" }
+                                                >
                                                     <span>
-                                                        { isImageSaved ? <HeartIcon style={{fill:"red"}}/> : <HeartIcon /> }
+                                                        { isImageSaved 
+                                                            ? <HeartIcon style={{fill:"red"}}/> 
+                                                            : <HeartIcon /> }
                                                     </span>
                                                 </Tooltip>
                                             </Button>
@@ -180,9 +185,10 @@ const HeartIcon = styled(FaHeart)`
     }
 `;
 
-const CollectionIcon = styled(IoAddCircleOutline)`
+const CollectionIcon = styled(RiImageAddLine)`
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
     font-size: 20px;
+    font-weight: bolder;
 
     &:hover{
         cursor: pointer;
@@ -216,18 +222,36 @@ const ImageItemStyle = styled.img`
     transition: all 0.3s ease;
 `;
 
+export const ButtonContainer = styled.div`
+    margin-top: 0.5rem;
+    display: inline-flex;
+    position: absolute;
+    top: 0rem;
+    left: 0rem;
+
+    span {
+        display: flex;
+        align-items: center;
+        margin-left: 0.5rem;
+    }
+`;
+
 const ImageContainerStyle = styled.div`
     position: relative;
     display: inline-block;
     margin-bottom: 15px;
     width: 100%;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
 
     &:hover {
         transform: scale(1.02);
 
         ${ImageItemStyle} {
             box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        }
+
+        ${ButtonContainer} {
+            opacity: 1;
         }
     }
 
@@ -240,12 +264,6 @@ const ImageContainerStyle = styled.div`
             }
         }
     }
-`;
-
-const ButtonContainer = styled.div`
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
 `;
 
 const Button = styled.button`
