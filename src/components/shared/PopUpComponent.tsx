@@ -1,6 +1,10 @@
-import { Tooltip } from "@mui/material";
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styled from "styled-components";
+import ButtonComponent from "./ButtonComponent";
+import { createPortal } from "react-dom";
+import { RiSave3Fill } from "react-icons/ri";
+import { RiCloseLargeFill } from "react-icons/ri";
+import { FaPlus } from "react-icons/fa6";
 
 interface PopUpProps {
     // onClick: () => void;
@@ -17,6 +21,8 @@ const PopUpComponent = ({
     const [isCreating, setIsCreating] = useState(false);
     const [newCollectionName, setNewCollectionName] = useState('');
     const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
+    const [position, setPosition] = useState({ top: 0, left: 0 });
+    const buttonRef = useRef<HTMLDivElement>(null);
 
     const handleCreateCollection = () => {
         if(isCreating) {
@@ -47,74 +53,102 @@ const PopUpComponent = ({
         });
     };
 
-    return (
-        <PopUpMenuContainer className="popup-menu-container">
-            <Button onClick={() => setIsShown(prev => !prev)}>
-                <Tooltip title={tooltipText}>
-                    <span>
-                        <Icon />
-                    </span>
-                </Tooltip>
-            </Button>
+    useEffect(() => {
+        if (isShown && buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            setPosition({ top: rect.bottom, left: rect.left });
+        }
+    }, [isShown]);
 
-            <PopUpMenu
-                className={`popup-menu ${isShown ? 'shown' : ''}`}
-                onMouseLeave={() => handleMouseLeave()}
-            >
-                <small>Add to collection:</small>
-                <CollectionsList>
-                    {
-                        collections.map((collection, i) => (
-                            <li key={i}>
-                                <CheckBoxInput 
-                                    type="checkbox" 
-                                    name={collection} 
-                                    id={collection} 
-                                    checked={selectedCollections.includes(collection)}
-                                    onInputCapture={() => handleSelectedCollections(collection)}
-                                />
-                                <label htmlFor={collection}>
-                                    {collection}
-                                </label>
-                            </li>
-                        ))
-                    }
-                </CollectionsList>
+    const popUpMenuContent = (
+        <PopUpMenu
+            className={`popup-menu ${isShown ? 'shown' : ''}`}
+            $position={position}
+            // onMouseLeave={() => handleMouseLeave()}
+        >
+            <small>Add to collection:</small>
+            <CollectionsList>
+                {
+                    collections.map((collection, i) => (
+                        <li key={i}>
+                            <CheckBoxInput 
+                                type="checkbox" 
+                                name={collection} 
+                                id={collection} 
+                                defaultChecked={selectedCollections.includes(collection)}
+                                onInputCapture={() => handleSelectedCollections(collection)}
+                            />
+                            <label htmlFor={collection}>
+                                {collection}
+                            </label>
+                        </li>
+                    ))
+                }
+            </CollectionsList>
+
+            {
+                isCreating && 
+                <Label htmlFor="new-collection">
+                    <small>Collection name:</small>
+                    <TextInput 
+                        type="text" 
+                        name="new-collection" 
+                        id="new-collection" 
+                        value={newCollectionName}
+                        onChange={(e) => setNewCollectionName(e.target.value)}
+                    />
+                </Label>
+            }
+
+            <ButtonContainer>
+                { 
+                    isCreating
+                        ?   <OptionButton 
+                                onClick={() => handleCreateCollection()}
+                                style={{backgroundColor:'#28a745'}}
+                            >
+                                <RiSave3Fill /> Save
+                            </OptionButton>
+
+                        :   <OptionButton 
+                                onClick={() => handleCreateCollection()}
+                                style={{backgroundColor:'#007bff'}}
+                            >
+                                <FaPlus /> New collection
+                            </OptionButton>
+                }
 
                 {
-                    isCreating && 
-                    <label htmlFor="new-collection">
-                        <input 
-                            type="text" 
-                            name="new-collection" 
-                            id="new-collection" 
-                            value={newCollectionName}
-                            onChange={(e) => setNewCollectionName(e.target.value)}
-                        />
-                    </label>
+                    isCreating &&
+                        <OptionButton 
+                            onClick={() => setIsCreating(false)}
+                            style={{backgroundColor:'#dc3545'}}
+                        >
+                            Cancel
+                        </OptionButton>
                 }
-                
 
-                <ButtonContainer>
-                    { 
-                        isCreating
-                            ?   <CreateButton onClick={() => handleCreateCollection()}>
-                                    Save
-                                </CreateButton>
-                            :   <CreateButton onClick={() => handleCreateCollection()}>
-                                    New collection
-                                </CreateButton>
-                    }
+                <OptionButton 
+                    onClick={() => handleMouseLeave()}
+                    style={{backgroundColor:'#6c757d'}}
+                >
+                    <RiCloseLargeFill /> Close
+                </OptionButton>
+            </ButtonContainer>
+        </PopUpMenu>
+    );
 
-                    <CreateButton onClick={() => handleMouseLeave()}>
-                        Add
-                    </CreateButton>
+    return (
+        <PopUpMenuContainer className="popup-menu-container">
+            <div ref={buttonRef}>
+                <ButtonComponent
+                    onClick={ () => setIsShown(prev => !prev) }
+                    Icon={ Icon } 
+                    tooltipText={tooltipText}
+                />
 
-                    <CreateButton onClick={() => handleMouseLeave()}>
-                        Close
-                    </CreateButton>
-                </ButtonContainer>
-            </PopUpMenu>
+                { createPortal(popUpMenuContent, document.body) }
+            </div>
         </PopUpMenuContainer>
     )
 }
@@ -131,14 +165,16 @@ const PopUpMenuContainer = styled.div`
     flex-direction: column;
 `;
 
-const PopUpMenu = styled.div`
-    position: absolute;
-    z-index: 1000;
+const PopUpMenu = styled.div<{ $position: { top: number, left: number}}>`
+    display: flex;
+    flex-direction: column;
+    position: fixed;
     transform: scale(0);
     transform-origin: top left;
+    top: ${({ $position }) => `${$position.top}px`};
+    left: ${({ $position }) => `${$position.left}px`};
     
-    width: auto;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
     padding: 1rem;
     color: ${({ theme }) => theme.text};
     background-color: ${({ theme }) => theme.themeButtonBg};
@@ -149,6 +185,12 @@ const PopUpMenu = styled.div`
     &.shown {
         transform: scale(1);
     }
+
+    @media only screen and (max-width: 700px) {
+        width: 70%;
+        left: 10%;
+        right: 10%;
+    }
 `;
 
 const CollectionsList = styled.ul`
@@ -157,7 +199,31 @@ const CollectionsList = styled.ul`
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.5rem;
+
+    li {
+        font-size: 15px;
+
+        @media only screen and (max-width: 700px) {
+            font-size: 18px;
+        }
+    }
+`;
+
+const Label = styled.label`
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+`;
+
+const TextInput = styled.input`
+    margin-top: 0.8rem;
+    /* width: 100%; */
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: unset;
+    margin-right: 0.5rem;
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.3));
 `;
 
 const CheckBoxInput = styled.input`
@@ -165,34 +231,25 @@ const CheckBoxInput = styled.input`
 `;
 
 const ButtonContainer = styled.div`
+    margin-top: 1rem;
     display: inline-flex;
     gap: 0.5rem;
 `;
 
-export const Button = styled.button`
-    font-size: 20px;
-    padding: unset;
-    background-color: unset;
-    border: unset;
-    margin-right: 0rem;
-    cursor: pointer;
+const OptionButton = styled.button`
+    display: flex;
+    gap: 0.35em;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 5px rgb(0 0 0 / 0.4);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
 
-    &:focus, &:focus-visible {
-        outline: unset;
+    @media only screen and (max-width: 700px) {
+        font-size: 18px;
     }
-
-    span svg {
-        color: white;
-
-        &:hover {
-            color: #0fe10f;
-        }
-    }
-`;
-
-const CreateButton = styled.button`
-    margin-top: 1rem;
 `;
 
 export default PopUpComponent;

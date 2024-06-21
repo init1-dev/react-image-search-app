@@ -12,7 +12,6 @@ import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
 import EditModal from "../shared/EditModal";
 import { Tooltip } from "@mui/material";
-import ButtonComponent from "../shared/ButtonComponent";
 import PopUpComponent from "../shared/PopUpComponent";
 
 function SearchResults() {
@@ -132,13 +131,10 @@ function SearchResults() {
                                                 </Tooltip>
                                             </Button>
 
-                                            {/* <ButtonComponent
-                                                onClick={ () => {} }
-                                                Icon={ CollectionIcon } 
-                                                tooltipText={"Add to collection"}
-                                            /> */}
-
-                                            <PopUpComponent Icon={CollectionIcon} tooltipText={"Add to collection"} />
+                                            <PopUpComponent 
+                                                Icon={CollectionIcon} 
+                                                tooltipText={"Add to collection"} 
+                                            />
                                         </ButtonContainer>
                                     </ImageContainerStyle>
                                 )
