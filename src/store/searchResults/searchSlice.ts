@@ -16,7 +16,8 @@ const SAVED_DEFAULT_STATE: SavedState = {
     images: [],
     tags: [],
     query: '',
-    imagesPerPage: 10
+    imagesPerPage: 10,
+    collections: []
 };
 
 const searchInitialState: SearchState = (() => {

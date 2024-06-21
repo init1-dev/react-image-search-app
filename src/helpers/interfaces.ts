@@ -43,11 +43,17 @@ export interface SearchState {
     error: string | null;
 }
 
+export interface Collection {
+    name: string;
+    images: SavedImg[];
+}
+
 export interface SavedState {
     images: SavedImg[];
     tags: SavedTags[];
     query: string;
     imagesPerPage: number;
+    collections: Collection[];
 }
 
 export interface SavedImg {
