@@ -6,6 +6,7 @@ import { deletePhoto, savePhoto, savedPhotos, searchError, searchPhotos, searchQ
 import { getRandomSearchThunk, getSearchThunk } from "../../store/searchResults/searchThunk";
 
 import { FaHeart } from "react-icons/fa";
+import { IoAddCircleOutline } from "react-icons/io5";
 import { Image, SavedImg, SelectedPic } from "../../helpers/interfaces";
 import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
@@ -67,9 +68,9 @@ function SearchResults() {
     useEffect(() => {
         if(query !== ''){
             if (status === 'ready'){
-            dispatch(getSearchThunk(query));
+                dispatch(getSearchThunk(query));
             } else if (status === 'pending') {
-            setIsLoading(true);
+                setIsLoading(true);
             } else if (status === 'fulfilled') {
                 setTimeout(() => {
                     setIsLoading(false);
@@ -77,11 +78,11 @@ function SearchResults() {
             }
         } else if (query === ''){
             if (status === 'ready'){
-            dispatch(getRandomSearchThunk());
+                dispatch(getRandomSearchThunk());
             } else if (status === 'pending') {
-            setIsLoading(true);
+                setIsLoading(true);
             } else if (status === 'fulfilled') {
-            setIsLoading(false);
+                setIsLoading(false);
             }
         } else {
             alert(`Error: ${error}`)
@@ -119,6 +120,14 @@ function SearchResults() {
                                                 <Tooltip title={ isImageSaved ? "Delete from saved" : "Add to saved" }>
                                                     <span>
                                                         { isImageSaved ? <HeartIcon style={{fill:"red"}}/> : <HeartIcon /> }
+                                                    </span>
+                                                </Tooltip>
+                                            </Button>
+
+                                            <Button>
+                                                <Tooltip title={"Add to collection"}>
+                                                    <span>
+                                                        <CollectionIcon />
                                                     </span>
                                                 </Tooltip>
                                             </Button>
@@ -168,6 +177,16 @@ const HeartIcon = styled(FaHeart)`
         cursor: pointer;
         color: red;
         fill: red;
+    }
+`;
+
+const CollectionIcon = styled(IoAddCircleOutline)`
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    font-size: 20px;
+
+    &:hover{
+        cursor: pointer;
+        color: #0fe10f;
     }
 `;
 
@@ -233,10 +252,6 @@ const Button = styled.button`
     background-color: unset;
     border: unset;
     color: white;
-
-    &:hover {
-        color: red;
-    }
 `;
 
 export default SearchResults;

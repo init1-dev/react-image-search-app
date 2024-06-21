@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { SelectStyle } from "../../css/SavedResults";
 import { Dispatch, SetStateAction, forwardRef } from "react";
 
 interface FiltersComponentProps {
@@ -69,6 +68,24 @@ const FilterGroup = styled.div`
 
     label {
         color: ${({ theme }) => theme.text};
+    }
+`;
+
+const SelectStyle = styled.select`
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    border-color: transparent;
+    border-right: 1rem solid transparent;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: ${({ theme }) => theme.searchBarBg};
+    color: ${({ theme }) => theme.headerH1};
+
+    &:focus, &:focus-visible{
+        outline: unset;
+    }
+
+    @media only screen and (max-width: 700px) {
+        width: 100%;
     }
 `;
 

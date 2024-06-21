@@ -1,9 +1,8 @@
 import { styled as styledMui, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import Paper from '@mui/material/Paper';
 import ClearIcon from '@mui/icons-material/Clear';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { InputBase, Paper } from '@mui/material';
 
 interface SearchComponentProps {
     placeholder: string;
