@@ -12,6 +12,7 @@ import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
 import EditModal from "../shared/EditModal";
 import { Tooltip } from "@mui/material";
+import ButtonComponent from "../shared/ButtonComponent";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -42,9 +43,9 @@ function SearchResults() {
         setIsModalOpen(false);
     };
 
-    const handleSave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, img: Image) => {
+    const handleSave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, img: Image) => {
         const isImageAlreadySaved = saved.some(image => image.id === img.id);
-        const target = e.target as HTMLDivElement;
+        const target = e.target as HTMLButtonElement;
         if (isImageAlreadySaved) {
             target.classList.remove("heart-red");
             Toast.fire({
@@ -103,6 +104,7 @@ function SearchResults() {
                     ?   <ImageGridStyle>
                             { images.map((image) => {
                                 const isImageSaved = saved.some((currentImage) => image.id === currentImage.id);
+                                
                                 return (
                                     <ImageContainerStyle key={image.id}>
                                         <Tooltip title="Click to details" followCursor>
@@ -115,8 +117,8 @@ function SearchResults() {
                                             />
                                         </Tooltip>
 
-                                        <ButtonContainer onClick={ (e) => handleSave(e, image) }>
-                                            <Button>
+                                        <ButtonContainer>
+                                            <Button onClick={ (e) => handleSave(e, image) }>
                                                 <Tooltip title={ isImageSaved ? "Delete from saved" : "Add to saved" }>
                                                     <span>
                                                         { isImageSaved ? <HeartIcon style={{fill:"red"}}/> : <HeartIcon /> }
@@ -124,13 +126,11 @@ function SearchResults() {
                                                 </Tooltip>
                                             </Button>
 
-                                            <Button>
-                                                <Tooltip title={"Add to collection"}>
-                                                    <span>
-                                                        <CollectionIcon />
-                                                    </span>
-                                                </Tooltip>
-                                            </Button>
+                                            <ButtonComponent
+                                                onClick={ () => {} }
+                                                Icon={ CollectionIcon } 
+                                                tooltipText={"Add to collection"}
+                                            />
                                         </ButtonContainer>
                                     </ImageContainerStyle>
                                 )
