@@ -6,13 +6,14 @@ import { deletePhoto, savePhoto, savedPhotos, searchError, searchPhotos, searchQ
 import { getRandomSearchThunk, getSearchThunk } from "../../store/searchResults/searchThunk";
 
 import { FaHeart } from "react-icons/fa";
-import { RiImageAddLine } from "react-icons/ri";
+import { BsHeartbreakFill } from "react-icons/bs";
 import { Image, SavedImg, SelectedPic } from "../../helpers/interfaces";
 import Toast from "../../helpers/alerts/swal";
 import { formatImage } from "../../helpers/Images/formatImage";
 import EditModal from "../shared/EditModal";
 import { Tooltip } from "@mui/material";
 import PopUpComponent from "../shared/PopUpComponent";
+import { SlOptions } from "react-icons/sl";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ function SearchResults() {
     const error = useAppSelector(searchError);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [openPopUpId, setOpenPopUpId] = useState<string | null>(null);
     const [selectedPic, setSelectedPic] = useState<SelectedPic>({
         id: '',
         src_regular: '',
@@ -125,7 +127,7 @@ function SearchResults() {
                                                 >
                                                     <span>
                                                         { isImageSaved 
-                                                            ? <HeartIcon style={{fill:"red"}}/> 
+                                                            ? <HeartUnsaveIcon style={{fill:"red"}}/> 
                                                             : <HeartIcon /> }
                                                     </span>
                                                 </Tooltip>
@@ -133,7 +135,10 @@ function SearchResults() {
 
                                             <PopUpComponent 
                                                 Icon={CollectionIcon} 
-                                                tooltipText={"Add to collection"} 
+                                                tooltipText={"More options"} 
+                                                id={image.id}
+                                                openPopUpId={openPopUpId}
+                                                setOpenPopUpId={setOpenPopUpId}
                                             />
                                         </ButtonContainer>
                                     </ImageContainerStyle>
@@ -179,12 +184,18 @@ const HeartIcon = styled(FaHeart)`
 
     &:hover{
         cursor: pointer;
-        color: red;
         fill: red;
     }
 `;
 
-const CollectionIcon = styled(RiImageAddLine)`
+const HeartUnsaveIcon = styled(BsHeartbreakFill)`
+    filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
+`;
+
+const CollectionIcon = styled(SlOptions)`
     filter: drop-shadow(1px 1px 1.2px rgb(0 0 0 / 0.6));
     font-size: 20px;
     font-weight: bolder;
@@ -227,6 +238,7 @@ export const ButtonContainer = styled.div`
     position: absolute;
     top: 0rem;
     left: 0rem;
+    align-items: center;
 
     span {
         display: flex;

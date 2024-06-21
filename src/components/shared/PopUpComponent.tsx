@@ -1,28 +1,49 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components";
 import ButtonComponent from "./ButtonComponent";
 import { createPortal } from "react-dom";
-import { RiSave3Fill } from "react-icons/ri";
-import { RiCloseLargeFill } from "react-icons/ri";
+import { RiSave3Fill, RiCloseLargeFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
 
 interface PopUpProps {
     // onClick: () => void;
     Icon: any;
     tooltipText: string;
+    id: string;
+    openPopUpId: string | null;
+    setOpenPopUpId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const PopUpComponent = ({
     // onClick,
     Icon,
-    tooltipText
+    tooltipText,
+    id,
+    openPopUpId,
+    setOpenPopUpId
 }: PopUpProps) => {
-    const [isShown, setIsShown] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
     const [newCollectionName, setNewCollectionName] = useState('');
     const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
     const [position, setPosition] = useState({ top: 0, left: 0 });
     const buttonRef = useRef<HTMLDivElement>(null);
+    const popUpRef = useRef<HTMLDivElement>(null);
+    const isOpen = openPopUpId === id;
+
+    useEffect(() => {
+        if (buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            setPosition({ top: rect.bottom, left: rect.left });
+        }
+    }, [isOpen]);
+
+    const handleTogglePopUp = () => {
+        if(isOpen){
+            setOpenPopUpId(null);
+        } else {
+            setOpenPopUpId(id);
+        }
+    };
 
     const handleCreateCollection = () => {
         if(isCreating) {
@@ -32,13 +53,6 @@ const PopUpComponent = ({
         } else {
             setIsCreating(true);
         }
-    };
-
-    const handleMouseLeave = () => {
-        setIsShown(false);
-        setIsCreating(false);
-        setNewCollectionName('');
-        setSelectedCollections([]);
     };
 
     const handleSelectedCollections = (collection: string) => {
@@ -53,18 +67,38 @@ const PopUpComponent = ({
         });
     };
 
-    useEffect(() => {
-        if (isShown && buttonRef.current) {
-            const rect = buttonRef.current.getBoundingClientRect();
-            setPosition({ top: rect.bottom, left: rect.left });
+    const closePopUp = () => {
+        setOpenPopUpId(null);
+        setIsCreating(false);
+        setNewCollectionName('');
+        setSelectedCollections([]);
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+        const btnRef = buttonRef.current && !buttonRef.current.contains(event.target as Node);
+        const popRef = popUpRef.current && !popUpRef.current.contains(event.target as Node);
+        
+        if (btnRef && popRef) {
+            closePopUp();
         }
-    }, [isShown]);
+    };
+
+    useEffect(() => {
+        if(isOpen){
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
 
     const popUpMenuContent = (
         <PopUpMenu
-            className={`popup-menu ${isShown ? 'shown' : ''}`}
+            ref={popUpRef}
+            className={`popup-menu ${isOpen ? 'shown' : ''}`}
             $position={position}
-            // onMouseLeave={() => handleMouseLeave()}
+            $isOpen={isOpen}
         >
             <small>Add to collection:</small>
             <CollectionsList>
@@ -129,7 +163,7 @@ const PopUpComponent = ({
                 }
 
                 <OptionButton 
-                    onClick={() => handleMouseLeave()}
+                    onClick={closePopUp}
                     style={{backgroundColor:'#6c757d'}}
                 >
                     <RiCloseLargeFill /> Close
@@ -140,15 +174,15 @@ const PopUpComponent = ({
 
     return (
         <PopUpMenuContainer className="popup-menu-container">
-            <div ref={buttonRef}>
+            <span ref={buttonRef}>
                 <ButtonComponent
-                    onClick={ () => setIsShown(prev => !prev) }
+                    onClick={handleTogglePopUp}
                     Icon={ Icon } 
                     tooltipText={tooltipText}
                 />
 
-                { createPortal(popUpMenuContent, document.body) }
-            </div>
+                { isOpen && createPortal(popUpMenuContent, document.body) }
+            </span>
         </PopUpMenuContainer>
     )
 }
@@ -165,11 +199,11 @@ const PopUpMenuContainer = styled.div`
     flex-direction: column;
 `;
 
-const PopUpMenu = styled.div<{ $position: { top: number, left: number}}>`
-    display: flex;
+const PopUpMenu = styled.div<{ $position: { top: number, left: number}, $isOpen: boolean}>`
+    display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
     flex-direction: column;
     position: fixed;
-    transform: scale(0);
+    transform: scale(${({ $isOpen }) => ($isOpen ? 1 : 0)});
     transform-origin: top left;
     top: ${({ $position }) => `${$position.top}px`};
     left: ${({ $position }) => `${$position.left}px`};
@@ -218,7 +252,6 @@ const Label = styled.label`
 
 const TextInput = styled.input`
     margin-top: 0.8rem;
-    /* width: 100%; */
     padding: 0.5rem;
     border-radius: 0.5rem;
     border: unset;
