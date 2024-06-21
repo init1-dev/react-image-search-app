@@ -13,6 +13,7 @@ import { formatImage } from "../../helpers/Images/formatImage";
 import EditModal from "../shared/EditModal";
 import { Tooltip } from "@mui/material";
 import ButtonComponent from "../shared/ButtonComponent";
+import PopUpComponent from "../shared/PopUpComponent";
 
 function SearchResults() {
     const dispatch = useAppDispatch();
@@ -131,11 +132,13 @@ function SearchResults() {
                                                 </Tooltip>
                                             </Button>
 
-                                            <ButtonComponent
+                                            {/* <ButtonComponent
                                                 onClick={ () => {} }
                                                 Icon={ CollectionIcon } 
                                                 tooltipText={"Add to collection"}
-                                            />
+                                            /> */}
+
+                                            <PopUpComponent Icon={CollectionIcon} tooltipText={"Add to collection"} />
                                         </ButtonContainer>
                                     </ImageContainerStyle>
                                 )
