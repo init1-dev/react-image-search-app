@@ -124,12 +124,35 @@ export const savedSlice = createSlice({
         updateImagesPerPage: (state, action) => {
             state.imagesPerPage = action.payload;
             return state;
+        },
+        createCollection: (state, action) => {
+            state.collections.push(action.payload);
+        },
+        deleteCollection: (state, action) => {
+            state.collections = state.collections.filter(collection => collection.name !== action.payload);
+        },
+        clearAllCollections: (state) => {
+            state.collections = [];
+        },
+        addImageToCollection: (state, action) => {
+            const index = state.collections.findIndex((item) => item.name === action.payload.name);
+            if (index !== -1) {
+                const prevImges = state.collections[index].images;
+                state.collections[index].images = [ ...prevImges, action.payload.image ];
+            }
+        },
+        deleteImageFromCollection: (state, action) => {
+            const index = state.collections.findIndex((item) => item.name === action.payload.name);
+            if (index !== -1) {
+                const filteredImages = state.collections[index].images.filter(image => image.id !== action.payload.id);
+                state.collections[index].images = filteredImages;
+            }
         }
     }
 });
 
 export const { setTerm, resetTerm, setStatusReady } = searchSlice.actions;
-export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm, editDescription, clearSaved, updateImagesPerPage } = savedSlice.actions;
+export const { savePhoto, deletePhoto, searchByTerm, resetSearchTerm, editDescription, clearSaved, updateImagesPerPage, createCollection, deleteCollection, clearAllCollections } = savedSlice.actions;
 
 export const searchPhotos = (state: { search: SearchState }) =>  state.search.images;
 export const searchQuery = (state: { search: SearchState }) =>  state.search.query;
@@ -141,3 +164,4 @@ export const savedPhotos = (state: { saved: SavedState }) => state.saved.images;
 export const savedQuery = (state: { saved: SavedState }) => state.saved.query;
 export const imageTags = (state: { saved: SavedState }) => state.saved.tags;
 export const stateImagesPerPage = (state: { saved: SavedState }) => state.saved.imagesPerPage;
+export const collections = (state: { saved: SavedState }) => state.saved.collections;
