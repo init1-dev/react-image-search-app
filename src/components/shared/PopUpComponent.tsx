@@ -3,7 +3,11 @@ import styled from "styled-components";
 import ButtonComponent from "./ButtonComponent";
 import { createPortal } from "react-dom";
 import { RiSave3Fill, RiCloseLargeFill } from "react-icons/ri";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { collections, createCollection, deleteCollection } from "../../store/searchResults/searchSlice";
+import { Collection } from "../../helpers/interfaces";
 
 interface PopUpProps {
     // onClick: () => void;
@@ -30,6 +34,9 @@ const PopUpComponent = ({
     const popUpRef = useRef<HTMLDivElement>(null);
     const isOpen = openPopUpId === id;
 
+    const savedCollections = useAppSelector(collections);
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
         if (buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect();
@@ -47,13 +54,29 @@ const PopUpComponent = ({
 
     const handleCreateCollection = () => {
         if(isCreating) {
-            selectedCollections.forEach(element => {
-                console.log(element);
-            });
+            const collection = newCollectionName.trim();
+            const notExist = !savedCollections.find(items => items.name === collection);
+
+            if(collection !== '' && notExist){
+                const newCollection:Collection = {name: newCollectionName, images: []};
+                dispatch(createCollection(newCollection));
+                setNewCollectionName('');
+                setIsCreating(false);
+            }
         } else {
             setIsCreating(true);
         }
     };
+
+    const handleCancel = () => {
+        setNewCollectionName('');
+        setIsCreating(false);
+    };
+
+    const handleDeleteCollection = (name: string) => {
+        // dispatch(clearAllCollections());
+        dispatch(deleteCollection(name));
+    }
 
     const handleSelectedCollections = (collection: string) => {
         setSelectedCollections(prev => {
@@ -83,13 +106,21 @@ const PopUpComponent = ({
         }
     };
 
+    const handleScroll = () => {
+        if (isOpen) {
+            closePopUp();
+        }
+    };
+
     useEffect(() => {
         if(isOpen){
             document.addEventListener('mousedown', handleClickOutside);
+            document.addEventListener('scroll', handleScroll);
         }
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('scroll', handleScroll);
         };
     }, [isOpen]);
 
@@ -103,20 +134,34 @@ const PopUpComponent = ({
             <small>Add to collection:</small>
             <CollectionsList>
                 {
-                    collections.map((collection, i) => (
-                        <li key={i}>
-                            <CheckBoxInput 
-                                type="checkbox" 
-                                name={collection} 
-                                id={collection} 
-                                defaultChecked={selectedCollections.includes(collection)}
-                                onInputCapture={() => handleSelectedCollections(collection)}
-                            />
-                            <label htmlFor={collection}>
-                                {collection}
-                            </label>
-                        </li>
-                    ))
+                    savedCollections.length > 0
+                        ? savedCollections.map(({name}, i) => (
+                            <li key={i}>
+                                <span>
+                                    <CheckBoxInput 
+                                        type="checkbox" 
+                                        name={name} 
+                                        id={name} 
+                                        defaultChecked={selectedCollections.includes(name)}
+                                        onInputCapture={() => handleSelectedCollections(name)}
+                                    />
+
+                                    <label htmlFor={name}>
+                                        {name}
+                                    </label>
+                                </span>
+
+                                <button onClick={() => handleDeleteCollection(name)}>
+                                    <RiDeleteBin6Line />
+                                </button>
+                            </li>
+                        ))
+                        :   <li>
+                                <small style={{color:'#8d8d8d'}}>
+                                    Create collections to see them here
+                                </small>
+                            </li>
+                    
                 }
             </CollectionsList>
 
@@ -155,7 +200,7 @@ const PopUpComponent = ({
                 {
                     isCreating &&
                         <OptionButton 
-                            onClick={() => setIsCreating(false)}
+                            onClick={handleCancel}
                             style={{backgroundColor:'#dc3545'}}
                         >
                             Cancel
@@ -186,12 +231,6 @@ const PopUpComponent = ({
         </PopUpMenuContainer>
     )
 }
-
-const collections = [
-    'landscapes',
-    'buildings',
-    'forest'
-]
 
 const PopUpMenuContainer = styled.div`
     position: relative;
@@ -236,11 +275,20 @@ const CollectionsList = styled.ul`
     gap: 0.5rem;
 
     li {
+        display: flex;
+        gap: 0.5rem;
         font-size: 15px;
+        justify-content: space-between;
 
         @media only screen and (max-width: 700px) {
             font-size: 18px;
         }
+    }
+
+    button {
+        padding: 0.2rem 0.35rem;
+        border-radius: 0.5rem;
+        border: unset;
     }
 `;
 
@@ -266,6 +314,7 @@ const CheckBoxInput = styled.input`
 const ButtonContainer = styled.div`
     margin-top: 1rem;
     display: inline-flex;
+    justify-content: space-between;
     gap: 0.5rem;
 `;
 
