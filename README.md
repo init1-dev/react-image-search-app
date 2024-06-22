@@ -43,6 +43,7 @@ $npm run dev
 ## Next Updates
 
 ### TODO:
+- develop: feature -> create image collections (in development)
 - improve saved select
 - improve the way photo details can be closed
 
@@ -54,7 +55,6 @@ $npm run dev
 
 ### FUTURE IDEAS
 - develop: migrate saved from localStorage to database
-- develop: feature -> create image collections
 
 ## Contact
 
