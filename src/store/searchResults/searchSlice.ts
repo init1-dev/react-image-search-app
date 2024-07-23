@@ -27,7 +27,15 @@ const searchInitialState: SearchState = (() => {
 
 const savedInitialState: SavedState = (() => {
     const persistedState = localStorage.getItem("__image__app__state__");
-    return (persistedState) ? JSON.parse(persistedState).saved : SAVED_DEFAULT_STATE;
+    if(persistedState){
+        const parsedState = JSON.parse(persistedState);
+        return {
+            ...SAVED_DEFAULT_STATE,
+            ...parsedState.saved,
+            collections: parsedState.saved.collections || []
+        }
+    }
+    return SAVED_DEFAULT_STATE;
 })();
 
 export const searchSlice = createSlice({

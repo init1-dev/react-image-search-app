@@ -7,13 +7,14 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { collections, createCollection, deleteCollection } from "../../store/searchResults/searchSlice";
-import { Collection } from "../../helpers/interfaces";
+import { Collection, Image } from "../../helpers/interfaces";
 
 interface PopUpProps {
     // onClick: () => void;
     Icon: any;
     tooltipText: string;
     id: string;
+    currentImage: Image;
     openPopUpId: string | null;
     setOpenPopUpId: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -23,6 +24,7 @@ const PopUpComponent = ({
     Icon,
     tooltipText,
     id,
+    currentImage,
     openPopUpId,
     setOpenPopUpId
 }: PopUpProps) => {
@@ -34,7 +36,7 @@ const PopUpComponent = ({
     const popUpRef = useRef<HTMLDivElement>(null);
     const isOpen = openPopUpId === id;
 
-    const savedCollections = useAppSelector(collections);
+    const savedCollections = useAppSelector(collections) || [];
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -78,7 +80,7 @@ const PopUpComponent = ({
         dispatch(deleteCollection(name));
     }
 
-    const handleSelectedCollections = (collection: string) => {
+    const handleSelectedCollections = (collection: string, _image: Image) => {
         setSelectedCollections(prev => {
             if(prev.includes(collection)){
                 console.log('existe, la quito');
@@ -143,7 +145,7 @@ const PopUpComponent = ({
                                         name={name} 
                                         id={name} 
                                         defaultChecked={selectedCollections.includes(name)}
-                                        onInputCapture={() => handleSelectedCollections(name)}
+                                        onInputCapture={() => handleSelectedCollections(name, currentImage)}
                                     />
 
                                     <label htmlFor={name}>

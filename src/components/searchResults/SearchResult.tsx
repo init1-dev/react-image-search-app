@@ -137,6 +137,7 @@ function SearchResults() {
                                                 Icon={CollectionIcon} 
                                                 tooltipText={"More options"} 
                                                 id={image.id}
+                                                currentImage={image}
                                                 openPopUpId={openPopUpId}
                                                 setOpenPopUpId={setOpenPopUpId}
                                             />

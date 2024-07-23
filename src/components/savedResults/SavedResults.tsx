@@ -21,7 +21,7 @@ import ImagesMasonry from "./ImagesMasonry";
 
 function SavedResults({currentPage, setPage}: SearchResultsProps) {
     const dispatch = useAppDispatch();
-    const saved = useAppSelector(savedPhotos);
+    const saved = useAppSelector(savedPhotos) || [];
     const perPage: number = useAppSelector(stateImagesPerPage);
     const query = useAppSelector(savedQuery);
     const tags: SavedTags[] = useAppSelector(imageTags);
